@@ -1,7 +1,7 @@
 if defined?(Merb::Plugins)
 
-  merb_version = "1.0"
-  datamapper_version = "0.9.6"
+  merb_version = ">= 1.0"
+  datamapper_version = ">= 0.9.6"
 
   $:.unshift File.dirname(__FILE__)
 
@@ -104,7 +104,7 @@ if defined?(Merb::Plugins)
   dependency 'merb-auth-more',  merb_version do
     require 'merb-auth-more/mixins/redirect_back'
   end
-  dependency 'RedCloth',        "4.1.0",  {:require_as => 'redcloth'}
+  dependency 'RedCloth',        ">= 4.1.0",  {:require_as => 'redcloth'}
   
   # Stdlib dependencies
   require 'digest/sha1'
