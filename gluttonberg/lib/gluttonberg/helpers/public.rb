@@ -6,7 +6,7 @@ module Gluttonberg
       def navigation_tree(pages, opts = {})
         content = ""
         pages.each do |page|
-          li_opts = {}
+          li_opts = {:id => page.slug + "Nav"}
           li_opts[:class] = "current" if page == @page
           li_content = tag(:a, page.nav_label, :href => page_url(page))
           children = page.children_with_localization(:dialect => params[:dialect], :locale => params[:locale])
