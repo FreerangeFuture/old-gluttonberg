@@ -143,7 +143,7 @@ module Gluttonberg
     end
     
     def self.localized_url(path, params)
-      opts = {:full_path => path}
+      opts = (path == "/" ? {} : {:full_path => path})
       if ::Gluttonberg.localized_and_translated?
         opts.merge!(:locale => params[:locale].slug, :dialect => params[:dialect].code)
       elsif ::Gluttonberg.localized?
@@ -163,19 +163,20 @@ module Gluttonberg
         # be added as a URL prefix. For now we just assume it's going into the
         # URL.
         if Gluttonberg.localized_and_translated?
-          path << "/:locale/:dialect"
+          path << "/:locale/:dialect(/:full_path)"
         elsif Gluttonberg.localized?
-          path << "/:locale"
+          path << "/:locale(/:full_path)"
         elsif Gluttonberg.translated?
-          path << "/:dialect"
+          path << "/:dialect(/:full_path)"
+        else
+          path << "/(:full_path)"
         end
         controller = Gluttonberg.standalone? ? "content/public" : "gluttonberg/content/public"
         # Set up the defer to block
-        match(path + "/:full_path", :full_path => /\S+/).defer_to(
+        match(path, :full_path => /\S+/).defer_to(
           {:controller => controller, :action => "show"},
           &Gluttonberg::Router::PUBLIC_DEFER_PROC
         ).name(:public_page)
-        match(path).defer_to({:controller => controller, :action => "show"}, &Gluttonberg::Router::PUBLIC_DEFER_PROC)
       end
     end
   end
