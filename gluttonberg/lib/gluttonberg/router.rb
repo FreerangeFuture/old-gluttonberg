@@ -143,7 +143,11 @@ module Gluttonberg
     end
     
     def self.localized_url(path, params)
-      opts = (path == "/" ? {} : {:full_path => path})
+      opts, named_route = if path == "/"
+        [{}, :root]
+      else
+        [{:full_path => path}, :page]
+      end
       if ::Gluttonberg.localized_and_translated?
         opts.merge!(:locale => params[:locale].slug, :dialect => params[:dialect].code)
       elsif ::Gluttonberg.localized?
@@ -151,7 +155,7 @@ module Gluttonberg
       elsif ::Gluttonberg.translated?
         opts.merge!(:dialect => params[:dialect].code)
       end
-      Merb::Router.url((Gluttonberg.standalone? ? :gluttonberg_public_page : :public_page), opts)
+      Merb::Router.url((Gluttonberg.standalone? ? :"gluttonberg_public_#{named_route}" : :"public_#{named_route}"), opts)
     end
     
     Merb::Router.extensions do
@@ -163,20 +167,18 @@ module Gluttonberg
         # be added as a URL prefix. For now we just assume it's going into the
         # URL.
         if Gluttonberg.localized_and_translated?
-          path << "/:locale/:dialect(/:full_path)"
+          path << "/:locale/:dialect"
         elsif Gluttonberg.localized?
-          path << "/:locale(/:full_path)"
+          path << "/:locale"
         elsif Gluttonberg.translated?
-          path << "/:dialect(/:full_path)"
-        else
-          path << "/(:full_path)"
+          path << "/:dialect"
         end
         controller = Gluttonberg.standalone? ? "content/public" : "gluttonberg/content/public"
         # Set up the defer to block
-        match(path, :full_path => /\S+/).defer_to(
-          {:controller => controller, :action => "show"},
-          &Gluttonberg::Router::PUBLIC_DEFER_PROC
-        ).name(:public_page)
+        match(path + "/:full_path", :full_path => /\S+/).defer_to({:controller => controller, :action => "show"}, &Gluttonberg::Router::PUBLIC_DEFER_PROC).name(:public_page)
+        # Filthy hack to match against the root, since the URL won't 
+        # regenerate with optional parameters — :full_path
+        match(path).defer_to({:controller => controller, :action => "show"}, &Gluttonberg::Router::PUBLIC_DEFER_PROC).name(:public_root)
       end
     end
   end
