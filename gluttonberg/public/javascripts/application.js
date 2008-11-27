@@ -65,6 +65,11 @@ var AssetBrowser = {
       AssetBrowser.nameDisplay.html(name);
       AssetBrowser.close();
     }
+    else if (target.is("#previous") || target.is("#next")) {
+      if (target.attr("href") != '') {
+        $.getJSON(target.attr("href") + ".json", null, AssetBrowserEx.handleJSON);
+      }
+    }
     else {
       $.getJSON(target.attr("href") + ".json", null, AssetBrowser.handleJSON);
     }
