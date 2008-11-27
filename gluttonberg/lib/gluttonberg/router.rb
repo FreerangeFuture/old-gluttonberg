@@ -46,6 +46,9 @@ module Gluttonberg
           se.resources(:users, :controller => "settings/users")
         end
         
+        # Help
+        s.match("/help/:module_and_controller/:page", :module_and_controller => %r{\S+}).to(:controller => "help", :action => "show").name(:help)
+        
         s.gluttonberg_public_routes if Gluttonberg.standalone?
       end
     end

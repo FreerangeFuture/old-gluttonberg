@@ -1,6 +1,16 @@
 module Gluttonberg
   module Helpers
     module Admin
+      
+      # Checks to see if there is a matching help page for this particular 
+      # controller/action. If there is it renders a link to the help 
+      # controller.
+      def contextual_help
+        if Help.help_available?(:controller => params[:controller], :page => params[:action])
+          tag(:p, link_to("Help", slice_url(:help, :module_and_controller => params[:controller], :page => params[:action])))
+        end
+      end
+      
       # Generates a link which launches the asset browser
       # This method operates in bound or unbound mode.
       #

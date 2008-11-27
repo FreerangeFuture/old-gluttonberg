@@ -1,5 +1,7 @@
 - require_js 'slug_management'
-= form_for(@page, :action => action) do
+%p{:id => "contextualHelp"}
+  = link_to("Help", slice_url(:help, :module_and_controller => params[:controller], :page => params[:action]))
+= form_for(@page, :action => action) do  
   = error_messages_for(@page)
   
   = block("General") do
