@@ -37,7 +37,9 @@ module Gluttonberg
       
       def show
         provides :json
-        @assets = @collection.assets.all(:order => [:name.desc])
+        @paginator, @assets = paginate(@collection.assets,{:order => [:name.desc], :per_page => 18})
+        @paginate_previous_url = slice_url(:collection_show, :page => @paginator.previous)
+        @paginate_next_url = slice_url(:collection_show, :page => @paginator.next)
         if content_type == :json
           JSON.pretty_generate({
             :name     => @collection.name,

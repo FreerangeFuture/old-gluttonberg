@@ -27,6 +27,8 @@ module Gluttonberg
           {:category => params[:category], :order => [:name.desc]}
         end
         @paginator, @assets = paginate(Asset, conditions.merge!(:per_page => 18))
+        @paginate_previous_url = slice_url(:asset_category, :category => params[:category], :page => @paginator.previous)
+        @paginate_next_url = slice_url(:asset_category, :category => params[:category], :page => @paginator.next)
         if content_type == :json          
           JSON.pretty_generate({
             :name     => params[:category].pluralize.capitalize,
