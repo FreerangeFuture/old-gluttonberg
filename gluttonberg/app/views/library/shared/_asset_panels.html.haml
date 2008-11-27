@@ -11,7 +11,7 @@
             - if asset.category == "image"
               %img{:src => asset.url}/
               
-- if @paginator && @paginator.total > 0
+- if @paginator && @paginator.total > 1
   %ul#paginator
     %li#count= "Page #{@paginator.current} of #{@paginator.total}"
     - if @paginator.previous?
