@@ -26,15 +26,14 @@ module Gluttonberg
         else
           {:category => params[:category], :order => [:name.desc]}
         end
-        if content_type == :json
-          @assets = Asset.all(conditions)
+        @paginator, @assets = paginate(Asset, conditions.merge!(:per_page => 18))
+        if content_type == :json          
           JSON.pretty_generate({
             :name     => params[:category].pluralize.capitalize,
             :backURL  => slice_url(:asset_browser, :no_frame => false),
             :markup   => partial("library/shared/asset_panels", :format => :html, :editing => false)
           })
         else
-          @paginator, @assets = paginate(Asset, conditions.merge!(:per_page => 18))
           render
         end
       end
