@@ -25,7 +25,8 @@ module Gluttonberg
 
   Locale.fixture {{
     :name => /\w+/.gen.capitalize,
-    :dialects => (1..3).of { Dialect.pick }
+    :slug => /\w+/.gen,
+    :dialects => (1..3).of { Dialect.generate }
   }}
 
   PageSection.fixture {{

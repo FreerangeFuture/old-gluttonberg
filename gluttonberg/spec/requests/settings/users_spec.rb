@@ -84,7 +84,7 @@ module Gluttonberg
           :params => { "gluttonberg::user" => {:name => "Weppa!"} })
       end
 
-      it "redirect to the article show action" do
+      it "redirect to the index action" do
         @response.should redirect_to(url(:gluttonberg_users))
       end
       
