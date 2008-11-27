@@ -6,8 +6,7 @@ module Gluttonberg
       before :find_asset, :exclude => [:index, :category, :new, :create, :browser]
 
       def index
-        @assets = Asset.all
-        display @assets
+       redirect slice_url(:asset_category, :category => 'all')
       end
       
       def browser
