@@ -6,8 +6,7 @@ module Gluttonberg
       before :find_asset, :exclude => [:index, :category, :new, :create, :browser]
 
       def index
-        @assets = Asset.all
-        display @assets
+       redirect slice_url(:asset_category, :category => 'all')
       end
       
       def browser
@@ -27,15 +26,16 @@ module Gluttonberg
         else
           {:category => params[:category], :order => [:name.desc]}
         end
-        if content_type == :json
-          @assets = Asset.all(conditions)
+        @paginator, @assets = paginate(Asset, conditions.merge!(:per_page => 18))
+        @paginate_previous_url = slice_url(:asset_category, :category => params[:category], :page => @paginator.previous)
+        @paginate_next_url = slice_url(:asset_category, :category => params[:category], :page => @paginator.next)
+        if content_type == :json          
           JSON.pretty_generate({
             :name     => params[:category].pluralize.capitalize,
             :backURL  => slice_url(:asset_browser, :no_frame => false),
             :markup   => partial("library/shared/asset_panels", :format => :html, :editing => false)
           })
         else
-          @paginator, @assets = paginate(Asset, conditions.merge!(:per_page => 18))
           render
         end
       end

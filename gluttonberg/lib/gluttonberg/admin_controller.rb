@@ -33,22 +33,22 @@ module Gluttonberg
       end
       
       def previous
-        @current - 1
+        @current > 1 ? @current - 1 : 1
       end
       
       def next
-        @current + 1
+        @current < @total ? @current + 1 : @total
       end
     end
     
-    def paginate(model, opts = {})
+    def paginate(model_or_association_proxy, opts = {})
       if params[:page]
         page = params[:page].to_i 
         opts[:page] = page
       else
         page = 1
       end
-      results = model.send(:paginated, opts)
+      results = model_or_association_proxy.send(:paginated, opts)
       [Paginator.new(page, results[0]), results[1]]
     end
   end

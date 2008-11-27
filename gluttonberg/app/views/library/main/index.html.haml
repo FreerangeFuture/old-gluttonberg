@@ -6,7 +6,7 @@
 %h2.assetList Browse
 %ul.assetList
   %li
-    %a{:href => slice_url(:assets), :class => "browseAll"}
+    %a{:href => slice_url(:asset_category, :category => 'all'), :class => "browseAll"}
       %h3 All
       %p nil items
   - Gluttonberg::Library::CATEGORIES.each do |category|
