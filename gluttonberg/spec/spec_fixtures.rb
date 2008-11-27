@@ -4,17 +4,26 @@ module Gluttonberg
     Asset.fixture {{
       :name         => (1..3).of { /\w+/.gen }.join(" ").capitalize,
       :description  => (1..2).of { /[:paragraph:]/.generate }.join("\n\n"),
-      :file         => Library.mock_file(File.join(File.dirname(__FILE__), "fixtures"))
+      :file         => Library.mock_tempfile
     }}
     
-    def self.mock_file(path)
-      file = Dir.entries(path).reject{|c| c[0].chr == '.'}.map{ |c| path / c }.pick
+    FIXTURE_PATH = Gluttonberg.root / "spec" / "fixtures" / "assets"
+    FIXTURE_FILES = [
+      {:content_type => "image/jpg", :filename => "gluttonberg_logo.jpg"}
+    ]
+    
+    def self.mock_tempfile
+      file = FIXTURE_FILES.pick
       {
-        :filename     => /\w+/.gen, 
-        :content_type => /\w+\/\w+/.gen, 
+        :filename     => file[:filename],
+        :content_type => file[:content_type],
         :size         => (300...8000).pick, 
-        :tempfile     => file
+        :tempfile     => temp_file(file[:filename])
       }
+    end
+    
+    def self.temp_file(name)
+      File.open(FIXTURE_PATH / name)
     end
   end
   
