@@ -6,7 +6,7 @@ module Gluttonberg
       before :find_page_type, :exclude => [:index, :new, :create]
     
       def index
-        @page_types = PageType.all
+        @page_types = PageType.all(:order => [:name.asc])
         display @page_types
       end
     

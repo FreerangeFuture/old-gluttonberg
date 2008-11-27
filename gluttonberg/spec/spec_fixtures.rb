@@ -69,16 +69,5 @@ module Gluttonberg
     :name => (name = (1..3).of { /\w+/.gen }).capitalize,
     :slug => name.downcase.gsub(" ", "_")
   }}
-
-  # RichTextContentLocalization.fixture {{
-  #   :text => (3..5).of { /[:paragraph:]/.generate }.join("\n\n")
-  # }}
   
 end
-
-# 5.of { Dialect.generate }
-# 3.of { Locale.generate }
-# 3.of { Template.generate(:layout) }
-# 8.of { Template.generate(:view) }
-# 5.of { Page.generate(:parent) }
-# 12.of { Page.generate(:child) }
