@@ -7,7 +7,11 @@ module Gluttonberg
       # controller.
       def contextual_help
         if Help.help_available?(:controller => params[:controller], :page => params[:action])
-          tag(:p, link_to("Help", slice_url(:help, :module_and_controller => params[:controller], :page => params[:action])))
+          tag(
+            :p, 
+            link_to("Help", slice_url(:help, :module_and_controller => params[:controller], :page => params[:action])),
+            :id => "contextualHelp"
+          )
         end
       end
       

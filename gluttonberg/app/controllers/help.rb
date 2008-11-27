@@ -19,7 +19,7 @@ module Gluttonberg
     end
     
     def self.help_available?(opts)
-      Dir.glob(template_dir(opts)).each do |template|
+      Dir.glob(template_dir(opts) / "*").each do |template|
         return true if template.match(opts[:page])
       end
       false
