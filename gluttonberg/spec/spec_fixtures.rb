@@ -1,11 +1,7 @@
 module Gluttonberg
   
   module Library
-    Asset.fixture {{
-      :name         => (1..3).of { /\w+/.gen }.join(" ").capitalize,
-      :description  => (1..2).of { /[:paragraph:]/.generate }.join("\n\n"),
-      :file         => Library.mock_tempfile
-    }}
+    
     
     FIXTURE_PATH = Gluttonberg.root / "spec" / "fixtures" / "assets"
     FIXTURE_FILES = [
@@ -26,6 +22,17 @@ module Gluttonberg
       File.open(FIXTURE_PATH / name)
     end
   end
+  
+  Asset.fixture {{
+    :name         => (1..3).of { /\w+/.gen }.join(" ").capitalize,
+    :description  => (1..2).of { /[:paragraph:]/.generate }.join("\n\n"),
+    :file         => Library.mock_tempfile
+  }}
+  
+  AssetCollection.fixture {{
+    :name   => (1..5).of { /\w+/.gen }.join(" ")[0..50].capitalize,
+    :assets => (1..8).of { Asset.pick }
+  }}
   
   Dialect.fixture {{
     :code => /\w{2}/.gen.downcase,
