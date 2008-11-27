@@ -1,5 +1,5 @@
-%tr{:class => cycle(:rows, "odd", "even")}
-  %td{:class => "inset#{inset}"}
+%tr{:id => "node-#{page.id}", :class => "#{page.parent_id ? 'child-of-node-' + page.parent_id.to_s : ''}"}
+  %td
     = page.home ? "#{page.name} (Home page)" : page.name
   %td.controls
     %ul

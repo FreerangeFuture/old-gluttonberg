@@ -233,6 +233,14 @@ function writeAssetToAssetCollection(assetId, assetCollectionUrl){
  });
 }
 
+var PageOrganiser = {
+  init: function(){
+    $("#pages_table").treeTable({
+	    expandable: false
+    });
+  }
+}
+
 $(document).ready(function() {
   // Temporary hack called by old Asset Browser code until it is updated to
   // use the new code
@@ -262,4 +270,6 @@ $(document).ready(function() {
       return false;
     }
   });
+
+  PageOrganiser.init();
 });
