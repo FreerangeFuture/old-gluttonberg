@@ -2,7 +2,6 @@ require 'rubygems'
 require 'merb-core'
 require 'merb-slices'
 require 'spec'
-require 'spec/mocks'
 
 # Add gluttonberg.rb to the search path
 Merb::Plugins.config[:merb_slices][:auto_register] = true
@@ -18,6 +17,7 @@ Merb.start_environment(
   :merb_root => Merb.root,
   :session_store => 'memory'
 )
+Merb::Router.prepare { add_slice(:gluttonberg) } if Gluttonberg.standalone?
 
 dependency 'dm-sweatshop'
 require File.join(File.dirname(__FILE__), "spec_fixtures")

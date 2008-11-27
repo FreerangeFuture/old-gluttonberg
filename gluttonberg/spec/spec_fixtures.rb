@@ -70,4 +70,11 @@ module Gluttonberg
     :slug => name.downcase.gsub(" ", "_")
   }}
   
+  User.fixture {{
+    :name                   => (1..3).of { /\w+/.gen }.join(" ").capitalize,
+    :email                  => /\w+@\w+\.com/.gen,
+    :password               => "password",
+    :password_confirmation  => "password"
+  }}
+  
 end
