@@ -117,6 +117,7 @@ if defined?(Merb::Plugins)
   require "gluttonberg/public_controller"
   require "gluttonberg/core_ext"
   require "gluttonberg/datamapper_ext"
+  require "gluttonberg/merb_helpers_ext"
   require "gluttonberg/templates"
   require "gluttonberg/components"
   require "gluttonberg/helpers"

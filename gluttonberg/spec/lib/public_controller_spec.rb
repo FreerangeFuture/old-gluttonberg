@@ -1,15 +1,8 @@
 require File.join( File.dirname(__FILE__), '..', "spec_helper" )
 
 module Gluttonberg
-  class TestController
+  class TestController < Gluttonberg::Application
     include PublicController
-    
-    attr_accessor :params
-    
-    def initialize(params = {})
-      @params = params
-      set_localization_and_path
-    end
   end
   
   # The default case is translated only

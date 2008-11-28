@@ -3,7 +3,7 @@ require File.join( File.dirname(__FILE__), '..', "spec_helper" )
 module Gluttonberg
   describe Asset, "file upload" do
 
-    @file = File.open(File.join(File.dirname(__FILE__), "..", "fixtures", "gluttonberg_logo.jpg"))
+    @file = File.open(File.join(File.dirname(__FILE__), "..", "fixtures", "assets", "gluttonberg_logo.jpg"))
     
     before :all do
       @asset = Asset.new(:file => {:filename => "Gluttonberg Logo.jpg", :content_type => "image/jpg", :size => 300, :tempfile => @file})
