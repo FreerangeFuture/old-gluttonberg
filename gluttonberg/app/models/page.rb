@@ -147,7 +147,6 @@ module Gluttonberg
     end
 
     def slug_management
-      puts "Hey, I'm managing a slug here, slug: #{slug.inspect}, slug.blank?: #{slug.blank?.inspect}"
       @slug = name if @slug.blank?
     end
 
