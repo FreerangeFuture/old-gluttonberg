@@ -762,6 +762,75 @@ p.newLink {
     margin-left: 12.6em;
     clear: both; }
 
+/* Page show */
+.pageBlock {
+  border-bottom: 1px solid #CCCCCC;
+  padding: 1.5em 3%;
+  width: 94%;
+  float: left; }
+  .pageBlock span {
+    font-size: 0.88em;
+    color: #333333; }
+  .pageBlock h2 {
+    font-weight: bold;
+    width: 8.5em;
+    float: left; }
+  .pageBlock dt, .pageBlock strong {
+    color: #244e66; }
+  .pageBlock table, .pageBlock ul, .pageBlock dl {
+    float: left;
+    clear: none; }
+  .pageBlock table {
+    width: 35em; }
+  .pageBlock table .controls a {
+    margin: 0;
+    float: right; }
+  .pageBlock thead {
+    display: none; }
+  .pageBlock td {
+    border-right: 0;
+    padding-left: 0; }
+  .pageBlock dl {
+    width: 30em; }
+  .pageBlock dd, .pageBlock dt {
+    padding: 0.3em 0; }
+  .pageBlock dt {
+    font-weight: bold;
+    width: 7em;
+    float: left !important;
+    clear: left; }
+  .pageBlock dd {
+    padding-top: 0.35em;
+    clear: right; }
+
+.meta {
+  font-size: 0.85em;
+  color: #333333;
+  padding: 1.5em 3%;
+  width: 96%;
+  float: left; }
+  .meta dt {
+    font-weight: bold;
+    margin-right: 0.5em;
+    float: left; }
+  .meta dd {
+    margin-right: 1.5em;
+    float: left; }
+
+/* Contents list */
+#pageContent {
+  background: #F8F8F8; }
+  #pageContent li {
+    background: left top no-repeat url(../images/page_content_fillin.gif);
+    text-align: center;
+    padding: 80px 0 0 0;
+    margin: 0 1em 0 0;
+    width: 127px;
+    float: left; }
+  #pageContent span {
+    text-align: center;
+    display: block; }
+
 /* Page form */
 #pageBehaviours input, #pageBehaviours label {
   margin-bottom: 0; }

@@ -3,6 +3,6 @@
     = page.home ? "#{page.name} (Home page)" : page.name
   %td.controls
     %ul
-      %li= link_to 'Show', slice_url(:page, page)
-      %li= link_to 'Edit', slice_url(:edit_page, page)
+      %li= link_to 'Details', slice_url(:page, page)
+      %li= link_to 'Settings', slice_url(:edit_page, page)
       %li= link_to 'Delete', slice_url(:delete_page, page)
