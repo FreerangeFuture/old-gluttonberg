@@ -121,5 +121,6 @@ if defined?(Merb::Plugins)
   require "gluttonberg/templates"
   require "gluttonberg/components"
   require "gluttonberg/helpers"
+  require "gluttonberg/page_descriptions"
   
 end
