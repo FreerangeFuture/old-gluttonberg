@@ -762,10 +762,16 @@ p.newLink {
     margin-left: 12.6em;
     clear: both; }
 
+/* Page index */
+table .published {
+  width: 5em; }
+table .behaviour {
+  width: 6em; }
+
 /* Page show */
 .pageBlock {
   border-bottom: 1px solid #CCCCCC;
-  padding: 1.5em 3%;
+  padding: 2em 3%;
   width: 94%;
   float: left; }
   .pageBlock span {
