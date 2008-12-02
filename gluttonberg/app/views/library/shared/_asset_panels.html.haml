@@ -9,7 +9,7 @@
           %p= "Added #{asset.created_at.formatted(:short)}"
           %div
             - if asset.category == "image"
-              %img{:src => asset.url}/
+              %img{:src => asset.thumb_small_url}/
               
 - if @paginator && @paginator.total > 1
   %ul#paginator
