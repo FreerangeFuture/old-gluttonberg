@@ -51,7 +51,7 @@ module Gluttonberg
       def update_file_on_disk
         if file
           FileUtils.mkdir(directory) unless File.exists?(directory)
-          FileUtils.mv file[:tempfile].path, location_on_disk
+          FileUtils.cp file[:tempfile].path, location_on_disk
         end
       end
       

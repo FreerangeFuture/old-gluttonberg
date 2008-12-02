@@ -41,7 +41,7 @@ module Gluttonberg
             else
               # For the non-localized/dialect mode, just collect the various formats
               files.inject([]) do |memo, file|
-                match = file.match(/#{filename}.(\w+).(erb|mab|haml)/)
+                match = file.match(/(#{filename})\.\w+\.(erb|mab|haml)/)
                 memo << match[1] if match
                 memo
               end
@@ -101,7 +101,7 @@ module Gluttonberg
               "#{filename}"
             ]
           else
-            ["#{filename}.*"]
+            [filename]
           end
           # Loop through them and return the first match
           for candidate in candidates 

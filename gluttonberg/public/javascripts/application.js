@@ -1,3 +1,81 @@
+// Common utility functions shared between the different dialogs.
+var Dialog = {
+  center: function() {
+    var offset = $(document).scrollTop();
+    for (var i=0; i < arguments.length; i++) {
+      arguments[i].css({top: offset + "px"});
+    };
+  },
+  PADDING_ATTRS: ["padding-top", "padding-bottom"],
+  resizeDisplay: function(object) {
+    // Get the display and the offsets if we don't have them
+    if (!object.display) object.display = object.frame.find(".display");
+    if (!object.offsets) object.offsets = object.frame.find("> *:not(.display)");
+    var offsetHeight = 0;
+    object.offsets.each(function(i, node) {
+      offsetHeight += $(node).outerHeight();
+    });
+    // Get the padding for the display
+    if (!object.displayPadding) {
+      object.displayPadding = 0
+      for (var i=0; i < this.PADDING_ATTRS.length; i++) {
+        object.displayPadding += parseInt(object.display.css(this.PADDING_ATTRS[i]).match(/\d+/)[0]);
+      };
+    }
+    //console.log(object.frame.innerHeight() - (offsetHeight + object.displayPadding))
+    object.display.height(object.frame.innerHeight() - (offsetHeight + object.displayPadding));
+  }
+};
+
+// Help Browser
+// Displays the help in an overlayed box. Intended to be used for contextual
+// help initially.
+var Help = {
+  load: function(url) {
+    $.get(url, null, function(markup) {Help.show(markup)});
+  },
+  show: function(markup) {
+    this.buildFrames();
+    this.frame.html(markup)
+    this.frame.find("a#closeHelp").click(this.close);
+    var centerFunction = function() {
+      Dialog.center(Help.frame, Help.overlay);
+      Dialog.resizeDisplay(Help);
+    };
+    $(window).resize(centerFunction);
+    $(document).scroll(centerFunction);
+    centerFunction();
+  },
+  close: function() {
+    Help.display = null;
+    Help.offsets = null;
+    Help.displayPadding = null;
+    Help.frame.hide();
+    Help.overlay.hide();
+    return false;
+  },
+  click: function(e) {
+    Help.load(this.href);
+    return false;
+  },
+  buildFrames: function() {
+    if (!this.overlay) {
+      this.overlay = $('<div id="overlay">&nbsp</div>');
+      $("body").append(this.overlay);
+      this.frame = $('<div id="helpDialog">&nbsp</div>');
+      $("body").append(this.frame);
+    }
+    else {
+      this.overlay.show();
+      this.frame.show();
+    }
+  },
+};
+
+$(document).ready(function() {
+  $("#wrapper p#contextualHelp a").click(Help.click);
+});
+
 var AssetBrowser = {
   overlay: null,
   dialog: null,

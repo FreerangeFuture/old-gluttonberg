@@ -19,6 +19,11 @@ Merb.start_environment(
   :session_store => 'memory'
 )
 
+if Gluttonberg.standalone?
+  Merb::Router.reset!
+  Merb::Router.prepare { add_slice(:gluttonberg) } 
+end
+
 dependency 'dm-sweatshop'
 require File.join(File.dirname(__FILE__), "spec_fixtures")
 

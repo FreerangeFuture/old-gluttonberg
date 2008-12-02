@@ -53,3 +53,25 @@ require 'spec/rake/spectask'
 require 'merb-core/test/tasks/spectasks'
 desc 'Default: run spec examples'
 task :default => 'spec'
+
+namespace :spec do
+  desc "Run all observer specs, run a spec for a specific Observer with OBSERVER=observer"
+  Spec::Rake::SpecTask.new('observer') do |t|
+    t.spec_opts = SPEC_OPTS
+    if(ENV['OBSERVER'])
+      t.spec_files = Dir["spec/observers/**/#{ENV['OBSERVER']}_spec.rb"].sort
+    else    
+      t.spec_files = Dir['spec/observers/**/*_spec.rb'].sort
+    end
+  end
+  
+  desc "Run all lib specs, run a spec for a specific lib file with LIB=observer"
+  Spec::Rake::SpecTask.new('lib') do |t|
+    t.spec_opts = SPEC_OPTS
+    if(ENV['LIB'])
+      t.spec_files = Dir["spec/lib/**/#{ENV['LIB']}_spec.rb"].sort
+    else    
+      t.spec_files = Dir['spec/lib/**/*_spec.rb'].sort
+    end
+  end
+end

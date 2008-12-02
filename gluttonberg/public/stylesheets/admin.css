@@ -479,91 +479,51 @@ ul.assetList {
     overflow: hidden; }
 
 /* Asset Browser */
-#assetsDialogOverlay {
-  background: url(../images/library/dialog_overlay.png);
+#assetsDialog h1 {
+  background: #807F65;
+  color: white;
+  font-weight: bold;
+  font-size: 1.6em;
+  padding: 0.2em 0;
+  text-indent: 10px; }
+#assetsDialog #assetsNavigation {
+  background: #666550;
   width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 20; }
-
-#assetsDialog {
-  border: 4px solid #807F65;
-  background: #FFFFCC;
-  height: 80%;
-  width: 80%;
-  position: absolute;
-  left: 10%;
-  top: 10%;
-  z-index: 21;
-  /* Border Radius */ */
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px; }
-  #assetsDialog h1 {
-    background: #807F65;
-    color: white;
+  float: left; }
+  #assetsDialog #assetsNavigation li, #assetsDialog #assetsNavigation a {
+    float: left; }
+  #assetsDialog #assetsNavigation li {
+    padding: 0.5em 0; }
+  #assetsDialog #assetsNavigation a {
+    background: left center no-repeat url(../images/library/back.gif);
     font-weight: bold;
-    font-size: 1.6em;
-    padding: 0.2em 0;
-    text-indent: 10px; }
-  #assetsDialog #assetsNavigation {
-    background: #666550;
-    width: 100%;
-    float: left; }
-    #assetsDialog #assetsNavigation li, #assetsDialog #assetsNavigation a {
-      float: left; }
-    #assetsDialog #assetsNavigation li {
-      padding: 0.5em 0; }
-    #assetsDialog #assetsNavigation a {
-      background: left center no-repeat url(../images/library/back.gif);
-      font-weight: bold;
-      color: #666550;
-      text-decoration: none;
-      padding: 0.5em 10px 0.5em 18px;
-      margin: 0 0 0 8px;
-      /* Browser-specific border-radius */
-      -moz-border-radius-topright: 3px;
-      -moz-border-radius-bottomright: 3px;
-      -webkit-border-top-right-radius: 3px;
-      -webkit-border-bottom-right-radius: 3px; }
-  #assetsDialog #assetsSearch {
-    float: right !important; }
-    #assetsDialog #assetsSearch label {
-      color: white;
-      padding: 0.4em 0.5em 0 0; }
-    #assetsDialog #assetsSearch input {
-      background: white left center no-repeat url(../images/library/search_icon.gif);
-      border: 2px solid #373B40;
-      padding: 0.3em 0.6em 0.3em 28px;
-      width: 12em; }
-  #assetsDialog form {
-    padding: 0 10px 0 0; }
-  #assetsDialog #assetsDisplay {
-    width: 100%;
-    float: left;
-    clear: both;
-    overflow: auto;
-    width: 96%; }
-    #assetsDialog #assetsDisplay .assetList {
-      left: 2%;
-      right: 2%; }
-    #assetsDialog #assetsDisplay ul.assetList {
-      overflow: hidden; }
-  #assetsDialog .controls {
-    border-top: 1px solid #AFAE8B;
-    padding: 0.8em 0;
-    height: 1.8em;
-    width: 100%;
-    position: absolute;
-    left: 0;
-    bottom: 0; }
-  #assetsDialog #upload {
-    margin-left: 15px;
-    float: left; }
-  #assetsDialog #cancel {
-    margin-right: 15px;
-    float: right; }
+    color: #666550;
+    text-decoration: none;
+    padding: 0.5em 10px 0.5em 18px;
+    margin: 0 0 0 8px;
+    /* Browser-specific border-radius */
+    -moz-border-radius-topright: 3px;
+    -moz-border-radius-bottomright: 3px;
+    -webkit-border-top-right-radius: 3px;
+    -webkit-border-bottom-right-radius: 3px; }
+#assetsDialog #assetsSearch {
+  float: right !important; }
+  #assetsDialog #assetsSearch label {
+    color: white;
+    padding: 0.4em 0.5em 0 0; }
+  #assetsDialog #assetsSearch input {
+    background: white left center no-repeat url(../images/library/search_icon.gif);
+    border: 2px solid #373B40;
+    padding: 0.3em 0.6em 0.3em 28px;
+    width: 12em; }
+#assetsDialog form {
+  padding: 0 10px 0 0; }
+#assetsDialog #upload {
+  margin-left: 15px;
+  float: left; }
+#assetsDialog #cancel {
+  margin-right: 15px;
+  float: right; }
 
 /* Asset panels */
 #assetPanels {
@@ -693,6 +653,82 @@ p.newLink {
       background-position: right top;
       margin-left: 4px !important; }
 
+/* Overlay & Dialog */
+#assetsDialogOverlay,
+#overlay {
+  background: url(../images/library/dialog_overlay.png);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 20; }
+
+#helpDialog,
+#assetsDialog {
+  border: 4px solid #807F65;
+  background: #FFFFCC;
+  margin: 10% 0 0 10%;
+  height: 80%;
+  width: 80%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 21;
+  /* Border Radius */ */
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px; }
+  #helpDialog h1,
+  #assetsDialog h1 {
+    background: #807F65;
+    color: white;
+    font-weight: bold;
+    font-size: 1.6em;
+    padding: 0.2em 0;
+    text-indent: 10px; }
+  #helpDialog .controls,
+  #assetsDialog .controls {
+    border-top: 1px solid #AFAE8B;
+    padding: 0.8em 0;
+    height: 1.8em;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0; }
+  #helpDialog .display,
+  #assetsDialog .display {
+    width: 100%;
+    float: left;
+    clear: both;
+    overflow: auto;
+    width: 96%; }
+    #helpDialog .display .assetList,
+    #assetsDialog .display .assetList {
+      left: 2%;
+      right: 2%; }
+    #helpDialog .display ul.assetList,
+    #assetsDialog .display ul.assetList {
+      overflow: hidden; }
+
+#contextualHelp {
+  margin: -2.25em 15px 0 0;
+  float: right; }
+  #contextualHelp a {
+    background: left center no-repeat url(../images/help/icon.gif);
+    color: white !important;
+    text-decoration: none;
+    padding: 0.4em 0 0.4em 22px;
+    display: block; }
+
+#helpDialog .display {
+  padding: 1.5em 4% 0 4%;
+  width: 92%; }
+#helpDialog #closeHelp {
+  margin: 0 15px 0 0;
+  float: right; }
+#helpDialog p {
+  margin-bottom: 1.5em; }
+
 /* Delete confirmation */
 #delete {
   margin-left: 20px; }
@@ -722,6 +758,81 @@ p.newLink {
   #login .buttonGrey {
     margin-left: 12.6em;
     clear: both; }
+
+/* Page index */
+table .published {
+  width: 5em; }
+table .behaviour {
+  width: 6em; }
+
+/* Page show */
+.pageBlock {
+  border-bottom: 1px solid #CCCCCC;
+  padding: 2em 3%;
+  width: 94%;
+  float: left; }
+  .pageBlock span {
+    font-size: 0.88em;
+    color: #333333; }
+  .pageBlock h2 {
+    font-weight: bold;
+    width: 8.5em;
+    float: left; }
+  .pageBlock dt, .pageBlock strong {
+    color: #244e66; }
+  .pageBlock table, .pageBlock ul, .pageBlock dl {
+    float: left;
+    clear: none; }
+  .pageBlock table {
+    width: 35em; }
+  .pageBlock table .controls a {
+    margin: 0;
+    float: right; }
+  .pageBlock thead {
+    display: none; }
+  .pageBlock td {
+    border-right: 0;
+    padding-left: 0; }
+  .pageBlock dl {
+    width: 30em; }
+  .pageBlock dd, .pageBlock dt {
+    padding: 0.3em 0; }
+  .pageBlock dt {
+    font-weight: bold;
+    width: 7em;
+    float: left !important;
+    clear: left; }
+  .pageBlock dd {
+    padding-top: 0.35em;
+    clear: right; }
+
+.meta {
+  font-size: 0.85em;
+  color: #333333;
+  padding: 1.5em 3%;
+  width: 96%;
+  float: left; }
+  .meta dt {
+    font-weight: bold;
+    margin-right: 0.5em;
+    float: left; }
+  .meta dd {
+    margin-right: 1.5em;
+    float: left; }
+
+/* Contents list */
+#pageContent {
+  background: #F8F8F8; }
+  #pageContent li {
+    background: left top no-repeat url(../images/page_content_fillin.gif);
+    text-align: center;
+    padding: 80px 0 0 0;
+    margin: 0 1em 0 0;
+    width: 127px;
+    float: left; }
+  #pageContent span {
+    text-align: center;
+    display: block; }
 
 /* Page form */
 #pageBehaviours input, #pageBehaviours label {

@@ -2,39 +2,49 @@
 = sub_nav do
   = back_link("Pages", slice_url(:pages))
   = nav_link('Delete', slice_url(:delete_page, @page))
-  = nav_link('Edit', slice_url(:edit_page, @page))
+  = nav_link('Edit settings', slice_url(:edit_page, @page))
   
-%h2 Properties
-%dl
-  %dt Slug
-  %dd= @page.slug
-  %dt Template
-  %dd= @page.type.name || "None set"
-  %dt Template Section Count
-  %dd= @page.type ? @page.type.sections.length : 0
+%div.pageBlock
+  %h2 Settings
+  %dl
+    %dt Slug
+    %dd= @page.slug
+    %dt Name
+    %dd= @page.name
+    %dt Page type
+    %dd= @page.template_name || "None set"
+    %dt Layout
+    %dd= @page.layout_name || "None set"
+    %dt Behaviour
+    %dd= @page.behaviour
 
-%h2 Sections
-%ul
-  - for section in @page.type.sections
-    %li= section.label
+%div#pageContent.pageBlock
+  %h2 Content
+  %ul
+    - for section in @page.type.sections
+      %li= "#{section.label} <span>(#{section.type.gsub("contents", "").gsub!("_", " ")})</span>"
 
-%h2 Localizations
-- if @page.localizations.empty?
-  %p.empty No localizations set
-- else
-  %table{:cellpadding => 0, :cellspacing => 0}
-    %thead
-      %tr
-        %th Locale
-        %th Language
-        %th Path
-        %th.controls Controls
-    %tbody
-      - for localization in @page.localizations
+%div.pageBlock
+  %h2 Localizations
+  - if @page.localizations.empty?
+    %p.empty No localizations set
+  - else
+    %table{:cellpadding => 0, :cellspacing => 0}
+      %thead
         %tr
-          %td= localization.locale.name if localization.locale
-          %td= "#{localization.dialect.name} (#{localization.dialect.code})"
-          %td= localization.path
-          %td.controls
-            %ul
-              %li= link_to("Edit", slice_url(:page_edit_localization, :page_id => @page, :id => localization))
+          %th Locale
+          %th Path
+          %th.controls Controls
+      %tbody
+        - for localization in @page.localizations
+          - pair = "#{localization.locale.slug}/#{localization.dialect.code}"
+          %tr
+            %td= "<strong>#{localization.locale.name}/#{localization.dialect.name}</strong> <span>(#{pair})</span>"
+            %td= pair / localization.path
+            %td.controls= link_to("Edit", slice_url(:page_edit_localization, :page_id => @page, :id => localization))
+
+%dl.meta
+  %dt Created at
+  %dd= @page.created_at.formatted(:long)
+  %dt Updated at
+  %dd= @page.updated_at.formatted(:long)

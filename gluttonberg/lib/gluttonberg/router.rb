@@ -48,7 +48,10 @@ module Gluttonberg
           se.resources(:users, :controller => "settings/users")
         end
         
-        s.gluttonberg_public_routes if Gluttonberg.standalone?
+        # Help
+        s.match("/help/:module_and_controller/:page", :module_and_controller => %r{\S+}).to(:controller => "help", :action => "show").name(:help)
+        
+        s.gluttonberg_public_routes(:prefix => "public") if Gluttonberg.standalone?
       end
     end
     
@@ -94,21 +97,29 @@ module Gluttonberg
       # into them. Also should include the full_path
       additional_params = {}
       conditions = {}
-      if Gluttonberg.localized?
-        locale = Gluttonberg::Locale.first(:slug => params[:locale])
-        raise Merb::ControllerExceptions::NotFound unless locale
-        additional_params[:locale] = locale
-        conditions[:locale_id] = locale.id
+      # Get the locale, falling back to a default
+      opts = if Gluttonberg.localized?
+        {:slug => params[:locale]}
+      else
+        {:default => true}
       end
-      if Gluttonberg.translated?
-        dialect = cascade_to_dialect(
+      locale = Gluttonberg::Locale.first(opts)
+      raise Merb::ControllerExceptions::NotFound unless locale
+      additional_params[:locale] = locale
+      conditions[:locale_id] = locale.id
+      # Get the dialect, falling back to a default
+      dialect = if Gluttonberg.translated?
+        cascade_to_dialect(
           Gluttonberg::Dialect.all(:conditions => ["? LIKE code || '%'", params[:dialect]]),
           params[:dialect]
         )
-        raise Merb::ControllerExceptions::NotFound unless dialect
-        additional_params[:dialect] = dialect
-        conditions[:dialect_id] = dialect.id
+      else
+        Gluttonberg::Dialect.first(:default => true)
       end
+      raise Merb::ControllerExceptions::NotFound unless dialect
+      additional_params[:dialect] = dialect
+      conditions[:dialect_id] = dialect.id
+      
       additional_params[:original_path] = params[:full_path]
       # If it's all good just return them both
       [additional_params, conditions]
@@ -168,12 +179,14 @@ module Gluttonberg
         # Check to see if this is localized or translated and if either need to
         # be added as a URL prefix. For now we just assume it's going into the
         # URL.
-        if Gluttonberg.localized_and_translated?
-          path << "/:locale/:dialect"
+        path << if Gluttonberg.localized_and_translated?
+          "/:locale/:dialect"
         elsif Gluttonberg.localized?
-          path << "/:locale"
+          "/:locale"
         elsif Gluttonberg.translated?
-          path << "/:dialect"
+          "/:dialect"
+        else
+          "/"
         end
         controller = Gluttonberg.standalone? ? "content/public" : "gluttonberg/content/public"
         # Set up the defer to block

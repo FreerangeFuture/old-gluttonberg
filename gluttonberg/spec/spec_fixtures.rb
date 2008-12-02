@@ -1,22 +1,38 @@
 module Gluttonberg
   
   module Library
-    Asset.fixture {{
-      :name         => (1..3).of { /\w+/.gen }.join(" ").capitalize,
-      :description  => (1..2).of { /[:paragraph:]/.generate }.join("\n\n"),
-      :file         => Library.mock_file(File.join(File.dirname(__FILE__), "fixtures"))
-    }}
     
-    def self.mock_file(path)
-      file = Dir.entries(path).reject{|c| c[0].chr == '.'}.map{ |c| path / c }.pick
+    
+    FIXTURE_PATH = Gluttonberg.root / "spec" / "fixtures" / "assets"
+    FIXTURE_FILES = [
+      {:content_type => "image/jpg", :filename => "gluttonberg_logo.jpg"}
+    ]
+    
+    def self.mock_tempfile
+      file = FIXTURE_FILES.pick
       {
-        :filename     => /\w+/.gen, 
-        :content_type => /\w+\/\w+/.gen, 
+        :filename     => file[:filename],
+        :content_type => file[:content_type],
         :size         => (300...8000).pick, 
-        :tempfile     => file
+        :tempfile     => temp_file(file[:filename])
       }
     end
+    
+    def self.temp_file(name)
+      File.open(FIXTURE_PATH / name)
+    end
   end
+  
+  Asset.fixture {{
+    :name         => (1..3).of { /\w+/.gen }.join(" ").capitalize,
+    :description  => (1..2).of { /[:paragraph:]/.generate }.join("\n\n"),
+    :file         => Library.mock_tempfile
+  }}
+  
+  AssetCollection.fixture {{
+    :name   => (1..5).of { /\w+/.gen }.join(" ")[0..50].capitalize,
+    :assets => (1..8).of { Asset.pick }
+  }}
   
   Dialect.fixture {{
     :code => /\w{2}/.gen.downcase,
@@ -25,7 +41,8 @@ module Gluttonberg
 
   Locale.fixture {{
     :name => /\w+/.gen.capitalize,
-    :dialects => (1..3).of { Dialect.pick }
+    :slug => /\w+/.gen,
+    :dialects => (1..3).of { Dialect.generate }
   }}
 
   PageSection.fixture {{
@@ -69,16 +86,12 @@ module Gluttonberg
     :name => (name = (1..3).of { /\w+/.gen }).capitalize,
     :slug => name.downcase.gsub(" ", "_")
   }}
-
-  # RichTextContentLocalization.fixture {{
-  #   :text => (3..5).of { /[:paragraph:]/.generate }.join("\n\n")
-  # }}
+  
+  User.fixture {{
+    :name                   => (1..3).of { /\w+/.gen }.join(" ").capitalize,
+    :email                  => /\w+@\w+\.com/.gen,
+    :password               => "password",
+    :password_confirmation  => "password"
+  }}
   
 end
-
-# 5.of { Dialect.generate }
-# 3.of { Locale.generate }
-# 3.of { Template.generate(:layout) }
-# 8.of { Template.generate(:view) }
-# 5.of { Page.generate(:parent) }
-# 12.of { Page.generate(:child) }
