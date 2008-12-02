@@ -229,14 +229,129 @@ function writeAssetToAssetCollection(assetId, assetCollectionUrl){
    error: function(){
      alert('Adding the Asset failed, sorry.');
      window.location.reload();
-   },
+   }
  });
 }
 
+DM_NONE          = null;
+DM_INSERT_BEFORE = {};
+DM_INSERT_AFTER  = {};
+DM_INSERT_CHILD  = {};
+
 var PageOrganiser = {
   init: function(){
+    var po = this;
+    var dragManager = {
+      dropSite: null,
+      dragMode: DM_NONE
+    };
+
     $("#pages_table").treeTable({
 	    expandable: false
+    });
+
+    // Configure draggable rows
+    $("#pages_table .page-node").draggable({
+      helper: "clone",
+      opacity: .75,
+      revert: "invalid",
+      revertDuration: 300,
+      scroll: true,
+      drag: function(e, ui){
+        if (dragManager.dropSite) {
+          var top = dragManager.dropSite.offset({padding: true, border: true, margin: true}).top;
+          var height = dragManager.dropSite.outerHeight({padding: false, border: false, margin: true});
+          var mouseTop = e.pageY;
+          if (mouseTop < (top + 10)){
+            dragManager.dropSite.addClass("insert_before").removeClass("insert_child insert_after");
+            dragManager.dragMode = DM_INSERT_BEFORE;
+          } else if (mouseTop > (top + height - 4)) {
+            dragManager.dropSite.addClass("insert_after").removeClass("insert_before insert_child");
+            dragManager.dragMode = DM_INSERT_AFTER;
+          } else {
+            dragManager.dropSite.addClass("insert_child").removeClass("insert_after insert_before");
+            dragManager.dragMode = DM_INSERT_CHILD;
+          }
+        }
+      }
+    });
+
+    // Configure droppable rows
+    $("#pages_table .page-node").each(function() {
+      $(this).parents("tr").droppable({
+        accept: ".page-node:not(selected)",
+        drop: function(e, ui) {
+          var sourceNode = $(ui.draggable).parents("tr")
+          var targetNode = this;
+
+          if (dragManager.dragMode == DM_INSERT_CHILD) {
+            $(sourceNode).appendBranchTo(targetNode,
+              function(){
+                po.remote_move_node(sourceNode, targetNode, 'INSERT');
+              }
+            );                        
+          }
+          if (dragManager.dragMode == DM_INSERT_BEFORE) {
+            $(sourceNode).insertBranchBefore(targetNode,
+              function(){
+                po.remote_move_node(sourceNode, targetNode, 'BEFORE');
+              }
+            );
+          }
+          if (dragManager.dragMode == DM_INSERT_AFTER) {
+            $(sourceNode).insertBranchAfter(targetNode,
+              function(){
+                po.remote_move_node(sourceNode, targetNode, 'AFTER');
+              }
+            );
+          }
+
+          $(sourceNode).effect("highlight", {}, 2000);
+          $("#pages_table").find("tr").removeClass("insert_child insert_before insert_after");
+          dragManager.dropSite = null;
+          dragManager.dragMode = DM_NONE;
+        },
+        hoverClass: "accept",
+        over: function(e, ui) {
+          if (ui.draggable.parents("tr") != dragManager.dropSite) {
+            dragManager.dropSite = ui.element;
+          }
+          // Make the droppable branch expand when a draggable node is moved over it.
+          if(this.id != ui.draggable.parents("tr")[0].id && !$(this).is(".expanded")) {
+            $(this).expand();
+          }
+        },
+        out: function(e, ui){
+          ui.element.removeClass("insert_child insert_before insert_after");
+          if (dragManager.dropSite == ui.element) {            
+            dragManager.dropSite = null;
+            dragManager.dragMode = DM_NONE;
+          }
+        }
+      });
+    });
+
+    // Make visible that a row is clicked
+    $("table#pages_table tbody tr").mousedown(function() {
+      $("tr.selected").removeClass("selected"); // Deselect currently selected rows
+      $(this).addClass("selected");
+    });
+
+    // Make sure row is selected when span is clicked
+    $("table#pages_table tbody tr span").mousedown(function() {
+      $($(this).parents("tr")[0]).trigger("mousedown");
+    });
+
+  },
+  remote_move_node: function(source, destination, mode){
+    $.ajax({
+      type: "POST",
+      url: $("#pages_table").attr("rel"),
+      data: "source_page_id=" + source[0].id.match(/\d+$/) + ";dest_page_id=" + destination.id.match(/\d+$/) + ";mode=" + mode,      
+      error: function(){
+        alert('Moving page failed.');
+        window.location.reload();
+      }
     });
   }
 }

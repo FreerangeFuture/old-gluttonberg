@@ -25,7 +25,7 @@ module Gluttonberg
     is_tree
 
     has n,      :localizations,       :class_name => "Gluttonberg::PageLocalization"
-    has n,      :children,            :class_name => "Gluttonberg::Page", :child_key => [:parent_id]
+    has n,      :children,            :class_name => "Gluttonberg::Page", :child_key => [:parent_id], :order => [:position.asc]
     belongs_to  :layout
     belongs_to  :type,                :class_name => "Gluttonberg::PageType"
     belongs_to  :passthrough_target,  :class_name => "Gluttonberg::Page"

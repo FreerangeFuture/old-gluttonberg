@@ -14,12 +14,13 @@ module Gluttonberg
         # Controllers in the content module
         s.match("/content").to(:controller => "content/main").name(:content)
         s.match("/content") do |c|
-          c.resources(:pages, :controller => "content/pages") do |p| 
+          c.resources(:pages, :controller => "content/pages") do |p|
             p.match("/localizations/:id").to(:controller => "content/page_localizations") do |l|
               l.match("/edit").to(:action => "edit").name(:edit_localization)
               l.match(:method => "put").to(:action => "update")
             end.name(:localization)
           end
+          c.match("/pages/move(.:format)").to(:controller => "content/pages", :action => "move_page").name(:page_move)
           c.resources(:types, :controller => "content/page_types", :name_prefix => "page") do |p|
             p.resources(:sections, :controller => "content/page_sections")
           end

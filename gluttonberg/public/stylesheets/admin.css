@@ -342,24 +342,21 @@ td.controls a {
   margin: 0 0.5em 0 0;
   float: left; }
 
-/* Inset table fields */
-td.inset1 {
-  text-indent: 1.5em; }
+tr.insert_after td {
+  border-bottom: 2px solid #000000;
+  padding-bottom: 4px; }
 
-td.inset2 {
-  text-indent: 3em; }
+tr.insert_before td {
+  border-top: 2px solid #000000;
+  padding-top: 4px; }
 
-td.inset3 {
-  text-indent: 4.5em; }
+.treeTable tr.insert_child {
+  background-color: #3875d7;
+  color: #fff; }
 
-td.inset4 {
-  text-indent: 6em; }
-
-td.inset5 {
-  text-indent: 7.5em; }
-
-td.inset6 {
-  text-indent: 9em; }
+.treeTable .ui-draggable-dragging {
+  color: #000;
+  z-index: 1; }
 
 /* Asset Library */
 .assetList {

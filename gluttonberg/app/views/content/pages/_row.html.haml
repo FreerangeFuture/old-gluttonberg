@@ -1,6 +1,7 @@
 %tr{:id => "node-#{page.id}", :class => "#{page.parent_id ? 'child-of-node-' + page.parent_id.to_s : ''}"}
   %td
-    = page.home ? "#{page.name} (Home page)" : page.name
+    %span.page-node
+      = page.home ? "#{page.name} (Home page)" : page.name
   %td.controls
     %ul
       %li= link_to 'Show', slice_url(:page, page)
