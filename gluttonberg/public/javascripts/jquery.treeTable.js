@@ -1,4 +1,8 @@
-/* jQuery treeTable Plugin 2.1 - http://ludo.cubicphuse.nl/jquery-plugins/treeTable/ */
+/*
+ * jQuery treeTable Plugin 2.1 - http://ludo.cubicphuse.nl/jquery-plugins/treeTable/
+ * This version is a modified version for the Gluttonberg CMS project
+ *
+ * */
 (function($) {
 	// Helps to make options available to all functions
 	// TODO: This gives problems when there are both expandable and non-expandable
@@ -59,7 +63,7 @@
 	};
 	
 	// Add an entire branch to +destination+
-	$.fn.appendBranchTo = function(destination) {
+	$.fn.appendBranchTo = function(destination, success_callback) {
 		var node = $(this);
 		var parent = parentOf(node);
 		
@@ -80,10 +84,22 @@
 			node.addClass(options.childPrefix + destination.id);
 			move(node, destination); // Recursively move nodes to new location
 			indent(node, ancestorsOf(node).length * options.indent);
+
+      if (success_callback) {
+        success_callback.call();
+      }
 		}
 
 		return this;
 	};
+
+  $.fn.insertBranchAfter = function(destination, success_callback) {
+    insertBranchBeforeOrAfter(this, destination, false, success_callback);
+  }
+
+  $.fn.insertBranchBefore = function(destination, success_callback) {
+    insertBranchBeforeOrAfter(this, destination, true, success_callback);
+  }
 	
 	// Add reverse() function from JS Arrays
 	$.fn.reverse = function() {
@@ -102,6 +118,67 @@
 	};
 	
 	// === Private functions
+
+  insertBranchBeforeOrAfter = function(source, destination, before, success_callback) {
+		var sourceNode = $(source);
+    var targetNode = $(destination);
+    var targetParent = undefined;
+
+    // if we are inserting after a node and that node has children, we are actually
+    // reparenting to that node.
+    if (!before && hasChildren(targetNode)){
+      targetParent = targetNode;
+    } else {
+      targetParent = parentOf(targetNode);
+    }
+
+		var sourceParent = parentOf(sourceNode);    
+    var needsIndenting = false;
+
+    if(nodeNotInDestinationAncestry(sourceNode, targetNode) && nodesDifferent(targetNode, sourceNode)) {
+      if (nodesDifferent(sourceParent, targetParent)){
+        // The nodes have different parents so reparent the node
+        indent(sourceNode, ancestorsOf(sourceNode).length * options.indent * -1); // Remove indentation
+        needsIndenting = true;
+        if (sourceParent) {sourceNode.removeClass(options.childPrefix + sourceParent[0].id); }
+        if (targetParent) {sourceNode.addClass(options.childPrefix + targetParent[0].id);}
+      }
+
+      // move node
+      if (before) {
+        moveBefore(sourceNode, destination); // Recursively move nodes to new location
+      } else {
+        move(sourceNode, destination); // Recursively move nodes to new location
+      }
+
+      if (needsIndenting){
+        // the parent was changed so re-apply indentation
+        indent(sourceNode, ancestorsOf(sourceNode).length * options.indent);
+      }
+
+      if (success_callback) {
+        success_callback.call();
+      }
+		}
+    return this;
+  }
+
+  function nodeNotInDestinationAncestry(node, destination){
+    var ancestorNames = $.map(ancestorsOf(destination), function(a) { return a.id; });
+    return $.inArray(node[0].id, ancestorNames) == -1;
+  }
+
+  function nodesSame(nodeA, nodeB){
+    if (nodeA && nodeB){
+      return (nodeA[0].id == nodeB[0].id);
+    } else {
+      return (nodeA == nodeB)
+    }
+  }
+
+  function nodesDifferent(nodeA, nodeB){
+    return !(nodesSame(nodeA, nodeB));
+  }
 	
 	function ancestorsOf(node) {
 		var ancestors = [];
@@ -125,6 +202,11 @@
 			indent($(this), value);
 		});
 	};
+
+  function hasChildren(node){
+    var childNodes = childrenOf(node);
+    return childNodes.length > 0;
+  }
 
 	function initialize(node) {
 		if(!node.hasClass("initialized")) {
@@ -165,6 +247,11 @@
 	
 	function move(node, destination) {
 		node.insertAfter(destination);
+		childrenOf(node).reverse().each(function() { move($(this), node[0]); });
+	};
+
+	function moveBefore(node, destination) {
+		node.insertBefore(destination);
 		childrenOf(node).reverse().each(function() { move($(this), node[0]); });
 	};
 	
