@@ -1,18 +1,37 @@
-require 'image_science'
-
 module Gluttonberg
   module Library
     module AttachmentMixin
+      begin
+        @@generate_thumbs = require 'image_science'
+      rescue LoadError
+        @@generate_thumbs = false
+      end
+
       def self.included(klass)
         klass.class_eval do
-          property :name,         String
-          property :description,  DataMapper::Types::Text
-          property :file_name,    String, :length => 255
-          property :hash,         String, :length => 255, :writer => :private
-          property :size,         Integer
+          property :name,             String
+          property :description,      DataMapper::Types::Text
+          property :file_name,        String, :length => 255
+          property :hash,             String, :length => 255, :writer => :private
+          property :size,             Integer
+          # if custom_thumbnail is false thumbs for the category will
+          # be used. If true thumbs form the assets file location will
+          # be used.
+          property :custom_thumbnail, TrueClass, :default => false
           
           after   :destroy, :remove_file_from_disk
           before  :save,    :generate_reference_hash
+
+          def self.generate_all_thumbnails
+            assets = Gluttonberg::Asset.all
+            assets.each do |asset|
+              p "thumb-nailing '#{asset.file_name}'"
+              asset.generate_image_thumb
+              asset.save
+            end
+            'done' # this just makes the output nicer when running from slice -i
+          end
+
         end
       end
       
@@ -42,11 +61,19 @@ module Gluttonberg
       end
         
       def thumb_small_url
-        "/assets/#{hash}/_thumb_small.jpg"
+        if custom_thumbnail
+          "/assets/#{hash}/_thumb_small.jpg"
+        else
+          "/images/category/#{category}/_thumb_small.jpg"
+        end
       end
 
       def thumb_large_url
-        "/assets/#{hash}/_thumb_large.jpg"
+        if custom_thumbnail
+          "/assets/#{hash}/_thumb_large.jpg"
+        else
+          "/images/category/#{category}/_thumb_large.jpg"
+        end
       end
       
       def location_on_disk
@@ -58,36 +85,59 @@ module Gluttonberg
       end
 
       def generate_thumb
-        ImageScience.with_image(location_on_disk) do |img|
-#          img.thumbnail(64) do |thumb|
-#            thumb.save File.join(directory,'_thumb.jpg')
-#          end
-
-         # small = 110w x 75h
-         # large = 250w x 200h
-
-         if (img.height >= img.width) then
-            # scale to height
-            img.thumbnail(75) do |thumb|
-              thumb.save File.join(directory,'_thumb_small.jpg')
-            end
-            img.thumbnail(200) do |thumb|
-              thumb.save File.join(directory,'_thumb_large.jpg')
-            end
-          else
-            # scale to width
-            img.thumbnail(110) do |thumb|
-              thumb.save File.join(directory,'_thumb_small.jpg')
-            end
-            img.thumbnail(250) do |thumb|
-              thumb.save File.join(directory,'_thumb_large.jpg')
-            end
+        # first assign the default thumbs for the category
+        # then spawn a worker to generate thumbs if possible and update
+        asset_id_to_process = self.id
+        run_later do
+          asset = Asset.get(asset_id_to_process)
+          if asset
+            asset.generate_image_thumb
+            asset.save!
           end
-
         end
       end
 
+      def generate_image_thumb
+        # raises a Type Error if not a supported image
+        if @@generate_thumbs
+          begin
+            ImageScience.with_image(location_on_disk) do |img|
+              # small = 110w x 75h
+              # large = 250w x 200h
+
+              if (img.height >= img.width) then
+                # scale to height
+                img.thumbnail(75) do |thumb|
+                  thumb.save File.join(directory,'_thumb_small.jpg')
+                end
+                img.thumbnail(200) do |thumb|
+                  thumb.save File.join(directory,'_thumb_large.jpg')
+                end
+              else
+                # scale to width
+                img.thumbnail(110) do |thumb|
+                  thumb.save File.join(directory,'_thumb_small.jpg')
+                end
+                img.thumbnail(250) do |thumb|
+                  thumb.save File.join(directory,'_thumb_large.jpg')
+                end
+              end
+
+              self.custom_thumbnail = true
+              return
+            end
+          rescue TypeError => error
+            # ignore TypeErrors, just means it wasn't a supported image
+          end
+        end
+        self.custom_thumbnail = false
+      end
+
       private
+
+     def run_later(&blk)
+       Merb::Dispatcher.work_queue << blk
+     end
 
       def remove_file_from_disk
         if File.exists?(directory)
