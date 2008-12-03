@@ -2,8 +2,7 @@
 = sub_nav do
   = back_link("Content", slice_url(:content))
   = nav_link('New', slice_url(:new_page))
-  = nav_link('Test', slice_url(:page_move))
-  
+    
 - if @pages.empty?
   %p.empty No Pages
 - else
