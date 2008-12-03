@@ -74,7 +74,7 @@ module Gluttonberg
         match = file[:filename].match(%r{\.([a-zA-Z]{2,6})$})
         if match && match[1]
           Library::TYPE_PATTERNS.each do |type, values|
-            attribute_set(:type, type) if values.include?(match[1])
+            attribute_set(:type, type) if values.include?(match[1].downcase)
           end
         else
           Library::TYPE_PATTERNS.each do |type, values|
