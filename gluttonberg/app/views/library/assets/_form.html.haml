@@ -1,11 +1,11 @@
 = form_for(@asset, :action => action) do
   = error_messages_for(@asset)
   
-  = block("Localization") do
-    = check_box(:localized)
-    %label{:for => "gluttonberg::localized", :class => "inline"} Localize
-    = select(:dialect_id, :collection => @dialects, :value_method => :id, :text_method => :name, :label => "Dialect")
-    = select(:locale_id, :collection => @locales, :value_method => :id, :text_method => :name, :label => "Locale")
+  / = block("Localization") do
+  /     = check_box(:localized)
+  /     %label{:for => "gluttonberg::localized", :class => "inline"} Localize
+  /     = select(:dialect_id, :collection => @dialects, :value_method => :id, :text_method => :name, :label => "Dialect")
+  /     = select(:locale_id, :collection => @locales, :value_method => :id, :text_method => :name, :label => "Locale")
   
   = block("Details") do
     = text_field(:name, :label => "Name", :class => "large")
