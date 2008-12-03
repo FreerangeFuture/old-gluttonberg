@@ -13,7 +13,7 @@
     %li
       %a{:href => slice_url(:asset_category, category), :class => "browse#{category.pluralize.capitalize}"}
         %h3= category.pluralize.capitalize
-        %p nil items
+        /%p nil items
 
 - unless @collections.empty?
   %h2.assetList Collections
@@ -22,7 +22,7 @@
       %li
         %a{:href => slice_url(:collection, collection), :class => "collection"}
           %h3= collection.name
-          %p nil items
+          /%p nil items
 
 - unless @assets.empty?
   %h2.assetList Latest
@@ -31,4 +31,4 @@
       %li
         %a{:href => slice_url(:asset, asset), :class => "asset#{asset.category.capitalize}"}
           %h3= asset.name
-          %p= asset.full_type
+          /%p= asset.full_type
