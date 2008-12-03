@@ -493,7 +493,8 @@ ul.assetList {
   #assetsDialog #assetsNavigation li, #assetsDialog #assetsNavigation a {
     float: left; }
   #assetsDialog #assetsNavigation li {
-    padding: 0.5em 0; }
+    padding: 0.5em 0;
+    height: 1.9em; }
   #assetsDialog #assetsNavigation a {
     background: left center no-repeat url(../images/library/back.gif);
     font-weight: bold;
@@ -764,6 +765,16 @@ table .published {
   width: 5em; }
 table .behaviour {
   width: 6em; }
+table .page, table .home {
+  background-position: left center;
+  background-repeat: no-repeat;
+  padding: 0.2em 0;
+  text-indent: 22px;
+  display: block; }
+table .page {
+  background-image: url(../images/content/page.gif); }
+table .home {
+  background-image: url(../images/content/home.gif); }
 
 /* Page show */
 .pageBlock {

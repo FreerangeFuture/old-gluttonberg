@@ -19,8 +19,11 @@ module Gluttonberg
     end
     
     def self.help_available?(opts)
-      Dir.glob(template_dir(opts) / "*").each do |template|
-        return true if template.match(opts[:page])
+      dir = template_dir(opts)
+      if dir
+        Dir.glob(dir / "*").each do |template|
+          return true if template.match(opts[:page])
+        end
       end
       false
     end
@@ -32,7 +35,7 @@ module Gluttonberg
     
     def self.template_dir(opts)
       match = opts[:controller].match(%r{^(\w+)/(\S+)})
-      "#{@@help_template_paths[match[1]]}/#{match[2]}"
+      "#{@@help_template_paths[match[1]]}/#{match[2]}" if match
     end
   end
 end

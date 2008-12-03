@@ -12,7 +12,7 @@ module Gluttonberg
     private
     
     def find_pages
-      @pages = Page.all_with_localization(:parent_id => nil, :dialect => params[:dialect], :locale => params[:locale])
+      @pages = Page.all_with_localization(:parent_id => nil, :dialect => params[:dialect], :locale => params[:locale], :order => [:position.asc])
     end
     
     def store_models_and_templates
