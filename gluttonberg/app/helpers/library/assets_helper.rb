@@ -2,7 +2,16 @@ module Merb
   module Gluttonberg
     module Library
       module AssetsHelper
-
+        
+        def sorter_link(name, param)
+          opts = {}
+          if param == params[:order] || (!params[:order] && param == 'name')
+            opts[:class] = "current"
+          end
+          
+          link_to(name, slice_url(:asset_category, :order => param, :page => params[:page] || 1), opts)
+        end
+        
         # Returns an AssetCollection (either by finding a matching existing one or creating a new one)
         # requires a hash with the following keys
         #   do_new_collection: If not present the method returns nil and does nothing
