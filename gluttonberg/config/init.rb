@@ -20,7 +20,5 @@ Merb::BootLoader.before_app_loads do
 end
 
 Merb::BootLoader.after_app_loads do
-  DataMapper.setup(:default, "sqlite3://#{Merb.root / "db" / Merb.environment}.db")
-  
   Gluttonberg::Components.register(:thing, :label => "Thing")
 end
