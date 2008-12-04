@@ -1,0 +1,32 @@
+h1. Gluttonberg - A Content Management System
+
+This is an open source content management system being developed by 
+"Freerange Future":http://www.freerangefuture.com
+
+Our basic philosophy for this CMS is that it shouldn’t try to be everything 
+to everybody. Rather, it should provide the basic components needed for 
+content management, a small and simple API for additional components, 
+authentication etc. and otherwise just stay out of the way. 
+
+Most importantly, you should be able to extend it with custom code on a 
+per-project basis without it making you cry.
+
+It's built on top of Merb and DataMapper. It is not ORM-agnostic and will 
+never be. Soz :)
+
+h2. Learning More
+
+We have the beginnings of a roadmap in the Git repo. It's stored in the design
+directory. You can read it online "at github.":http://github.com/lukesutton/gluttonberg/tree/master/design
+It describes the basic philosophy behind the project and then details the 
+planned implementation for it's various features
+
+h2. Helping
+
+Firstly, YES PLEASE :) We've got a whole bunch of good ideas for developing
+this CMS and would love to have other people pitch in. Commit access is given
+freely, no questions asked.
+
+If you're interested, send a message to lukesutton through Github.
+
+Any bugs can be posted on "our lighthouse project.":http://freerangefuture.lighthouseapp.com/projects/17110-gluttonberg/overview

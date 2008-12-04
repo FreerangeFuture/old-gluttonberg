@@ -1,7 +1,7 @@
 h1. Gluttonberg Design - A Content Management System
 
 This is an open source content management system being developed by 
-"Freerange Future":www.freerangefuture.com. It is built with Merb and 
+"Freerange Future":http://www.freerangefuture.com. It is built with Merb and 
 DataMapper.
 
 This document is intended to describe the various features in Gluttonberg, 
