@@ -10,7 +10,7 @@ module Gluttonberg
       def self.included(klass)
         klass.class_eval do
           property :name,             String
-          property :description,      DataMapper::Types::Text
+          property :description,      DataMapper::Types::Text, :lazy => false
           property :file_name,        String, :length => 255
           property :hash,             String, :length => 255, :writer => :private
           property :size,             Integer
@@ -149,7 +149,7 @@ module Gluttonberg
         if file
           FileUtils.mkdir(directory) unless File.exists?(directory)
           FileUtils.cp file[:tempfile].path, location_on_disk
-
+          FileUtils.chmod(0755, location_on_disk)
           # new file has been upload, if it is an image, then create a thumbnail
           generate_thumb
         end
