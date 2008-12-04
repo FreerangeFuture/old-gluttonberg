@@ -1,6 +1,11 @@
 /*
- * jQuery treeTable Plugin 2.1 - http://ludo.cubicphuse.nl/jquery-plugins/treeTable/
- * This version is a modified version for the Gluttonberg CMS project
+ *
+ * jQuery dragTree Plugin 1.0. Built for Gluttonberg CMS system
+ * 
+ * 
+ * Orginal treetable code based onjQuery treeTable Plugin 2.1 -
+ * http://ludo.cubicphuse.nl/jquery-plugins/treeTable/
+ * The orginal code has been significantly modified.
  *
  * */
 (function($) {
