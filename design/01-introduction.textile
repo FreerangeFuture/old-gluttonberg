@@ -1,0 +1,41 @@
+h1. Gluttonberg Design - A Content Management System
+
+This is an open source content management system being developed by 
+"Freerange Future":www.freerangefuture.com. It is built with Merb and 
+DataMapper.
+
+This document is intended to describe the various features in Gluttonberg, 
+both existing and planned. It is not a sales-pitch, rather it is aimed at
+developers interested in contributing to the project, since it should give a
+clear idea of where the project is headed.
+
+h2. Philosophy
+
+Don’t try to be everything to everyone. Support the bare-minimum of features 
+needed to work and allow the CMS to be easily extended on a per-project basis.
+
+One problem with most existing CMSs is the need to customise them for each
+client. Those CMSs that do allow for customisations usually use plugins. This
+approach sucks. It boils down to this; you’re limited to what the plugin API
+gives you. This makes it really hard to do any complex customisations. Often
+you might find yourself hacking the actual CMS code to do what you need.
+That’s a maintenance nightmare, especially when you need to update an
+installation with the latest version of the CMS.
+
+The answer is to make the CMS itself into a plugin. This leaves you free to 
+write any application code you want to, while still having access to the CMS 
+functionality via an API.
+
+Luckily Merb gives us something like a plugin API for free. Merb-slices will 
+allow us to create a CMS slice that can be included in any application. 
+Additional plugins can also be created as slices. One of the beauty of slices 
+is that they also allow your application code to over-ride any of the 
+templates or code in the slice. Dead easy customisations, without making 
+upgrades difficult.
+
+h2. Design and Roadmap
+
+This set of documents acts primarily as a roadmap for future development of 
+Gluttonberg. It does in part document existing features of the CMS, but 
+shouldn’t be treated as a guide if you’re trying to get started — you might 
+get confused about why stuff is missing!

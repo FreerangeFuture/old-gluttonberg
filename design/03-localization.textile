@@ -1,0 +1,12 @@
+h1. Localization
+
+There are intended to be two levels for localization in Gluttonberg. The first
+is localizing the editable contents in the database — which end-users 
+maintain. The second involves localizing formats for dates/times, currency and
+common strings to be used across the site e.g. "ok", "cancel", "error".
+
+h2. Template Rendering
+
+h2. Localizing DB content
+
+h2. Localization Toolkit for Custom Code

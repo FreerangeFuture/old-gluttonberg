@@ -1,0 +1,13 @@
+h1. Content Management
+
+This is the core of the application. At a bare minimum the CMS needs to
+provide some way for users to add and edit content and arrange pages within
+their site.
+
+h2. Page MetaData
+
+h2. Content Types
+
+h2. Arbitrary Contents
+
+h2. Versioning
