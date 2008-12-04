@@ -11,7 +11,7 @@ module Gluttonberg
       
       def browser
         @assets = []
-        @collections = AssetCollection.all(:order => [:name.desc])
+        @collections = AssetCollection.all(:order => [:name.asc])
         if params["no_frame"]
           partial(:browser_root)
         else
@@ -22,9 +22,9 @@ module Gluttonberg
       def category
         provides :json
         conditions = if params[:category] == "all"
-          {:order => [:name.desc]}
+          {:order => [:name.asc]}
         else
-          {:category => params[:category], :order => [:name.desc]}
+          {:category => params[:category], :order => [:name.asc]}
         end
         @paginator, @assets = paginate(Asset, conditions.merge!(:per_page => 18))
         @paginate_previous_url = slice_url(:asset_category, :category => params[:category], :page => @paginator.previous)
@@ -86,19 +86,19 @@ module Gluttonberg
           # no collection ids were supplied so need to delete all collection associations
           @asset.clear_all_collections
         end
-
+        
         the_collection = find_or_create_asset_collection_from_hash(params["new_collection"])
         if the_collection
           unless params["gluttonberg::asset"]['collection_ids'].include?(the_collection.id.to_s)
             params["gluttonberg::asset"]['collection_ids'] << the_collection.id.to_s
           end
         end
-
+        
         if @asset.update_attributes(params["gluttonberg::asset"])
           redirect(slice_url(:asset, @asset))
         else
           prepare_to_edit
-          render :new
+          render :edit
         end
       end
       
@@ -118,6 +118,17 @@ module Gluttonberg
         @dialects = Dialect.all
         @locales = Locale.all
         @collections = AssetCollection.all
+      end
+      
+      def get_order
+        case params[:order]
+        when 'date-added'
+          [:created_at.asc]
+        when 'date-updated'
+          [:updated_at.asc]
+        else
+          [:name.desc]
+        end
       end
     end
   end
