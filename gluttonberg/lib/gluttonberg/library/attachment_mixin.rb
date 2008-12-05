@@ -12,13 +12,13 @@ module Gluttonberg
           property :name,             String
           property :description,      DataMapper::Types::Text, :lazy => false
           property :file_name,        String, :length => 255
-          property :hash,             String, :length => 255, :writer => :private
+          property :asset_hash,       String, :length => 255, :writer => :private, :field => 'hash'
           property :size,             Integer
           # if custom_thumbnail is false thumbs for the category will
           # be used. If true thumbs form the assets file location will
           # be used.
           property :custom_thumbnail, TrueClass, :default => false
-          
+
           after   :destroy, :remove_file_from_disk
           before  :save,    :generate_reference_hash
 
@@ -34,35 +34,35 @@ module Gluttonberg
 
         end
       end
-      
+
       def file=(new_file)
         unless new_file.blank?
           # Forgive me this naive sanitisation, I'm still a regex n00b
           clean_filename = new_file[:filename].gsub(" ", "_").gsub(/[^A-Za-z0-9\-_.]/, "").downcase
-          
+
           # _thumb.jpg is a reserved name for the thumbnailing system, so if the user
           # has a file with that name rename it.
           if (clean_filename == '_thumb_small.jpg') || (clean_filename == '_thumb_large.jpg')
             clean_filename = 'thumb.jpg'
           end
-          
+
           attribute_set(:file_name, clean_filename)
           attribute_set(:size, new_file[:size])
           @file = new_file
         end
       end
-      
+
       def file
         @file
       end
-      
+
       def url
-        "/assets/#{hash}/#{file_name}"
+        "/assets/#{asset_hash}/#{file_name}"
       end
-        
+
       def thumb_small_url
         if custom_thumbnail
-          "/assets/#{hash}/_thumb_small.jpg"
+          "/assets/#{asset_hash}/_thumb_small.jpg"
         else
           "/images/category/#{category}/_thumb_small.jpg"
         end
@@ -70,18 +70,18 @@ module Gluttonberg
 
       def thumb_large_url
         if custom_thumbnail
-          "/assets/#{hash}/_thumb_large.jpg"
+          "/assets/#{asset_hash}/_thumb_large.jpg"
         else
           "/images/category/#{category}/_thumb_large.jpg"
         end
       end
-      
+
       def location_on_disk
         directory / file_name
       end
-      
+
       def directory
-        Library.root / hash
+        Library.root / asset_hash
       end
 
       def generate_thumb
@@ -141,7 +141,7 @@ module Gluttonberg
 
       def remove_file_from_disk
         if File.exists?(directory)
-          FileUtils.rm_r(directory) 
+          FileUtils.rm_r(directory)
         end
       end
 
@@ -154,12 +154,12 @@ module Gluttonberg
           generate_thumb
         end
       end
-      
+
       private
-      
+
       def generate_reference_hash
-        unless attribute_get(:hash)
-          attribute_set(:hash, Digest::SHA1.hexdigest(Time.now.to_s + file_name))
+        unless attribute_get(:asset_hash)
+          attribute_set(:asset_hash, Digest::SHA1.hexdigest(Time.now.to_s + file_name))
         end
       end
     end

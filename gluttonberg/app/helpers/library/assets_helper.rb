@@ -2,7 +2,7 @@ module Merb
   module Gluttonberg
     module Library
       module AssetsHelper
-
+        
         # Returns an AssetCollection (either by finding a matching existing one or creating a new one)
         # requires a hash with the following keys
         #   do_new_collection: If not present the method returns nil and does nothing

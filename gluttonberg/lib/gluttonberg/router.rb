@@ -32,12 +32,13 @@ module Gluttonberg
         s.match("/library") do |a|
           a.match("/assets").to(:controller => "library/assets") do |as|
             as.match("/browser").to(:action => "browser").name(:asset_browser)
-            as.match("/browse/:category(/:page)(.:format)", :category => /[a-zA-Z]/).to(:action => "category").name(:asset_category)
+            as.match("/browse/:category(/by-:order)(/:page)(.:format)", :category => /[a-zA-Z]/, :order => /[a-zA-Z]/, :page => /\d+/).
+              to(:action => "category").name(:asset_category)
           end
           a.resources(:assets, :controller => "library/assets")
           a.resources(:collections, :controller => "library/collections")          
           a.match("/collections/:id/add_asset").to(:controller => "library/collections", :action => "add_asset").name(:add_asset_to_collection)
-          a.match("/collections/:id(/:page)(.:format)").to(:controller => "library/collections", :action => "show").name(:collection_show)
+          a.match("/collections/:id(/by-:order)(/:page)(.:format)").to(:controller => "library/collections", :action => "show").name(:collection_show)
         end
       
         # Settings
