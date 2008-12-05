@@ -89,7 +89,10 @@ body {
   min-height: 30em;
   float: left; }
   #wrapper h1 {
-    background: #244e66;
+    background-color: #244e66;
+    background-position: left bottom;
+    background-repeat: repeat-x;
+    background-image: url(../images/pagetitle_bkg.gif);
     color: white;
     font-size: 1.6em;
     padding: 8px 15px; }
@@ -505,6 +508,8 @@ ul.assetList {
     -moz-border-radius-bottomright: 3px;
     -webkit-border-top-right-radius: 3px;
     -webkit-border-bottom-right-radius: 3px; }
+#assetsDialog #assetPanels a {
+  border-color: #FFFFCC !important; }
 #assetsDialog #assetsSearch {
   float: right !important; }
   #assetsDialog #assetsSearch label {
@@ -577,10 +582,10 @@ ul.assetList {
     border: 1px solid white;
     text-decoration: none;
     color: #333333;
-    padding: 0.3em 0.6em; }
+    padding: 0.3em 0.8em; }
   #sorter .current {
     border-color: #80B8B8;
-    background: #A8E6E6; }
+    background: #DCE6E6; }
   #sorter #sortName {
     margin-left: 5em;
     padding-left: 15px; }
