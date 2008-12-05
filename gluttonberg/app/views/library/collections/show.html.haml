@@ -4,5 +4,6 @@
   = nav_link("Delete", slice_url(:delete_collection))
   = nav_link("Edit", slice_url(:edit_collection))
   = asset_browser_nav_link("Select asset", :collection => @collection)
-  
+
+= partial("library/shared/sorter", :opts => {:route => :collection_show, :id => params[:id]})
 = partial("library/shared/asset_panels")

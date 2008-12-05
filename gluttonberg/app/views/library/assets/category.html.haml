@@ -2,12 +2,7 @@
 = sub_nav do
   = back_link("Library", slice_url(:library))
   = nav_link("Add asset", slice_url(:new_asset))
-  
-- unless content_type == :json || @assets.empty?
-  %p#sorterLabel Order by
-  %ul#sorter
-    %li#sortName=     sorter_link("Name",         "name")
-    %li#sortAdded=    sorter_link("Date added",   "date-added")
-    %li#sortUpdated=  sorter_link("Date updated", "date-updated")  
-  
+
+= partial("library/shared/sorter", :opts => {:route => :asset_category})
+
 = partial("library/shared/asset_panels")
