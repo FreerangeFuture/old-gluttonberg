@@ -449,8 +449,6 @@ ul.assetList {
   #assets.show #wrapper li {
     padding: 0.3em 0 0.1em 0; }
 #assets.show #preview {
-  border: 1px solid #cccccc;
-  background: #E6E6E6;
   text-align: center;
   margin-top: 30px;
   width: 250px;
@@ -539,13 +537,12 @@ ul.assetList {
     color: black;
     padding: 10px 10px 10px 130px;
     width: 10em;
-    min-height: 79px;
+    min-height: 75px;
     position: relative; }
     #assetPanels a:hover {
-      background: #B9B791;
-      border-color: #999778; }
+      border-color: #244e66; }
   #assetPanels div {
-    border: 2px solid #666666;
+    text-align: center;
     width: 110px;
     height: 75px;
     position: absolute;
@@ -559,6 +556,34 @@ ul.assetList {
   #assetPanels p {
     font-size: 0.85em;
     color: #666666; }
+
+/* Sorter */
+#sorterLabel {
+  font-weight: bold;
+  color: #666666;
+  margin: 0.8em 0 0.8em 15px;
+  float: left; }
+
+#sorter {
+  border-bottom: 1px solid #cccccc;
+  margin: -2.4em 0 0 0;
+  width: 100%;
+  float: left; }
+  #sorter li, #sorter a {
+    float: left; }
+  #sorter li {
+    padding: 0.4em 0; }
+  #sorter a {
+    border: 1px solid white;
+    text-decoration: none;
+    color: #333333;
+    padding: 0.3em 0.6em; }
+  #sorter .current {
+    border-color: #80B8B8;
+    background: #A8E6E6; }
+  #sorter #sortName {
+    margin-left: 5em;
+    padding-left: 15px; }
 
 /* Paginator */
 #paginator {

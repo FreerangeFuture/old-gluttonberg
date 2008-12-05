@@ -22,13 +22,13 @@ module Gluttonberg
       def category
         provides :json
         conditions = if params[:category] == "all"
-          {:order => [:name.asc]}
+          {:order => get_order}
         else
-          {:category => params[:category], :order => [:name.asc]}
+          {:category => params[:category], :order => get_order}
         end
         @paginator, @assets = paginate(Asset, conditions.merge!(:per_page => 18))
-        @paginate_previous_url = slice_url(:asset_category, :category => params[:category], :page => @paginator.previous)
-        @paginate_next_url = slice_url(:asset_category, :category => params[:category], :page => @paginator.next)
+        @paginate_previous_url = slice_url(:asset_category, :category => params[:category], :page => @paginator.previous, :order => params[:order] || 'name')
+        @paginate_next_url = slice_url(:asset_category, :category => params[:category], :page => @paginator.next, :order => params[:order] || 'name')
         if content_type == :json          
           JSON.pretty_generate({
             :name     => params[:category].pluralize.capitalize,
@@ -123,11 +123,11 @@ module Gluttonberg
       def get_order
         case params[:order]
         when 'date-added'
-          [:created_at.asc]
+          [:created_at.desc]
         when 'date-updated'
-          [:updated_at.asc]
+          [:updated_at.desc]
         else
-          [:name.desc]
+          [:name.asc]
         end
       end
     end

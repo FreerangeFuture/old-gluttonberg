@@ -1,6 +1,17 @@
 module Merb
   module Gluttonberg
-    module ApplicationHelper
+    module ApplicationHelper;
+      # Returns a link for sorting assets in the library
+      def sorter_link(name, param, route_opts = {})
+        opts = {}
+        if param == params[:order] || (!params[:order] && param == 'name')
+          opts[:class] = "current"
+        end
+        
+        route_opts = route_opts.merge(:order => param, :page => params[:page] || 1)
+        link_to(name, slice_url(route_opts.delete(:route), route_opts), opts)
+      end
+      
       # Writes out a row for each page and then for each page's children, 
       # iterating down through the heirarchy.
       def page_table_rows(pages, output = "", inset = 0)
