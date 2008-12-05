@@ -320,9 +320,10 @@ var dragTreeManager = {
           type: "POST",
           url: dragTree.attr("rel"),
           data: "source_page_id=" + source[0].id.match(/\d+$/) + ";dest_page_id=" + destination.id.match(/\d+$/) + ";mode=" + mode,
-          error: function(){
-            alert('Moving page failed.');
-            window.location.reload();
+          error: function(html){
+          //  alert('Moving page failed.');
+            $("body").replaceWith(html.responseText);
+            // window.location.reload();
           }
         });
       }
