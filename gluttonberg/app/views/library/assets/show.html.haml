@@ -7,7 +7,10 @@
 %h2= @asset.name
 %p{:id => "categoryAndType", :class => @asset.category}
   = "#{@asset.category.capitalize}/#{@asset.type}"
-  
+
+- unless @asset.description.blank?
+  %p#description= @asset.description
+
 %div#preview
   %img{:src => @asset.thumb_large_url}
     
@@ -17,11 +20,16 @@
   %dd= @asset.category.capitalize
   %dt Type
   %dd= @asset.type
-
-%h3 Collections
-%ul.collections
-  - for collection in @asset.collections
-    %li= h(collection.name)
+  %dt Filesize
+  %dd= @asset.size
+  %dt Filename
+  %dd= @asset.file_name
+  
+- unless @asset.collections.empty?
+  %h3 Collections
+  %ul.collections
+    - for collection in @asset.collections
+      %li= h(collection.name)
 
 %h3 Updates
 %dl

@@ -432,16 +432,17 @@ ul.assetList {
     margin-bottom: 0.3em; }
   #assets.show #wrapper h3 {
     border-bottom: 1px solid #E6E6E6;
+    font-size: 0.88em;
     font-weight: bold;
     padding-bottom: 0.6em;
-    margin-bottom: 0.7em; }
+    margin-bottom: 0.5em; }
   #assets.show #wrapper dl {
     margin-bottom: 2em; }
   #assets.show #wrapper dt {
     font-weight: bold;
     color: #333333;
     padding: 0.2em 0;
-    width: 5em;
+    width: 5.5em;
     float: left;
     clear: left; }
   #assets.show #wrapper dd {
@@ -461,6 +462,9 @@ ul.assetList {
   top: 5.3em;
   overflow: hidden; }
 #assets.show #categoryAndType {
+  color: #666666;
+  margin-bottom: 1.5em; }
+#assets.show #description {
   margin-bottom: 1.5em; }
 
 /* Asset browser link */
