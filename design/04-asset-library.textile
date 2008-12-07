@@ -1,1 +1,41 @@
-h1. Asset Library
+h1. Asset Management
+
+Gluttonberg already includes a centralised system for uploading and managing
+assets. Within Gluttonberg and asset consists of an uploaded file and a record
+in the database, which contains the various meta-data about the file.
+
+At this point all the assets are stored using the same mechanism and the
+meta-data for each is as follows:
+
+* Name
+* Description
+* Size
+* Filename
+* Category (image, document, video etc)
+* Type (Word, XL, PDF, Quicktime etc)
+
+h2. Collections
+
+Assets can be arranged in collections. Collections are arbitrary lists of 
+assets. An asset may belong to multiple collections. These are intended mainly
+as an organisational tool, but in the future we may expand them.
+
+h2. Multiple Libraries
+
+The asset library provides the basic mechanism for uploading and managing 
+assets. In the future however, we may wish to segment the asset library up.
+
+For example it may be useful to separate the assets into general and 
+restricted libraries, or you may wish to publish a subset of the assets 
+wholesale — i.e. mark a library as ‘public’ and have it’s contents exposed
+via the public site, while the rest of the assets remain secured.
+
+h2. Asset models
+
+Currently all asset types are stored with the one model. This is restrictive
+since it limits the type of meta-data we can store. For example, images may 
+have additional data for exposure, capture date/time, dimensions etc.
+
+To account for this, in the future we will be splitting each asset type up 
+into it’s own model. This will let us store much richer data about each type
+of asset.
