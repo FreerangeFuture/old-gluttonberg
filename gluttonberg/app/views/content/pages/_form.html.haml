@@ -20,18 +20,18 @@
   = block("Behaviour", :id => "pageBehaviours") do
     = radio_button(:behaviour, :value => :default)
     %label{:for => "gluttonberg::page_behaviour", :class => "inline"} Default
-    %p A regular page where all the contents are fully editable.
+    %p.help A regular page where all the contents are fully editable.
     
     = radio_button(:behaviour, :value => :dynamic)
     %label{:for => "gluttonberg::page_behaviour", :class => "inline"} Dynamic
-    %p 
+    %p.help
       This page will contain dynamic content — pulled from the database. It 
       may also have some directly editable content.
       
     - unless Gluttonberg::Components.registered.empty?
       = radio_button(:behaviour, :value => :component)
       %label{:for => "gluttonberg::page_behaviour", :class => "inline"} Component
-      %p
+      %p.help
         This page has no editable content, instead it’s content is set by a 
         custom component.
         
