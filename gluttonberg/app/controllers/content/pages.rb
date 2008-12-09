@@ -2,7 +2,6 @@ module Gluttonberg
   module Content
     class Pages < Gluttonberg::Application
       include Gluttonberg::AdminController
-      include Gluttonberg::DragTreeHelper
 
       drag_tree Page
 
