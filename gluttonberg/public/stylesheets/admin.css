@@ -574,72 +574,6 @@ ul.assetList {
     font-size: 0.85em;
     color: #666666; }
 
-/* Sorter */
-#sorterLabel {
-  font-weight: bold;
-  color: #666666;
-  margin: 0.8em 0 0.8em 15px;
-  float: left; }
-
-#sorter {
-  border-bottom: 1px solid #cccccc;
-  margin: -2.4em 0 0 0;
-  width: 100%;
-  float: left; }
-  #sorter li, #sorter a {
-    float: left; }
-  #sorter li {
-    padding: 0.4em 0; }
-  #sorter a {
-    border: 1px solid white;
-    text-decoration: none;
-    color: #333333;
-    padding: 0.3em 0.8em; }
-  #sorter .current {
-    border-color: #80B8B8;
-    background: #DCE6E6; }
-  #sorter #sortName {
-    margin-left: 5em;
-    padding-left: 15px; }
-
-/* Paginator */
-#paginator {
-  border-top: 1px solid #cccccc;
-  width: 100%;
-  float: left;
-  position: relative; }
-  #paginator li {
-    padding: 0.5em 0; }
-  #paginator #count {
-    font-weight: bold;
-    font-size: 1.2em;
-    text-indent: 15px;
-    color: #333333;
-    float: left; }
-  #paginator #previous,
-  #paginator #next {
-    float: right; }
-    #paginator #previous a,
-    #paginator #next a {
-      background: left top no-repeat url(../images/paginator.gif);
-      width: 20px;
-      height: 19px;
-      text-indent: -1000em;
-      letter-spacing: -1000em;
-      display: block; }
-  #paginator #previous {
-    margin-right: 36px; }
-    #paginator #previous.disabled a {
-      background-position: left bottom !important; }
-  #paginator #next {
-    position: absolute;
-    right: 15px;
-    top: 0; }
-    #paginator #next a {
-      background-position: right top !important; }
-    #paginator #next.disabled a {
-      background-position: right bottom !important; }
-
 /* Buttons */
 .buttonAqua,
 .buttonGrey {
@@ -752,6 +686,74 @@ p.newLink {
     #helpDialog .display ul.assetList,
     #assetsDialog .display ul.assetList {
       overflow: hidden; }
+
+/* Sorter */
+#sorterLabel {
+  font-weight: bold;
+  color: #666666;
+  margin: 0.8em 0 0.8em 15px;
+  float: left; }
+
+#sorter {
+  border-bottom: 1px solid #cccccc;
+  margin: -2.4em 0 0 0;
+  width: 100%;
+  float: left; }
+  #sorter li, #sorter a {
+    float: left; }
+  #sorter li {
+    padding: 0.4em 0; }
+  #sorter a {
+    border: 1px solid white;
+    text-decoration: none;
+    color: #333333;
+    padding: 0.3em 0.8em; }
+  #sorter .current {
+    border-color: #80B8B8;
+    background: #DCE6E6; }
+  #sorter .first {
+    margin-left: 6em; }
+  #sorter #sortName {
+    margin-left: 5em;
+    padding-left: 15px; }
+
+/* Paginator */
+#paginator {
+  border-top: 1px solid #cccccc;
+  width: 100%;
+  float: left;
+  position: relative; }
+  #paginator li {
+    padding: 0.5em 0; }
+  #paginator #count {
+    font-weight: bold;
+    font-size: 1.2em;
+    text-indent: 15px;
+    color: #333333;
+    float: left; }
+  #paginator #previous,
+  #paginator #next {
+    float: right; }
+    #paginator #previous a,
+    #paginator #next a {
+      background: left top no-repeat url(../images/paginator.gif);
+      width: 20px;
+      height: 19px;
+      text-indent: -1000em;
+      letter-spacing: -1000em;
+      display: block; }
+  #paginator #previous {
+    margin-right: 36px; }
+    #paginator #previous.disabled a {
+      background-position: left bottom !important; }
+  #paginator #next {
+    position: absolute;
+    right: 15px;
+    top: 0; }
+    #paginator #next a {
+      background-position: right top !important; }
+    #paginator #next.disabled a {
+      background-position: right bottom !important; }
 
 #contextualHelp {
   margin: -2.25em 15px 0 0;
