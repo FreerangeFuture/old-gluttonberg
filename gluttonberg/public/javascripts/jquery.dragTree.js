@@ -313,6 +313,8 @@ var dragTreeManager = {
 
       var dragTree = $(this);
 
+      var dragFlat = $(this).hasClass('drag-flat');
+
       dragTree.treeTable({expandable: false});
 
       var remote_move_node = function(source, destination, mode){
@@ -321,7 +323,7 @@ var dragTreeManager = {
           url: dragTree.attr("rel"),
           data: "source_page_id=" + source[0].id.match(/\d+$/) + ";dest_page_id=" + destination.id.match(/\d+$/) + ";mode=" + mode,
           error: function(html){
-          //  alert('Moving page failed.');
+            //  alert('Moving page failed.');
             $("body").replaceWith(html.responseText);
             // window.location.reload();
           }
@@ -340,15 +342,25 @@ var dragTreeManager = {
             var top = dragManager.dropSite.offset({padding: true, border: true, margin: true}).top;
             var height = dragManager.dropSite.outerHeight({padding: false, border: false, margin: true});
             var mouseTop = e.pageY;
-            if (mouseTop < (top + 10)){
+            var topOffset = 10;
+            var bottomOffset = 4;
+
+            if (dragFlat) {
+              topOffset = height / 2;
+              bottomOffset = height / 2;
+            }
+
+            if (mouseTop < (top + topOffset)){
               dragManager.dropSite.addClass("insert_before").removeClass("insert_child insert_after");
               dragManager.dragMode = DM_INSERT_BEFORE;
-            } else if (mouseTop > (top + height - 4)) {
+            } else if (mouseTop > (top + height - bottomOffset)) {
               dragManager.dropSite.addClass("insert_after").removeClass("insert_before insert_child");
               dragManager.dragMode = DM_INSERT_AFTER;
             } else {
-              dragManager.dropSite.addClass("insert_child").removeClass("insert_after insert_before");
-              dragManager.dragMode = DM_INSERT_CHILD;
+              if (!dragFlat){
+                dragManager.dropSite.addClass("insert_child").removeClass("insert_after insert_before");
+                dragManager.dragMode = DM_INSERT_CHILD;
+              }
             }
           }
         }
@@ -362,7 +374,7 @@ var dragTreeManager = {
             var sourceNode = $(ui.draggable).parents("tr")
             var targetNode = this;
 
-            if (dragManager.dragMode == DM_INSERT_CHILD) {
+            if ((dragManager.dragMode == DM_INSERT_CHILD) && (!dragFlat)) {
               $(sourceNode).appendBranchTo(targetNode,
                 function(){
                   remote_move_node(sourceNode, targetNode, 'INSERT');

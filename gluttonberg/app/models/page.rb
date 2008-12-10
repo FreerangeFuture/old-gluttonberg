@@ -21,8 +21,7 @@ module Gluttonberg
     after  :save, :check_for_home_update
     #validate_uniqueness_of :slug, :event => :save, :scope => [:parent_id]
 
-    is_list :scope => [:parent_id]
-    is_tree
+    is_drag_tree :scope => [:parent_id]
 
     has n,      :localizations,       :class_name => "Gluttonberg::PageLocalization"
     has n,      :children,            :class_name => "Gluttonberg::Page", :child_key => [:parent_id], :order => [:position.asc]
