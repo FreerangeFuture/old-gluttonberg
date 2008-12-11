@@ -1,16 +1,45 @@
 module Gluttonberg
   module DragTree
-    module ControllerHelper
+    module ControllerHelperClassMethods
       def self.included(klass)
         klass.class_eval do
           @drag_tree_model_class = nil
+          @drag_tree_route_name = nil
+          @generate_route = true
  
           def klass.drag_class
             @drag_tree_model_class
           end
 
-          def klass.drag_tree(model_class)
+          def klass.set_drag_tree(model_class, options = {})
+            @drag_tree_route_name = options[:route_name] if options[:route_name]
+            @generate_route = options[:auto_gen_route] if options[:auto_gen_route]
             @drag_tree_model_class = model_class
+          end
+
+          def klass.add_route_for_drag_tree(router)
+            if @generate_route then
+              # add router for this controllers move_page action
+              url_path_to_match = "/drag_tree/#{self.controller_name}/move_node.json"
+              controller_path_to_use = self.controller_name
+              router.match(url_path_to_match).to(:controller => controller_path_to_use, :action => "move_page").name(self.drag_tree_route_name)
+            end
+          end
+
+          def klass.drag_tree_route_name
+            if @drag_tree_route_name then
+              @drag_tree_route_name
+            else
+              "#{self.controller_name}/move_node".to_sym
+            end
+          end
+
+          def drag_tree_url
+            url(self.class.drag_tree_route_name)
+          end
+
+          def drag_tree_slice_url
+            slice_url(self.class.drag_tree_route_name)
           end
 
           def move_page
@@ -113,7 +142,6 @@ module Gluttonberg
             if self.class.respond_to?(:drag_class) then
               if self.class.drag_class then
                 if self.class.drag_class.respond_to?(:behaves_as_a_drag_tree) then
-                  css_class_str = 'drag-tree'
                   if !self.class.drag_class.behaves_as_a_flat_drag_tree then
                     css_class_str = model.parent_id ? 'child-of-node-' + model.parent_id.to_s : ''
                   end
@@ -129,6 +157,24 @@ module Gluttonberg
 
           def drag_tree_row_id(model)
             "node-#{model.id}"
+          end
+        end
+      end
+    end
+
+    module ControllerHelper
+      def self.included(klass)
+        klass.class_eval do
+          @@_drag_tree_class_list = []
+          def klass.drag_tree(model_class, options = {})
+            self.send(:include, Gluttonberg::DragTree::ControllerHelperClassMethods)
+            self.set_drag_tree(model_class, options)
+
+            @@_drag_tree_class_list << self
+          end
+
+          def klass.drag_tree_class_list
+            @@_drag_tree_class_list
           end
         end
       end
@@ -156,11 +202,11 @@ module Gluttonberg
     module ModelHelpers
       def self.included(klass)
         klass.class_eval do  
-          def is_drag_tree(options = {:flat => false})
+          def is_drag_tree(options = {})
+            options[:flat] = true unless options.has_key?(:flat)
             self.send(:include, Gluttonberg::DragTree::ModelHelpersClassMethods)
-
             is_list options
-            unless options[:flat] 
+            unless options[:flat]
               is_tree options
             else
               self.make_flat_drag_tree
@@ -170,6 +216,14 @@ module Gluttonberg
       end
 
       DataMapper::Model.send(:include, self)
-    end 
+    end
+
+    module RouteHelpers
+      def self.build_drag_tree_routes(router)
+        Merb::Controller.drag_tree_class_list.each do |drag_controller_class|
+          drag_controller_class.add_route_for_drag_tree(router)
+        end
+      end
+    end
   end
 end

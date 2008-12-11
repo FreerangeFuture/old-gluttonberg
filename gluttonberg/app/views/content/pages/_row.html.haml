@@ -1,6 +1,6 @@
-%tr{:id => "node-#{page.id}", :class => "#{page.parent_id ? 'child-of-node-' + page.parent_id.to_s : ''}"}
+%tr{:id => drag_tree_row_id(page), :class => drag_tree_row_class(page)}
   %td
-    %span{:class => "drag-node #{page.home ? "home" : "page"}"}
+    %span{:class => "#{drag_tree_drag_point_class} #{page.home ? "home" : "page"}"}
       = page.home ? "#{page.name} (Home page)" : page.name
   %td.published= "Yes"
   %td.behaviour= page.behaviour.to_s.capitalize

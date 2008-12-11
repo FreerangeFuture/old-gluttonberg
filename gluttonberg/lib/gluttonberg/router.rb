@@ -175,6 +175,13 @@ module Gluttonberg
     Merb::Router.extensions do
       def gluttonberg_public_routes(opts = {})
         Merb.logger.info("Adding Gluttonberg's public routes")
+
+
+        # Only generate DragTree routes if we are NOT running as a standalone slice
+        # users of DragTree within the slice need to explicitly set the route!
+        # these need to be before the more generic routes added below
+        Gluttonberg::DragTree::RouteHelpers.build_drag_tree_routes(self) unless Gluttonberg.standalone?
+
         # See if we need to add the prefix
         path = opts[:prefix] ? "/#{opts[:prefix]}" : ""
         # Check to see if this is localized or translated and if either need to

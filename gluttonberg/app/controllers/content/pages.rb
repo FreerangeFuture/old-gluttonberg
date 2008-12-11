@@ -3,7 +3,7 @@ module Gluttonberg
     class Pages < Gluttonberg::Application
       include Gluttonberg::AdminController
 
-      drag_tree Page
+      drag_tree Page, :route_name => :page_move, :auto_gen_route => false
 
       before :find_page, :only => [:show, :edit, :delete, :update, :destroy]
 
