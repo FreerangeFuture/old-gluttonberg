@@ -4,7 +4,7 @@ module Merb
       # Returns a link for sorting assets in the library
       def sorter_link(name, param, route_opts = {})
         opts = {}
-        if param == params[:order] || (!params[:order] && param == 'name')
+        if param == params[:order] || (!params[:order] && param == 'date-added')
           opts[:class] = "current"
         end
         
