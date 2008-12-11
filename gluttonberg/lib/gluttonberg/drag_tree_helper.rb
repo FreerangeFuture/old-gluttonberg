@@ -142,8 +142,11 @@ module Gluttonberg
             if self.class.respond_to?(:drag_class) then
               if self.class.drag_class then
                 if self.class.drag_class.respond_to?(:behaves_as_a_drag_tree) then
+                  css_class_str = 'node-pos-' + model.position.to_s
                   if !self.class.drag_class.behaves_as_a_flat_drag_tree then
-                    css_class_str = model.parent_id ? 'child-of-node-' + model.parent_id.to_s : ''
+                    if model.parent_id then
+                      css_class_str = css_class_str + ' child-of-node-' + model.parent_id.to_s
+                    end
                   end
                 end
               end
