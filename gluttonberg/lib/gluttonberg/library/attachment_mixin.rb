@@ -64,7 +64,7 @@ module Gluttonberg
         if custom_thumbnail
           "/assets/#{asset_hash}/_thumb_small.jpg"
         else
-          "/images/category/#{category}/_thumb_small.jpg"
+          "/slices/gluttonberg/images/category/#{category}/_thumb_small.jpg"
         end
       end
 
@@ -72,7 +72,7 @@ module Gluttonberg
         if custom_thumbnail
           "/assets/#{asset_hash}/_thumb_large.jpg"
         else
-          "/images/category/#{category}/_thumb_large.jpg"
+          "/slices/gluttonberg/images/category/#{category}/_thumb_large.jpg"
         end
       end
 

@@ -6,6 +6,8 @@ module Gluttonberg
         self._template_roots << [Gluttonberg::Templates.root, :_template_location]
         before :store_models_and_templates
         before :find_pages
+        @@_before_filters.each {|f| before(*f) }
+        @@_after_filters.each {|f| after(*f) }
       end
     end
     
@@ -23,6 +25,19 @@ module Gluttonberg
       templates       = @page.template_paths(:dialect => params[:dialect], :locale => params[:locale])
       @page_template  = "pages/" + templates[:page] if templates[:page]
       @page_layout    = "#{templates[:layout]}.#{content_type}" if templates[:layout]
+    end
+    
+    @@_before_filters = []
+    @@_after_filters = []
+    
+    # Add a method to be called before each action
+    def self.before(*args)
+      @@_before_filters << args
+    end
+    
+    # Add a method to be called after each action
+    def self.after(*args)
+      @@_after_filters << args
     end
   end
 end

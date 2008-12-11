@@ -88,9 +88,10 @@ ul.assetList
 
     h3
       :border-bottom 1px solid #E6E6E6
+      :font-size 0.88em
       :font-weight bold
       :padding-bottom 0.6em
-      :margin-bottom 0.7em
+      :margin-bottom 0.5em
 
     dl
       :margin-bottom 2em
@@ -99,7 +100,7 @@ ul.assetList
       :font-weight bold
       :color #333333
       :padding 0.2em 0
-      :width 5em
+      :width 5.5em
       :float left
       :clear left
 
@@ -124,6 +125,10 @@ ul.assetList
     :overflow hidden
 
   #categoryAndType
+    :color #666666
+    :margin-bottom 1.5em
+    
+  #description
     :margin-bottom 1.5em
 
 /* Asset browser link 
@@ -179,6 +184,9 @@ ul.assetList
       :-moz-border-radius-bottomright 3px
       :-webkit-border-top-right-radius 3px
       :-webkit-border-bottom-right-radius 3px
+      
+  #assetPanels a
+    :border-color #FFFFCC !important
 
   #assetsSearch
     :float right !important
@@ -243,83 +251,3 @@ ul.assetList
   p
     :font-size 0.85em
     :color #666666
-
-/* Sorter
-#sorterLabel
-  :font-weight bold
-  :color #666666
-  :margin 0.8em 0 0.8em 15px
-  :float left
-  
-#sorter
-  :border-bottom 1px solid #cccccc
-  :margin -2.4em 0 0 0
-  :width 100%
-  :float left
-  
-  li, a
-    :float left
-  
-  li
-    :padding 0.4em 0
-  
-  a
-    :border 1px solid white
-    :text-decoration none
-    :color #333333
-    :padding 0.3em 0.6em
-    
-  .current
-    :border-color #80B8B8
-    :background #A8E6E6
-    
-  #sortName
-    :margin-left 5em
-    :padding-left 15px
-
-/* Paginator
-#paginator
-  :border-top 1px solid #cccccc
-  :width 100%
-  :float left
-  :position relative
-  
-  li
-    :padding 0.5em 0
-  
-  #count
-    :font
-      :weight bold
-      :size 1.2em
-    :text-indent 15px
-    :color #333333
-    :float left
-    
-  #previous,
-  #next
-    :float right
-    
-    a
-      :background left top no-repeat url(../images/paginator.gif)
-      :width 20px
-      :height 19px
-      :text-indent -1000em
-      :letter-spacing -1000em
-      :display block
-  
-  #previous
-    :margin-right 36px
-    
-    &.disabled a
-      :background-position left bottom !important
-  
-  #next 
-    :position absolute
-    :right 15px
-    :top 0
-  
-    a
-      :background-position right top !important
-      
-    &.disabled a
-      :background-position right bottom !important

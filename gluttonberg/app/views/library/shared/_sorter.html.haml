@@ -1,6 +1,6 @@
 - unless content_type == :json || @assets.empty?
   %p#sorterLabel Order by
   %ul#sorter
-    %li#sortName=     sorter_link("Name",         "name",         opts)
     %li#sortAdded=    sorter_link("Date added",   "date-added",   opts)
     %li#sortUpdated=  sorter_link("Date updated", "date-updated", opts)
+    %li#sortName=     sorter_link("Name",         "name",         opts)

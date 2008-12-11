@@ -27,7 +27,7 @@ module Gluttonberg
         def convert_textile_text_to_html
           self.class.textilized_fields.each do |field, formatted_field|
             if attribute_dirty?(field)
-              attribute_set(formatted_field, RedCloth.new(text).to_html)
+              attribute_set(formatted_field, RedCloth.new(attribute_get(field)).to_html)
             end
           end
         end

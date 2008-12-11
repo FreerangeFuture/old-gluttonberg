@@ -122,12 +122,12 @@ module Gluttonberg
       
       def get_order
         case params[:order]
-        when 'date-added'
-          [:created_at.desc]
+        when 'name'
+          [:name.asc]
         when 'date-updated'
           [:updated_at.desc]
         else
-          [:name.asc]
+          [:created_at.desc]
         end
       end
     end
