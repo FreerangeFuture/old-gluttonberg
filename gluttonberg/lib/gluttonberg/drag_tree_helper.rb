@@ -313,6 +313,9 @@ module Gluttonberg
             end
             # todo: add support for non flat trees
           end
+          def klass.all_sorted(query={})
+            all({:order => [:position.asc]}.merge(query))
+          end
         end
       end
     end
