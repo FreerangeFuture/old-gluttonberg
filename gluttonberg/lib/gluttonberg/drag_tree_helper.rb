@@ -40,7 +40,7 @@
 #
 #    options:
 #      :route_name (symbol) This is the name of the route used to access the
-#                  move_page() action added to the controller. If you
+#                  move_node() action added to the controller. If you
 #                  are not using auto generation then you must set this to
 #                  the route you have created.
 #      :auto_gen_route (true|false) default is true. If true a route
@@ -51,6 +51,12 @@
 #    NOTE: You must set :auto_gen_route to false if your are using
 #          this in a slice (including Gluttonberg) and ensure you
 #          set :route_name to the route you create.
+#
+#    NOTE: This adds the action :move_node to your controller
+#          you may need to exclude this action from your before
+#          filters to prevent them running (and possible failing)
+#          e.g.
+#            before :find_panel, :exclude => [:index, :create, :new, :move_node]
 #
 #    Example
 #
@@ -128,10 +134,10 @@ module Gluttonberg
 
           def klass.add_route_for_drag_tree(router)
             if @generate_route then
-              # add router for this controllers move_page action
+              # add router for this controllers move_node action
               url_path_to_match = "/drag_tree/#{self.controller_name}/move_node.json"
               controller_path_to_use = self.controller_name
-              router.match(url_path_to_match).to(:controller => controller_path_to_use, :action => "move_page").name(self.drag_tree_route_name)
+              router.match(url_path_to_match).to(:controller => controller_path_to_use, :action => "move_node").name(self.drag_tree_route_name)
             end
           end
 
@@ -143,15 +149,7 @@ module Gluttonberg
             end
           end
 
-          def drag_tree_url
-            url(self.class.drag_tree_route_name)
-          end
-
-          def drag_tree_slice_url
-            slice_url(self.class.drag_tree_route_name)
-          end
-
-          def move_page
+          def move_node
             only_provides :json
 
             raise Exception.new('dragtree model class not set') unless self.class.drag_class
@@ -234,46 +232,6 @@ module Gluttonberg
               end
             end
           end
-
-          def drag_tree_table_class
-            css_class_str = ''
-            if self.class.respond_to?(:drag_class) then
-              if self.class.drag_class then
-                if self.class.drag_class.respond_to?(:behaves_as_a_drag_tree) then
-                  css_class_str = 'drag-tree'
-                  if self.class.drag_class.behaves_as_a_flat_drag_tree then
-                    css_class_str = css_class_str + ' drag-flat'
-                  end
-                end
-              end
-            end
-            css_class_str
-          end
-
-          def drag_tree_row_class(model)
-            css_class_str = ''
-            if self.class.respond_to?(:drag_class) then
-              if self.class.drag_class then
-                if self.class.drag_class.respond_to?(:behaves_as_a_drag_tree) then
-                  css_class_str = 'node-pos-' + model.position.to_s
-                  if !self.class.drag_class.behaves_as_a_flat_drag_tree then
-                    if model.parent_id then
-                      css_class_str = css_class_str + ' child-of-node-' + model.parent_id.to_s
-                    end
-                  end
-                end
-              end
-            end
-            css_class_str
-          end
-
-          def drag_tree_drag_point_class
-            'drag-node'
-          end
-
-          def drag_tree_row_id(model)
-            "node-#{model.id}"
-          end
         end
       end
     end
@@ -292,6 +250,59 @@ module Gluttonberg
           def klass.drag_tree_class_list
             @@_drag_tree_class_list
           end
+
+          def drag_tree_url(klass = self.class)
+            if klass.respond_to?(:drag_tree_route_name) then
+              url(klass.drag_tree_route_name)
+            else
+              ''
+            end
+          end
+
+          def drag_tree_slice_url(klass = self.class)
+            if klass.respond_to?(:drag_tree_route_name) then
+              slice_url(klass.drag_tree_route_name)
+            else
+              ''
+            end
+          end
+
+          def drag_tree_table_class(klass = self.class)
+            css_class_str = ''
+            if klass.respond_to?(:drag_class) then
+              if klass.drag_class then
+                if klass.drag_class.respond_to?(:behaves_as_a_drag_tree) then
+                  css_class_str = 'drag-tree'
+                  if klass.drag_class.behaves_as_a_flat_drag_tree then
+                    css_class_str = css_class_str + ' drag-flat'
+                  end
+                end
+              end
+            end
+            css_class_str
+          end
+
+          def drag_tree_row_class(model)
+            css_class_str = ''
+            if model.class.respond_to?(:behaves_as_a_drag_tree) then
+              css_class_str = 'node-pos-' + model.position.to_s
+              if !model.class.behaves_as_a_flat_drag_tree then
+                if model.parent_id then
+                  css_class_str = css_class_str + ' child-of-node-' + model.parent_id.to_s
+                end
+              end
+            end
+            css_class_str
+          end
+
+          def drag_tree_drag_point_class
+            'drag-node'
+          end
+
+          def drag_tree_row_id(model)
+            "node-#{model.id}"
+          end
+
         end
       end
 
@@ -312,22 +323,17 @@ module Gluttonberg
             @is_flat_drag_tree
           end
           def klass.repair_drag_tree
-            p '************************************************************'
             if behaves_as_a_flat_drag_tree
-              p ' - is flat'
               if list_options[:scope].empty?
-                p ' - unscoped'
                 repair_list
               else
                 # this is wasteful as it does a repair on every item
                 # which means for items of the same scope they keep
                 # getting re-repaired. :-(
-                p ' - scoped to ' + list_options[:scope].to_s
                 items = all()
                 items.each{ |item| item.repair_list}
               end
             end
-            p '************************************************************'
             # todo: add support for non flat trees
           end
           def klass.all_sorted(query={})
