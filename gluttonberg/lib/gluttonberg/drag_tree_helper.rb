@@ -313,16 +313,21 @@ module Gluttonberg
 
     module ModelHelpers
       def self.included(klass)
-        klass.class_eval do  
+        klass.class_eval do
+          
           def is_drag_tree(options = {})
             options[:flat] = true unless options.has_key?(:flat)
             self.send(:include, Gluttonberg::DragTree::ModelHelpersClassMethods)
             is_list options
             unless options[:flat]
+              unless options[:child_key]
+                property :parent_id, Integer unless properties.detect{|p| p.name == :parent_id && p.type == Integer}
+              end
               is_tree options
             else
               self.make_flat_drag_tree
             end
+            ModelTracker.register_class(self)
           end
         end
       end
@@ -335,6 +340,16 @@ module Gluttonberg
         Merb::Controller.drag_tree_class_list.each do |drag_controller_class|
           drag_controller_class.add_route_for_drag_tree(router)
         end
+      end
+    end
+
+    module ModelTracker
+      @@_drag_tree_class_list = []
+      def self.class_list
+        @@_drag_tree_class_list
+      end
+      def self.register_class(model_class)
+        @@_drag_tree_class_list << model_class
       end
     end
   end
