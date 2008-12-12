@@ -308,9 +308,22 @@ module Gluttonberg
             @is_flat_drag_tree
           end
           def klass.repair_drag_tree
+            p '************************************************************'
             if behaves_as_a_flat_drag_tree
-              repair_list
+              p ' - is flat'
+              if list_options[:scope].empty?
+                p ' - unscoped'
+                repair_list
+              else
+                # this is wasteful as it does a repair on every item
+                # which means for items of the same scope they keep
+                # getting re-repaired. :-(
+                p ' - scoped to ' + list_options[:scope].to_s
+                items = all()
+                items.each{ |item| item.repair_list}
+              end
             end
+            p '************************************************************'
             # todo: add support for non flat trees
           end
           def klass.all_sorted(query={})
