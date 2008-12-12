@@ -4,10 +4,36 @@ This is the core of the application. At a bare minimum the CMS needs to
 provide some way for users to add and edit content and arrange pages within
 their site.
 
-h2. Page MetaData
+h2. Pages
+
+Pages are the core of the content management. They represent each page that 
+appears in the navigation of a website and act as the container which holds
+the editable content.
+
+They also act as a way to expose controllers publicly, which will be 
+explained in a later section; Extensions.
+
+h3. Meta Data
+
+Each page has the following details associated with it:
+  
+* Name - to be displayed in page titles
+* Navigation label - Shortened title to be used in the nav
+* Slug - used when building the URL to a page
+
+h3. Localization
+
+All details related to the pages themselves can be localized. This includes 
+the page title, the slug and the navigation label.
+
+The actual content of the pages themselves are also localized, which is 
+discussed a little later in this section.
+
+h3. Managing
 
 h2. Content Types
 
 h2. Arbitrary Contents
 
 h2. Versioning
+

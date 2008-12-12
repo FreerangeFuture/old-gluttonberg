@@ -1,0 +1,13 @@
+h1. Extensions
+
+Extensions to Gluttonberg come in two forms. The first is custom code living 
+in controllers and libs. In general, this is code written on a project by
+project basis. For example you might create a custom contact form for a 
+client.
+
+The second form of extensions add additional functionality to Gluttonberg 
+itself and will usually take the form of merb-slices e.g. a forum, web-shop,
+photo gallery.
+
+For extensions that don't expose a UI — and therefore don’t need controllers 
+or views — they may be packaged simply as gems.
