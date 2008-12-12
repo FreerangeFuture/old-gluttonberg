@@ -170,9 +170,13 @@ module Gluttonberg
             end
 
             @pages = self.class.drag_class.all
+            raise Merb::ControllerExceptions::BadRequest.new("No #{self.class.drag_class} found]") unless @pages && !@pages.empty?
             @mode = params[:mode]
             @source = self.class.drag_class.get(params[:source_page_id])
             @dest   = self.class.drag_class.get(params[:dest_page_id])
+
+            raise Merb::ControllerExceptions::BadRequest.new("Drag source is nil [#{params[:source_page_id]}]") unless @source
+            raise Merb::ControllerExceptions::BadRequest.new("Drag destination is nil [#{params[:dest_page_id]}]") unless @dest
 
             if !self.class.drag_class.behaves_as_a_flat_drag_tree
               if source_in_destination_ancestry(@source, @dest)
