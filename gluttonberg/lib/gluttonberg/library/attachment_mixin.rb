@@ -107,19 +107,37 @@ module Gluttonberg
 
               if (img.height >= img.width) then
                 # scale to height
-                img.thumbnail(75) do |thumb|
-                  thumb.save File.join(directory,'_thumb_small.jpg')
+                if img.height > 75
+                  img.thumbnail(75) do |thumb|
+                    thumb.save File.join(directory,'_thumb_small.jpg')
+                  end
+                else
+                  img.save File.join(directory,'_thumb_small.jpg')
                 end
-                img.thumbnail(200) do |thumb|
-                  thumb.save File.join(directory,'_thumb_large.jpg')
+
+                if img.height > 200
+                  img.thumbnail(200) do |thumb|
+                    thumb.save File.join(directory,'_thumb_large.jpg')
+                  end
+                else
+                  img.save File.join(directory,'_thumb_large.jpg')
                 end
               else
                 # scale to width
-                img.thumbnail(110) do |thumb|
-                  thumb.save File.join(directory,'_thumb_small.jpg')
+                if img.width > 110
+                  img.thumbnail(110) do |thumb|
+                    thumb.save File.join(directory,'_thumb_small.jpg')
+                  end
+                else
+                  img.save File.join(directory,'_thumb_small.jpg')
                 end
-                img.thumbnail(250) do |thumb|
-                  thumb.save File.join(directory,'_thumb_large.jpg')
+
+                if img.width > 250
+                  img.thumbnail(250) do |thumb|
+                    thumb.save File.join(directory,'_thumb_large.jpg')
+                  end
+                else
+                  img.save File.join(directory,'_thumb_large.jpg')
                 end
               end
 
