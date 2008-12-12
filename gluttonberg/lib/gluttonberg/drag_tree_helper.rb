@@ -307,6 +307,12 @@ module Gluttonberg
           def klass.behaves_as_a_flat_drag_tree
             @is_flat_drag_tree
           end
+          def klass.repair_drag_tree
+            if behaves_as_a_flat_drag_tree
+              repair_list
+            end
+            # todo: add support for non flat trees
+          end
         end
       end
     end
