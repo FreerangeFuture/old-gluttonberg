@@ -60,9 +60,15 @@ module Gluttonberg
       unless file.nil?
         attribute_set(:mime_type, file[:content_type])
         # Determine the category based on the matchers specified in the library
+        category_set = false
         Library::CATEGORY_PATTERNS.each do |t, m|
           attribute_set(:category, t) if mime_type.match(m)
+          category_set = true
         end
+        unless category_set
+          attribute_set(:category, Library::UNCATEGORISED_CATEGORY)
+        end
+
         # Now slightly more complicated; check the extension, then mime type to
         # try and determine the exact asset type.
         #
@@ -70,7 +76,7 @@ module Gluttonberg
         # If it has, check it against the list inside the patterns
         # If it doesn't, use the regex patterns to examine the mime-type
         # If none match, mark it as generic
-        attribute_set(:type, nil)
+        attribute_set(:type, Library::UNKNOWN_TYPE)
         match = file[:filename].match(%r{\.([a-zA-Z]{2,6})$})
         if match && match[1]
           Library::TYPE_PATTERNS.each do |type, values|
@@ -81,6 +87,8 @@ module Gluttonberg
             attribute_set(:type, type) if mime_type.match(values.last)
           end
         end
+
+
       end
     end
     
