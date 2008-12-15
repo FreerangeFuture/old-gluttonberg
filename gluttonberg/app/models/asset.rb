@@ -14,6 +14,8 @@ module Gluttonberg
     has n, :localizations, :class_name => "Gluttonberg::AssetLocalization"
     has n, :collections, :through => Resource, :class_name => "Gluttonberg::AssetCollection"
 
+    belongs_to  :asset_type, :class_name => "Gluttonberg::AssetType"
+
     # This replaces the existing set of associated collections with a new set based
     # on the array of IDs passed in.
     def collection_ids=(new_ids)
