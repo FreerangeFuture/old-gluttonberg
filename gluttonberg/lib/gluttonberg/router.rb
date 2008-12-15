@@ -65,7 +65,7 @@ module Gluttonberg
       if page
         case page.behaviour
           when :component
-            Gluttonberg::Router.rewrite(page, params[:full_path], request, additional_params)
+            Gluttonberg::Router.rewrite(page, params[:full_path], request, params, additional_params)
           when :passthrough
             page.passthrough_target.load_localization(
               :locale   => additional_params[:locale].id,
@@ -73,7 +73,12 @@ module Gluttonberg
             )
             redirect(Gluttonberg::Router.localized_url(page.current_localization.path))
           else
-            {:controller => params[:controller], :action => params[:action], :page => page}.merge!(additional_params)
+            {
+              :controller => params[:controller], 
+              :action     => params[:action], 
+              :page       => page, 
+              :format     => params[:format]
+            }.merge!(additional_params)
         end
       else
         # TODO: The string concatenation here is Sqlite specific, we need to 
@@ -85,7 +90,7 @@ module Gluttonberg
         )
         page = Gluttonberg::Page.first_with_localization(component_conditions)
         if page
-          Gluttonberg::Router.rewrite(page, params[:full_path], request, additional_params)
+          Gluttonberg::Router.rewrite(page, params[:full_path], request, params, additional_params)
         else
           raise Merb::ControllerExceptions::NotFound
         end
@@ -149,8 +154,9 @@ module Gluttonberg
       end
     end
     
-    def self.rewrite(page, original_path, request, additional_params)
+    def self.rewrite(page, original_path, request, params, additional_params)
       additional_params[:page] = page
+      additional_params[:format] = params[:format]
       request.env["REQUEST_PATH"] = original_path.gsub(page.current_localization.path, "/public/#{page.component}")
       new_params = Merb::Router.match(request)[1]
       new_params.merge(additional_params)
@@ -199,7 +205,7 @@ module Gluttonberg
 
         controller = Gluttonberg.standalone? ? "content/public" : "gluttonberg/content/public"
         # Set up the defer to block
-        match(path + "/:full_path", :full_path => /\S+/).defer_to({:controller => controller, :action => "show"}, &Gluttonberg::Router::PUBLIC_DEFER_PROC).name(:public_page)
+        match(path + "/:full_path(.:format)", :full_path => /[a-z0-9\/]+/).defer_to({:controller => controller, :action => "show"}, &Gluttonberg::Router::PUBLIC_DEFER_PROC).name(:public_page)
         # Filthy hack to match against the root, since the URL won't 
         # regenerate with optional parameters — :full_path
         match(path).defer_to({:controller => controller, :action => "show"}, &Gluttonberg::Router::PUBLIC_DEFER_PROC).name(:public_root)
