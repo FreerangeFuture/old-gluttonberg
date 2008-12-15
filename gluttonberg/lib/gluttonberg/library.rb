@@ -15,7 +15,11 @@ module Gluttonberg
       'archive'  => %r{[zip|gzip|tar]},
       'binary'   => %r{^binary/}
     }
+    UNCATEGORISED_CATEGORY = 'uncategorised'
     CATEGORIES = CATEGORY_PATTERNS.keys.sort
+    CATEGORIES << UNCATEGORISED_CATEGORY
+
+    ::Extlib::Inflection.plural_word(UNCATEGORISED_CATEGORY, UNCATEGORISED_CATEGORY)
     
     # Types are the actual document type rather than the broad category i.e.
     # a word document belongs in the document category, but the actual type
@@ -29,7 +33,9 @@ module Gluttonberg
       "JPEG"        => ["jpg", "jpeg",  %r{/png}],
       "GIF"         => ["gif",          %r{/gif}]
     }
+    UNKNOWN_TYPE = 'unknown'
     TYPES = TYPE_PATTERNS.keys.sort
+    TYPES << UNKNOWN_TYPE
     
     @@assets_root = nil
     

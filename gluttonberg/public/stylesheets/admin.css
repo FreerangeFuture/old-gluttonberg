@@ -426,6 +426,8 @@ ul.assetList {
     background-image: url(../images/library/browse_images_medium.gif); }
   ul.assetList a.browseVideos {
     background-image: url(../images/library/browse_videos_medium.gif); }
+  ul.assetList a.browseUncategorised {
+    background-image: url(../images/library/browse_uncategorised_medium.gif); }
 
 /* Assets */
 #assets.show #subnav {
