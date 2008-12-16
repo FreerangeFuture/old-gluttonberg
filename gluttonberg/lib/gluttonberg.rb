@@ -107,6 +107,7 @@ if defined?(Merb::Plugins)
     require 'merb-auth-more/mixins/redirect_back'
   end
   dependency 'RedCloth',        ">= 4.1.0",  {:require_as => 'redcloth'}
+  dependency 'mime-types', '>= 1.15',  {:require_as => 'mime/types'}
   
   # Stdlib dependencies
   require 'digest/sha1'

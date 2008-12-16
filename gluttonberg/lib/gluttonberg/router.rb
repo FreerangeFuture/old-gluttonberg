@@ -39,8 +39,9 @@ module Gluttonberg
           a.resources(:collections, :controller => "library/collections")          
           a.match("/collections/:id/add_asset").to(:controller => "library/collections", :action => "add_asset").name(:add_asset_to_collection)
           a.match("/collections/:id(/by-:order)(/:page)(.:format)").to(:controller => "library/collections", :action => "show").name(:collection_show)
-          a.resources(:asset_types, :controller => "library/asset_types")
-          a.resources(:asset_categories, :controller => "library/asset_categories")
+     #     a.resources(:asset_types, :controller => "library/asset_types")
+     #     a.resources(:asset_categories, :controller => "library/asset_categories")
+     #     a.resources(:asset_mime_types, :controller => "library/asset_mime_types")
         end
       
         # Settings

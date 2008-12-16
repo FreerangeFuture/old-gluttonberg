@@ -55,12 +55,37 @@ module Gluttonberg
     def type
       attribute_get(:type) ? attribute_get(:type) : category
     end
+
+    def auto_set_asset_type
+      self.asset_type = AssetType.for_file(mime_type, file_name)
+    end
+
+    def self.refresh_all_asset_types
+      all.each do |asset|
+        asset.auto_set_asset_type
+        asset.save
+      end
+    end
+
+    def self.clear_all_asset_types
+      all.each do |asset|
+        asset.asset_type = nil
+        asset.save
+      end
+    end
     
     private
     
     def set_category_and_type
       unless file.nil?
         attribute_set(:mime_type, file[:content_type])
+
+        Library.santise_mime_type(mime_type, file_name)
+
+        p '************** MIME TYPE ********************'
+        p mime_type
+        p '*********************************************'
+
         # Determine the category based on the matchers specified in the library
         category_set = false
         Library::CATEGORY_PATTERNS.each do |t, m|
@@ -70,6 +95,10 @@ module Gluttonberg
         unless category_set
           attribute_set(:category, Library::UNCATEGORISED_CATEGORY)
         end
+
+        p '************** CATEGORY ********************'
+        p category
+        p '*********************************************'
 
         # Now slightly more complicated; check the extension, then mime type to
         # try and determine the exact asset type.
@@ -90,7 +119,11 @@ module Gluttonberg
           end
         end
 
+        p '************** TYPE ********************'
+        p type
+        p '*********************************************'
 
+        auto_set_asset_type
       end
     end
     
@@ -108,5 +141,7 @@ module Gluttonberg
         update_file_on_disk
       end
     end
+
+
   end
 end
