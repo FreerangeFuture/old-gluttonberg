@@ -83,6 +83,20 @@ When working with the Slice:
 When working in a merb application
   $ rake slices:gluttonberg:create_thumbnails
 
+
+
+To generate the necessary Asset Types and Asset Categories. This is safe to
+run on existing database as it only rebuilds the Gluttonberg set data
+and not and custom data entered by the user.
+
+When working with the Slice:
+  $ slice -i
+  $ Gluttonberg::Library.rebuild
+
+When working in a merb application
+  $ rake slices:gluttonberg:rebuild_asset_types
+
+
 Thumbnailing
 ============
 For thumbnailing of images to work you need to install image science gem. See the

@@ -8,6 +8,11 @@ namespace :slices do
         asset.generate_image_thumb
         asset.save
       end
-    end   
+    end
+
+    desc "Rebuild AssetType information and reassociate with existing Assets"
+    task :rebuild_asset_types => :merb_env do
+      Gluttonberg::Library.rebuild
+    end
   end
 end
