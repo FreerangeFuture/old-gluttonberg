@@ -6,6 +6,7 @@
       %li
         %a{:href => slice_url(:asset, asset), :class => "assetLink"}
           %h2= asset.name
+          %p= h(asset.asset_type.name)
           %p= "Added #{asset.created_at.formatted(:short)}"
           %div
             %img{:src => asset.thumb_small_url}/
