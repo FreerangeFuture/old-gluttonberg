@@ -32,7 +32,7 @@ module Gluttonberg
       ensure_exists('document', false)
       ensure_exists('archive',  false)
       ensure_exists('binary',   false)
-      ensure_exists('uncategorised', true)
+      ensure_exists(Library::UNCATEGORISED_CATEGORY, true)
     end
 
     private
