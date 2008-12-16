@@ -80,8 +80,6 @@ module Gluttonberg
       unless file.nil?
         attribute_set(:mime_type, file[:content_type])
 
-        Library.santise_mime_type(mime_type, file_name)
-
         p '************** MIME TYPE ********************'
         p mime_type
         p '*********************************************'

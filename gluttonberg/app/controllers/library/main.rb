@@ -7,6 +7,7 @@ module Gluttonberg
         @assets = Asset.all(:updated_at => range, :order => [:updated_at.asc], :limit => 15)
         # Collections
         @collections = AssetCollection.all(:order => [:name.desc])
+        @categories = AssetCategory.all
         render
       end
     end

@@ -8,6 +8,7 @@ module Gluttonberg
     property :unknown, Boolean, :default => false
 
     has n, :asset_types
+    has n, :assets, :through => :asset_types
 
     validates_is_unique :name
 
