@@ -43,7 +43,11 @@ if defined?(Merb::Plugins)
     
     # Activation hook - runs after AfterAppLoads BootLoader
     def self.activate
-      #Merb.add_mime_type(:htmlf, :to_htmlf, %w(text/html application/xhtml+xml))
+      # Have to re-add the HTML mime-type again to ensure that it gets it's 
+      # proper weighting, otherwise it seems our :htmlf format is swiping it.
+      Merb.add_mime_type(:htmlf, :to_htmlf, %w(text/html application/xhtml+xml), {}, 0.1)
+      Merb.add_mime_type(:html, :to_html, %w(text/html application/xhtml+xml), {}, 1)
+      
       
       Content.setup
       Library.setup
