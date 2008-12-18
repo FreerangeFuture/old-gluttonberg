@@ -128,5 +128,6 @@ if defined?(Merb::Plugins)
   require "gluttonberg/helpers"
   require "gluttonberg/page_descriptions"
   require "gluttonberg/drag_tree_helper"
+  require "gluttonberg/redcloth_helper"
   
 end
