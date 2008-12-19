@@ -63,6 +63,7 @@ module Gluttonberg
       end
    
       def find_page_type
+        Merb
         @page_type = PageType.get(params[:type_id])
         raise NotFound unless @page_type
       end
