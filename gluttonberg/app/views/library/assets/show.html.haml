@@ -6,7 +6,7 @@
   
 %h2= @asset.name
 %p{:id => "categoryAndType", :class => @asset.category}
-  = "#{@asset.category.capitalize}/#{@asset.type}"
+  = h(@asset.asset_type.name)
 
 - unless @asset.description.blank?
   %p#description= @asset.description
@@ -17,13 +17,15 @@
 %h3 Metadata
 %dl
   %dt Category
-  %dd= @asset.category.capitalize
+  %dd= h(@asset.category.capitalize)
   %dt Type
-  %dd= @asset.type
+  %dd= h(@asset.asset_type.name)
   %dt Filesize
-  %dd= @asset.size
+  %dd= h(@asset.size)
   %dt Filename
-  %dd= @asset.file_name
+  %dd= h(@asset.file_name)
+  %dt Mime type
+  %dd= h(@asset.mime_type)
   
 - unless @asset.collections.empty?
   %h3 Collections

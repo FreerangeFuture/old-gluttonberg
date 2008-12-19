@@ -4,8 +4,6 @@ module Gluttonberg
     include Library::AttachmentMixin
     
     property :id,         Serial 
-    property :category,   Enum[*Library::CATEGORIES]
-    property :type,       Enum[*Library::TYPES]
     property :mime_type,  String
     property :localized,  Boolean, :default => false
     property :created_at, Time
@@ -13,6 +11,8 @@ module Gluttonberg
 
     has n, :localizations, :class_name => "Gluttonberg::AssetLocalization"
     has n, :collections, :through => Resource, :class_name => "Gluttonberg::AssetCollection"
+
+    belongs_to  :asset_type, :class_name => "Gluttonberg::AssetType"
 
     # This replaces the existing set of associated collections with a new set based
     # on the array of IDs passed in.
@@ -45,50 +45,47 @@ module Gluttonberg
     def localized?
       localized
     end
-    
-    def full_type
-      attribute_get(:type) ? "#{attribute_get(:type)} #{category}" : category
+
+    def category
+      if asset_type.nil? then
+        Library::UNCATEGORISED_CATEGORY
+      else
+        asset_type.asset_category.name
+      end
     end
     
     def type
-      attribute_get(:type) ? attribute_get(:type) : category
+      if asset_type.nil? then
+        Library::UNCATEGORISED_CATEGORY
+      else
+        asset_type.name
+      end
+    end
+    
+
+    def auto_set_asset_type
+      self.asset_type = AssetType.for_file(mime_type, file_name)
+    end
+
+    def self.refresh_all_asset_types
+      all.each do |asset|
+        asset.auto_set_asset_type
+        asset.save
+      end
+    end
+
+    def self.clear_all_asset_types
+      all.each do |asset|
+        asset.asset_type = nil
+        asset.save
+      end
     end
     
     private
     
     def set_category_and_type
       unless file.nil?
-        attribute_set(:mime_type, file[:content_type])
-        # Determine the category based on the matchers specified in the library
-        category_set = false
-        Library::CATEGORY_PATTERNS.each do |t, m|
-          attribute_set(:category, t) if mime_type.match(m)
-          category_set = true
-        end
-        unless category_set
-          attribute_set(:category, Library::UNCATEGORISED_CATEGORY)
-        end
-
-        # Now slightly more complicated; check the extension, then mime type to
-        # try and determine the exact asset type.
-        #
-        # See if it has an extension
-        # If it has, check it against the list inside the patterns
-        # If it doesn't, use the regex patterns to examine the mime-type
-        # If none match, mark it as generic
-        attribute_set(:type, Library::UNKNOWN_TYPE)
-        match = file[:filename].match(%r{\.([a-zA-Z]{2,6})$})
-        if match && match[1]
-          Library::TYPE_PATTERNS.each do |type, values|
-            attribute_set(:type, type) if values.include?(match[1].downcase)
-          end
-        else
-          Library::TYPE_PATTERNS.each do |type, values|
-            attribute_set(:type, type) if mime_type.match(values.last)
-          end
-        end
-
-
+        auto_set_asset_type
       end
     end
     
@@ -106,5 +103,7 @@ module Gluttonberg
         update_file_on_disk
       end
     end
+
+
   end
 end

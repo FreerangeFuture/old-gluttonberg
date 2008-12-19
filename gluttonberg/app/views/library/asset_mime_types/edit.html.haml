@@ -1,0 +1,15 @@
+%h1
+  AssetMimeTypes controller, edit action
+%p
+  Edit this file in
+  %tt
+    app/views/asset_mime_types/edit.html.erb
+= error_messages_for @asset_mime_type
+
+= form_for(@asset_mime_type, :action => url(:asset_mime_type, @asset_mime_type)) do
+  %p
+    = submit "Update"
+
+= link_to 'Show', url(:asset_mime_type, @asset_mime_type)
+|
+= link_to 'Back', url(:asset_mime_types)

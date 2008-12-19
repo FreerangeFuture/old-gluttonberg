@@ -12,6 +12,7 @@ module Gluttonberg
       def browser
         @assets = []
         @collections = AssetCollection.all(:order => [:name.asc])
+        @categories = AssetCategory.all
         if params["no_frame"]
           partial(:browser_root)
         else
@@ -21,12 +22,15 @@ module Gluttonberg
       
       def category
         provides :json
-        conditions = if params[:category] == "all"
-          {:order => get_order}
+        conditions = {:order => get_order, :per_page => 18}
+        if params[:category] == "all" then
+          @paginator, @assets = paginate(Asset, conditions)
         else
-          {:category => params[:category], :order => get_order}
+          req_category = AssetCategory.first(:name => params[:category])
+          raise BadRequest.new("Unknown category '#{params[:category]}'") if req_category.nil?
+          @paginator, @assets = paginate(req_category.assets, conditions)
         end
-        @paginator, @assets = paginate(Asset, conditions.merge!(:per_page => 18))
+
         @paginate_previous_url = slice_url(:asset_category, :category => params[:category], :page => @paginator.previous, :order => params[:order] || 'name')
         @paginate_next_url = slice_url(:asset_category, :category => params[:category], :page => @paginator.next, :order => params[:order] || 'name')
         if content_type == :json          

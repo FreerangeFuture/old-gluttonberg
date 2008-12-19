@@ -1,0 +1,16 @@
+%h1
+  AssetMimeTypes controller, index action
+%p
+  Edit this file in
+  %tt
+    app/views/asset_mime_types/index.html.erb
+%table
+  %tr
+  - for asset_mime_type in @asset_mime_types
+    %tr
+      %td
+        = link_to 'Show', url(:asset_mime_type, asset_mime_type)
+      %td
+        = link_to 'Edit', url(:edit_asset_mime_type,  asset_mime_type)
+
+= link_to 'New', url(:new_asset_mime_type)
