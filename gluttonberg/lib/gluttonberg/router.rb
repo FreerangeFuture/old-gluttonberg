@@ -20,7 +20,7 @@ module Gluttonberg
               l.match(:method => "put").to(:action => "update")
             end.name(:localization)
           end
-          c.match("/pages/move(.:format)").to(:controller => "content/pages", :action => "move_page").name(:page_move)
+          c.match("/pages/move(.:format)").to(:controller => "content/pages", :action => "move_node").name(:page_move)
           c.resources(:types, :controller => "content/page_types", :name_prefix => "page") do |p|
             p.resources(:sections, :controller => "content/page_sections")
           end
