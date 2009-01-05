@@ -476,6 +476,17 @@ ul.assetList {
   margin-bottom: 1.5em; }
 #assets.show #description {
   margin-bottom: 1.5em; }
+#assets.show #public-path {
+  margin-left: 340px;
+  width: 22em;
+  clear: both;
+  float: left; }
+#assets.show #public-path-note {
+  font-size: 0.9em;
+  color: #333333;
+  padding-bottom: 1em;
+  clear: both;
+  float: left; }
 
 /* Asset browser link */
 .assetBrowserLink {
