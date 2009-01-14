@@ -112,7 +112,9 @@ if defined?(Merb::Plugins)
   dependency 'merb-auth-more',  merb_version do
     require 'merb-auth-more/mixins/redirect_back'
   end
-  dependency 'RedCloth',        ">= 4.1.0",  {:require_as => 'redcloth'}
+  dependency 'RedCloth',        ">= 4.1.0",  {:require_as => 'redcloth'} do
+    require "gluttonberg/redcloth_helper"
+  end
   dependency 'mime-types', '>= 1.15',  {:require_as => 'mime/types'}
   
   # Stdlib dependencies
@@ -130,8 +132,7 @@ if defined?(Merb::Plugins)
   require "gluttonberg/templates"
   require "gluttonberg/components"
   require "gluttonberg/helpers"
-  require "gluttonberg/page_descriptions"
+  require "gluttonberg/page_description"
   require "gluttonberg/drag_tree_helper"
-  require "gluttonberg/redcloth_helper"
   
 end

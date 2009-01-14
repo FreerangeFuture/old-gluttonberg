@@ -40,3 +40,9 @@
   %dt Updated
   %dd= @asset.updated_at.formatted(:long)
   
+%h3 Public path
+= text_field(:value => "http://#{request.host}#{@asset.url}", :id => "public-path")
+%p#public-path-note 
+  This address can be used to link to this asset.
+  %br/
+  For example it could be pasted into an email.

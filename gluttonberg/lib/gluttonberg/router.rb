@@ -20,7 +20,7 @@ module Gluttonberg
               l.match(:method => "put").to(:action => "update")
             end.name(:localization)
           end
-          c.match("/pages/move(.:format)").to(:controller => "content/pages", :action => "move_page").name(:page_move)
+          c.match("/pages/move(.:format)").to(:controller => "content/pages", :action => "move_node").name(:page_move)
           c.resources(:types, :controller => "content/page_types", :name_prefix => "page") do |p|
             p.resources(:sections, :controller => "content/page_sections")
           end
@@ -208,7 +208,10 @@ module Gluttonberg
 
         controller = Gluttonberg.standalone? ? "content/public" : "gluttonberg/content/public"
         # Set up the defer to block
-        match(path + "/:full_path(.:format)", :full_path => /[a-z0-9\/]+/).defer_to({:controller => controller, :action => "show"}, &Gluttonberg::Router::PUBLIC_DEFER_PROC).name(:public_page)
+        match(path + "/:full_path(.:format)", :full_path => /[a-z0-9\-_\/]+/).defer_to(
+          {:controller => controller, :action => "show"}, 
+          &Gluttonberg::Router::PUBLIC_DEFER_PROC
+        ).name(:public_page)
         # Filthy hack to match against the root, since the URL won't 
         # regenerate with optional parameters — :full_path
         match(path).defer_to({:controller => controller, :action => "show"}, &Gluttonberg::Router::PUBLIC_DEFER_PROC).name(:public_root)

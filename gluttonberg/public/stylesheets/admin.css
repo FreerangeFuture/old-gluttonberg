@@ -476,6 +476,17 @@ ul.assetList {
   margin-bottom: 1.5em; }
 #assets.show #description {
   margin-bottom: 1.5em; }
+#assets.show #public-path {
+  margin-left: 340px;
+  width: 22em;
+  clear: both;
+  float: left; }
+#assets.show #public-path-note {
+  font-size: 0.9em;
+  color: #333333;
+  padding-bottom: 1em;
+  clear: both;
+  float: left; }
 
 /* Asset browser link */
 .assetBrowserLink {
@@ -674,6 +685,9 @@ p.newLink {
     position: absolute;
     left: 0;
     bottom: 0; }
+    #helpDialog .controls li,
+    #assetsDialog .controls li {
+      list-style-type: none; }
   #helpDialog .display,
   #assetsDialog .display {
     width: 100%;
@@ -774,7 +788,28 @@ p.newLink {
   margin: 0 15px 0 0;
   float: right; }
 #helpDialog p {
-  margin-bottom: 1.5em; }
+  margin-bottom: 1.5em;
+  line-height: 1.166667em; }
+#helpDialog h2 {
+  font-size: 1.166667em;
+  line-height: 1em;
+  font-weight: bold;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  color: #565644;
+  background: #E6E5B7;
+  padding-top: 0.25em;
+  padding-bottom: 0.25em; }
+#helpDialog abbr {
+  border-bottom: none;
+  text-transform: uppercase;
+  font-size: 0.8em;
+  letter-spacing: 0.05em; }
+#helpDialog ul {
+  line-height: 1em; }
+#helpDialog li {
+  margin-left: 20px;
+  list-style-type: circle; }
 
 /* Delete confirmation */
 #delete {
