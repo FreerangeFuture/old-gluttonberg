@@ -25,6 +25,14 @@ module Gluttonberg
       }
     end
     
+    # This just loads the page_descriptions.rb file from the config dir.
+    #
+    # The specified file should contain the various page descriptions.
+    def self.setup
+      path = Merb.dir_for(:config) / "page_descriptions.rb"
+      require path if File.exists?(path)
+    end
+    
     def self.add(&blk)
       class_eval(&blk)
     end
