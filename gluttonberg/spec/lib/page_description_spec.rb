@@ -156,31 +156,83 @@ module Gluttonberg
       end
     end
     
-    # describe "A page with a redirect" do
-    #   before :all do
-    #     PageDescription.add do
-    #       page :simple_redirect do
-    #         label       "Simple Redirect"
-    #         redirect_to :url, "http://freerangefuture.com"
-    #       end
-    #       
-    #       page :block_redirect do
-    #         label "Block redirect"
-    #         redirect_to { "http://google.com" }
-    #       end
-    #       
-    #       page :page_redirect do
-    #         label "Page redirect"
-    #         redirect_to :page
-    #       end
-    #     end
-    #   end
-    #   
-    #   it "should be a redirect"
-    #   it "should redirect to a simple url"
-    #   it "should redirect from a block"
-    #   it "should redirect to a page"
-    # end
+    describe "A page with a rewrite" do
+      before :all do
+        PageDescription.add do
+          page :rewrite do
+            label "Rewrite"
+            rewrite_to :test_url
+          end
+        end
+        
+        @desc = PageDescription[:rewrite]
+      end
+      
+      it "should return the correct named route" do
+        @desc.rewrite_route.should == :test_url
+      end
+      
+      it "should have the rewrite behaviour" do
+        @desc[:behaviour].should == :rewrite
+      end
+    end
+        
+    describe "A page with a redirect" do
+      before :all do
+        PageDescription.add do
+          page :remote_redirect do
+            label       "Simple Redirect"
+            redirect_to :remote, "http://freerangefuture.com"
+          end
+          
+          page :local_redirect do
+            label       "Simple Redirect"
+            redirect_to :path, "/simple"
+          end
+          
+          page :local_block_redirect do
+            label "Local Block redirect"
+            redirect_to(:path) {|params| "/block" }
+          end
+          
+          page :remote_block_redirect do
+            label "Remote Block redirect"
+            redirect_to(:remote) {|params| "http://google.com" }
+          end
+          
+          page :page_redirect do 
+            label "Page redirect"
+            redirect_to :page
+          end
+        end
+      end
+      
+      it "should be a redirect" do
+        PageDescription[:remote_redirect][:behaviour].should == :redirect
+      end
+      
+      it "should return a local path for simple redirects" do
+        Router.should_receive(:localized_url).with("/simple", {})
+        PageDescription[:local_redirect].redirect_url(nil, {})
+      end
+      
+      it "should return remote url" do
+        path = PageDescription[:remote_redirect].redirect_url(nil, {})
+        path.should == "http://freerangefuture.com"
+      end
+      
+      it "should return a remote url from a block" do
+        path = PageDescription[:remote_block_redirect].redirect_url(nil, {})
+        path.should == "http://google.com"
+      end
+      
+      it "should return a local path from a block" do
+        Router.should_receive(:localized_url).with("/block", {})
+        PageDescription[:local_block_redirect].redirect_url(nil, {})
+      end
+      
+      it "should redirect to a page"
+    end
         
   end
 end

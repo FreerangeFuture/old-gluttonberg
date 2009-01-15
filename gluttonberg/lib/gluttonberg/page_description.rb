@@ -75,15 +75,25 @@ module Gluttonberg
       @sections[name] = new_section
     end
     
+    # Configures the page to act as a rewrite to named route. This doesn’t 
+    # work like a rewrite in the traditional sense, since it is intended to be
+    # used to redirect requests to a controller. Becuase of this it can't rewrite
+    # to a path, it needs to use a named route.
+    def rewrite_to(route)
+      @rewrite_route = route
+      @options[:behaviour] = :rewrite
+    end
+    
+    # Returns the named route to be used when rewriting the request.
+    def rewrite_route
+      @rewrite_route
+    end
+    
     def redirect_to(type = nil, opt = nil, &blk)
-      if type
-        @redirect_type    = type
-        @redirect_option  = opt if opt
-      elsif block_given?
-        @redirect_type  = :block
-        @redirect_block = type_or_blk
-      end
-      @options[:behaviour] = (type == :component ? :component : :redirect)
+      @redirect_option      = opt if opt
+      @redirect_block       = blk if block_given?
+      @redirect_type        = type
+      @options[:behaviour]  = :redirect
     end
     
     def redirect?
@@ -95,18 +105,23 @@ module Gluttonberg
     end
     
     def redirect_url(page, params)
-      path = case @redirect_type
-        when :block     then @redirect_block.call
-        when :url       then @redirect_option
-        when :page      then redirect_to_page(page, params)
-        when :component then Merb::Router.url(@redirect_option)
+      case @redirect_type
+        when :remote
+          redirect_value(page, params)
+        when :path
+          Router.localized_url(redirect_value(page, params), params)
+        when :page
+          path_to_page(page, params)
       end
-      Router.localized_url(path, params)
     end
     
     private
     
-    def redirect_to_page(page, params)
+    def redirect_value(page, params)
+      @redirect_block ? @redirect_block.call(page, params) : @redirect_option
+    end
+    
+    def path_to_page(page, params)
       localization = PageLocalization.first(
         :fields   => [:path],
         :page_id  => page.redirect_target_id,
