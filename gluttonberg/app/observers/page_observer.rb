@@ -19,12 +19,12 @@ module Gluttonberg
         end
       end
         
-      unless behaviour == :component
+      unless description.sections.empty?
         Merb.logger.info("Generating stubbed content for new page")
-        type.sections.each do |section|
+        description.sections.each do |name, section|
           # Create the content
-          association = send(section.type)
-          content = association.create(:section => section)
+          association = send(section[:type].to_s.pluralize)
+          content = association.create(:section_name => name)
           # Create each localization
           if content.model.localized?
             localizations.all.each do |localization|

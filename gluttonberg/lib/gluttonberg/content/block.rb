@@ -16,11 +16,11 @@ module Gluttonberg
           attr_reader :current_localization
           
           property :orphaned,     ::DataMapper::Types::Boolean, :default => false
+          property :section_name, String
           property :created_at,   Time
-          property :updated_at,   Time 
+          property :updated_at,   Time
           
           belongs_to :page
-          belongs_to :section, :class_name => "PageSection"
           
           # Generate the various names to be used in associations
           type = Extlib::Inflection.underscore(Extlib::Inflection.demodulize(self.name))
@@ -84,6 +84,10 @@ module Gluttonberg
       end
       
       module InstanceMethods
+        def section
+          @section ||= page.description.sections[section_name.to_sym]
+        end
+        
         def localized?
           self.class.localized?
         end
@@ -93,11 +97,11 @@ module Gluttonberg
         end
         
         def section_name
-          section.name
+          section[:name]
         end
         
         def section_label
-          section.label
+          section[:label]
         end
         
         # Just delegates to the class.

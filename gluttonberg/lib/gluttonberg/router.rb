@@ -15,10 +15,7 @@ module Gluttonberg
         s.match("/content").to(:controller => "content/main").name(:content)
         s.match("/content") do |c|
           c.resources(:pages, :controller => "content/pages") do |p|
-            p.match("/localizations/:id").to(:controller => "content/page_localizations") do |l|
-              l.match("/edit").to(:action => "edit").name(:edit_localization)
-              l.match(:method => "put").to(:action => "update")
-            end.name(:localization)
+            p.resources(:localizations, :controller => "content/page_localizations")
           end
           c.match("/pages/move(.:format)").to(:controller => "content/pages", :action => "move_node").name(:page_move)
           c.resources(:types, :controller => "content/page_types", :name_prefix => "page") do |p|
@@ -66,10 +63,10 @@ module Gluttonberg
       additional_params, conditions = Gluttonberg::Router.localization_details(params)
       page = Gluttonberg::Page.first_with_localization(conditions.merge(:path => params[:full_path]))
       if page
-        case page.behaviour
+        case page.description[:behaviour]
           when :component
             Gluttonberg::Router.rewrite(page, params[:full_path], request, params, additional_params)
-          when :passthrough
+          when :redirect
             page.passthrough_target.load_localization(
               :locale   => additional_params[:locale].id,
               :dialect  => additional_params[:dialect].id

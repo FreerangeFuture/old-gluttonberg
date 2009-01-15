@@ -11,30 +11,13 @@
     = check_box(:home)
     %label{:for => "page_home", :class => "checkbox"} Set as homepage
   
-  = block("Templates") do
-    - unless @types.empty?
-      = select(:page_type_id, :collection => @types, :value_method => "id", :text_method => "name", :label => "Type")
-    - unless @layouts.empty?
-      = select(:layout_id, :collection => @layouts, :value_method => "id", :text_method => "name", :label => "Layout")
-      
-  = block("Behaviour", :id => "pageBehaviours") do
-    = radio_button(:behaviour, :value => :default)
-    %label{:for => "gluttonberg::page_behaviour", :class => "inline"} Default
-    %p.help A regular page where all the contents are fully editable.
-    
-    = radio_button(:behaviour, :value => :dynamic)
-    %label{:for => "gluttonberg::page_behaviour", :class => "inline"} Dynamic
+  = block("Page Description") do
     %p.help
-      This page will contain dynamic content — pulled from the database. It 
-      may also have some directly editable content.
+      Page descriptions are used to define how this page behaves. For example,
+      all of it’s contents may be editable, or it may be generated dynamically.
       
-    - unless Gluttonberg::Components.registered.empty?
-      = radio_button(:behaviour, :value => :component)
-      %label{:for => "gluttonberg::page_behaviour", :class => "inline"} Component
-      %p.help
-        This page has no editable content, instead it’s content is set by a 
-        custom component.
-        
-      = select(:component, :collection => Gluttonberg::Components.registered, :include_blank => true, :text_method => :label, :value_method => :name)
+    - Gluttonberg::PageDescription.all.each do |name, desc|
+      = radio_button(:description_name, :value => name)
+      %label{:for => "gluttonberg::page_description_name", :class => "inline"}= desc[:label]
    
   = form_controls(slice_url(:pages))

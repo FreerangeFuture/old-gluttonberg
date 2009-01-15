@@ -11,18 +11,18 @@
     %dd= @page.slug
     %dt Name
     %dd= @page.name
-    %dt Page type
-    %dd= @page.template_name || "None set"
+    %dt View
+    %dd= @page.view || "None set"
     %dt Layout
-    %dd= @page.layout_name || "None set"
-    %dt Behaviour
-    %dd= @page.behaviour
+    %dd= @page.layout || "None set"
+    %dt Description
+    %dd= @page.description[:name]
 
 %div#pageContent.pageBlock
   %h2 Content
   %ul
-    - for section in @page.type.sections
-      %li= "#{section.label} <span>(#{section.type.gsub("contents", "").gsub!("_", " ")})</span>"
+    - @page.description.sections.each do |name, section|
+      %li= "#{section[:label]} <span>(#{section[:type].to_s.gsub!("_", " ").capitalize})</span>"
 
 %div.pageBlock
   %h2 Localizations
@@ -41,7 +41,7 @@
           %tr
             %td= "<strong>#{localization.locale.name}/#{localization.dialect.name}</strong> <span>(#{pair})</span>"
             %td= pair / localization.path
-            %td.controls= link_to("Edit", slice_url(:page_edit_localization, :page_id => @page, :id => localization))
+            %td.controls= link_to("Edit", slice_url(:edit_page_localization, :page_id => @page, :id => localization))
 
 %dl.meta
   %dt Created at

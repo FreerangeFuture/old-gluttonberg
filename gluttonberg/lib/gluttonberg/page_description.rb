@@ -45,6 +45,11 @@ module Gluttonberg
       @@_descriptions[name]
     end
     
+    # Returns the full list of page descriptions as a hash.
+    def self.all
+      @@_descriptions
+    end
+    
     def [](opt)
       @options[opt]
     end
@@ -72,12 +77,13 @@ module Gluttonberg
     
     def redirect_to(type = nil, opt = nil, &blk)
       if type
-        @redirect_type    = type_or_blk
+        @redirect_type    = type
         @redirect_option  = opt if opt
-      elsif blk
+      elsif block_given?
         @redirect_type  = :block
         @redirect_block = type_or_blk
       end
+      @options[:behaviour] = (type == :component ? :component : :redirect)
     end
     
     def redirect?
