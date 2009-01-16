@@ -1,6 +1,8 @@
 module Gluttonberg
   class PageDescription
     @@_descriptions = {}
+    @@_categorised_descriptions = {}
+    @@_description_names = {}
     @@_home_page    = nil
     
     attr_accessor :options
@@ -23,6 +25,15 @@ module Gluttonberg
           @options[:#{opt}] = opt_value
         end
       }
+    end
+    
+    # This is a destructive method which removes all page definitions. Mainly
+    # used for testing and debugging.
+    def self.clear!
+      @@_descriptions.clear
+      @@_categorised_descriptions.clear
+      @@_description_names.clear
+      @@_home_page = nil
     end
     
     # This just loads the page_descriptions.rb file from the config dir.
@@ -48,6 +59,20 @@ module Gluttonberg
     # Returns the full list of page descriptions as a hash.
     def self.all
       @@_descriptions
+    end
+    
+    # Returns all the descriptions with the matching behaviour in an array.
+    def self.behaviour(name)
+      @@_categorised_descriptions[name] ||= @@_descriptions.inject([]) do |memo, desc|
+        memo << desc[1] if desc[1][:behaviour] == name
+        memo
+      end
+    end
+    
+    # Collects all the names of the descriptions which have the specified 
+    # behaviour.
+    def self.names_for(name)
+      @@_description_names[name] ||= self.behaviour(name).collect {|d| d[:name]}
     end
     
     def [](opt)

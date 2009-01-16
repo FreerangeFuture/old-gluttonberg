@@ -2,6 +2,44 @@ require File.join( File.dirname(__FILE__), '..', "spec_helper" )
 
 module Gluttonberg
   describe PageDescription do
+    describe "Clearing page descriptions" do
+      it "should clear all definitions" do
+        PageDescription.add do
+          page(:lala)     { label "One" }
+          page(:wubwub)   { label "Two" }
+          page(:donkdonk) { label "Three" }
+        end
+        
+        PageDescription.all.length.should == 3
+        PageDescription.clear!
+        PageDescription.all.empty?.should be_true
+      end
+    end
+    
+    describe "Accessing descriptions" do
+      before :all do
+        PageDescription.add do
+          page(:lala)     { label "One" }
+          page(:wubwub)   { label "Two" }
+        end
+      end
+      
+      it "should return the correct descriptions" do
+        PageDescription.behaviour(:default).length.should == 2
+      end
+      
+      it "should return the correct names" do
+        PageDescription.names_for(:default).length.should == 2
+        [:lala, :wubwub].each do |name|
+          PageDescription.names_for(:default).include?(name).should be_true
+        end
+      end
+      
+      after :all do
+        PageDescription.clear!
+      end
+    end
+    
     describe "Standard page with defaults" do
       before :all do
         PageDescription.add do
@@ -233,6 +271,6 @@ module Gluttonberg
       
       it "should redirect to a page"
     end
-        
+    
   end
 end
