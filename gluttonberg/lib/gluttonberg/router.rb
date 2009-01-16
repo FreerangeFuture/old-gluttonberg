@@ -64,14 +64,10 @@ module Gluttonberg
       page = Gluttonberg::Page.first_with_localization(conditions.merge(:path => params[:full_path]))
       if page
         case page.description[:behaviour]
-          when :component
+          when :rewrite
             Gluttonberg::Router.rewrite(page, params[:full_path], request, params, additional_params)
           when :redirect
-            page.passthrough_target.load_localization(
-              :locale   => additional_params[:locale].id,
-              :dialect  => additional_params[:dialect].id
-            )
-            redirect(Gluttonberg::Router.localized_url(page.current_localization.path))
+            redirect(page.description.redirect_url(page, params))
           else
             {
               :controller => params[:controller], 
@@ -83,10 +79,11 @@ module Gluttonberg
       else
         # TODO: The string concatenation here is Sqlite specific, we need to 
         # handle it differently per adapter.
+        names = PageDescription.names_for(:rewrite)
         component_conditions = conditions.merge(
-          "page.behaviour"  => :component,
-          :conditions       => ["? LIKE (path || '%')", params[:full_path]], 
-          :order            => [:path.asc]
+          "page.description_name" => names,
+          :conditions             => ["? LIKE (path || '%')", params[:full_path]], 
+          :order                  => [:path.asc]
         )
         page = Gluttonberg::Page.first_with_localization(component_conditions)
         if page
@@ -157,7 +154,8 @@ module Gluttonberg
     def self.rewrite(page, original_path, request, params, additional_params)
       additional_params[:page] = page
       additional_params[:format] = params[:format]
-      request.env["REQUEST_PATH"] = original_path.gsub(page.current_localization.path, "/public/#{page.component}")
+      rewrite_path = Merb::Router.url(page.description.rewrite_route)
+      request.env["REQUEST_PATH"] = original_path.gsub(page.current_localization.path, rewrite_path)
       new_params = Merb::Router.match(request)[1]
       new_params.merge(additional_params)
     end
