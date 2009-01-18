@@ -26,7 +26,7 @@ module Gluttonberg
       end
 
       def render_rich_text_content(content, opts = nil)
-        content.current_localization.formatted_text
+        RedClothPartials::Renderer.render(self, content.current_localization.formatted_text)
       end
 
       def render_image_content(content, opts = {})

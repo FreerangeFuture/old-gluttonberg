@@ -1,7 +1,10 @@
 if defined?(Merb::Plugins)
 
   merb_version = ">= 1.0"
+  merb_parts_version = ">= 0.9.8"
   datamapper_version = ">= 0.9.6"
+
+ # wow a comment
 
   $:.unshift File.dirname(__FILE__)
 
@@ -109,11 +112,13 @@ if defined?(Merb::Plugins)
   dependency 'dm-timestamps',   datamapper_version
   dependency 'dm-types',        datamapper_version
   dependency 'merb-auth-core',  merb_version
+  dependency 'merb-parts',      merb_parts_version
   dependency 'merb-auth-more',  merb_version do
     require 'merb-auth-more/mixins/redirect_back'
   end
   dependency 'RedCloth',        ">= 4.1.0",  {:require_as => 'redcloth'} do
     require "gluttonberg/redcloth_helper"
+    require "gluttonberg/red_cloth_partials"
   end
   dependency 'mime-types', '>= 1.15',  {:require_as => 'mime/types'}
   

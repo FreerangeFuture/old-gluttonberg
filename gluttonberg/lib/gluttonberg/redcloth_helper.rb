@@ -45,6 +45,8 @@
 #   irb> RedCloth.new('!asset:4/thumb!:asset:4').to_html
 #   => "<p><a href=\"/assets/483e126734ca87ebdede76ac02e16438687aeca6/image.jpg\"><img src=\"/assets/483e126734ca87ebdede76ac02e16438687aeca6/_thumb_small.jpg\" alt=\"\" /></a></p>"
 #
+require 'redcloth'
+
 module RedCloth::Formatters::HTML
   alias_method :original_link, :link
 
