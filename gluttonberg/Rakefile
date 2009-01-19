@@ -75,3 +75,5 @@ namespace :spec do
     end
   end
 end
+
+require 'merb_datamapper/merbtasks'
