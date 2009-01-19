@@ -13,8 +13,6 @@ module Gluttonberg
       end
 
       def show
-        @page = Page.get(params[:id])
-        raise NotFound unless @page
         display @page
       end
 
@@ -71,8 +69,6 @@ module Gluttonberg
       def prepare_to_edit
         @pages      = params[:id] ? Page.all(:id.not => params[:id]) : Page.all
         @dialects   = Dialect.all
-        @types      = PageType.all
-        @layouts    = Layout.all
         @locales    = Locale.all
       end
 
@@ -81,6 +77,21 @@ module Gluttonberg
         raise NotFound unless @page
       end
       
+      # Returns a collection of Locale/Dialect pairs that have not yet been used
+      # with the specified page.
+      def pending_localizations
+        existing = @page.localizations.collect {|l| [l.locale_id, l.dialect_id]}
+        pending = []
+        dialects = Dialect.all
+        Locale.all.each do |locale|
+          dialects.each do |dialect|
+            unless existing.include?([locale.id, dialect.id])
+              pending << ["#{locale.id}-#{dialect.id}", "#{locale.name} - #{dialect.name}"]
+            end
+          end
+        end
+        pending
+      end
     end
   end
 end 

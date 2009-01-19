@@ -950,10 +950,6 @@ table .home {
 /* Contents */
 #iconNav #pagesNav {
   background-image: url(../images/content/pages.gif); }
-#iconNav #pageTypesNav {
-  background-image: url(../images/content/page_types.gif); }
-#iconNav #layoutsNav {
-  background-image: url(../images/content/layouts.gif); }
 
 /* Locales */
 #iconNav #usersNav {

@@ -31,7 +31,7 @@ if defined?(Merb::Plugins)
     
     # Slice metadata
     self.description = "A content management system"
-    self.version = "0.0.1"
+    self.version = "0.0.3"
     self.author = "Freerange Future (www.freerangefuture.com)"
     
     # Stub classes loaded hook - runs before LoadClasses BootLoader

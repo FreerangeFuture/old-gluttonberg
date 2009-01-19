@@ -4,29 +4,21 @@ module Gluttonberg
 
     property :id,               Integer,  :serial => true, :key => true
     property :parent_id,        Integer
-    property :layout_id,        Integer
     property :name,             String,   :length => 1..100
     property :navigation_label, String,   :length => 0..100
     property :slug,             String,   :length => 1..100
-    property :template_name,    String,   :length => 0..100
-    property :layout_name,      String,   :length => 0..100
+    property :description_name, String,   :length => 1..100
     property :home,             Boolean,  :default => false,  :writer => :private
-    property :behaviour,        Enum[:default, :dynamic, :component], :default => :default
-    property :component,        String,   :length => 0...100
     property :created_at,       Time
     property :updated_at,       Time
 
-    before :save, :cache_template_and_layout_name
     before :valid?, :slug_management
-    after  :save, :check_for_home_update
-    #validate_uniqueness_of :slug, :event => :save, :scope => [:parent_id]
+    after  :save,   :check_for_home_update
 
     is_drag_tree :scope => [:parent_id], :flat => false
 
     has n,      :localizations,       :class_name => "Gluttonberg::PageLocalization"
     has n,      :children,            :class_name => "Gluttonberg::Page", :child_key => [:parent_id], :order => [:position.asc]
-    belongs_to  :layout
-    belongs_to  :type,                :class_name => "Gluttonberg::PageType"
     belongs_to  :passthrough_target,  :class_name => "Gluttonberg::Page"
 
     attr_accessor :current_localization, :dialect_id, :locale_id, :paths_need_recaching
@@ -55,9 +47,29 @@ module Gluttonberg
       current_localization.path
     end
 
+    # Returns the PageDescription associated with this page.
+    def description
+      @description ||= PageDescription[description_name.to_sym]
+    end
+    
+    # Returns the name of the view template specified for this page —
+    # determined via the associated PageDescription
+    def view
+      description[:view]
+    end
+    
+    # Returns the name of the layout template specified for this page —
+    # determined via the associated PageDescription
+    def layout
+      description[:layout]
+    end
+
     # Returns a hash containing the paths to the page and layout templates.
     def template_paths(opts = {})
-      {:page => PageType.template_for(template_name, opts), :layout => Layout.template_for(layout_name, opts)}
+      {
+        :page => Gluttonberg::Templates.template_for(:pages, view, opts), 
+        :layout => Gluttonberg::Templates.template_for(:layout, layout, opts)
+      }
     end
 
     def slug=(new_slug)
@@ -120,18 +132,6 @@ module Gluttonberg
       conditions[:page_id] = id 
       @current_localization = localizations.first(conditions) unless conditions.empty?
     end
-    
-    # Checks to see if a layout has actually been set, otherwise it falls back
-    # to the default "public"
-    def layout_name
-      attribute_get(:layout_name) || "default"
-    end
-
-    # Checks to see if a template has been set, otherwise it falls back and
-    # returns the default: "default"
-    def template_name
-      attribute_get(:template_name) || "default"
-    end
 
     def home=(state)
       attribute_set(:home, state)
@@ -139,11 +139,6 @@ module Gluttonberg
     end
 
     private
-
-    def cache_template_and_layout_name
-      attribute_set(:template_name, type.filename) if attribute_dirty?(:page_type_id)
-      attribute_set(:layout_name, layout.filename) if attribute_dirty?(:layout_id)
-    end
 
     def slug_management
       @slug = name if @slug.blank?

@@ -15,16 +15,9 @@ module Gluttonberg
         s.match("/content").to(:controller => "content/main").name(:content)
         s.match("/content") do |c|
           c.resources(:pages, :controller => "content/pages") do |p|
-            p.match("/localizations/:id").to(:controller => "content/page_localizations") do |l|
-              l.match("/edit").to(:action => "edit").name(:edit_localization)
-              l.match(:method => "put").to(:action => "update")
-            end.name(:localization)
+            p.resources(:localizations, :controller => "content/page_localizations")
           end
           c.match("/pages/move(.:format)").to(:controller => "content/pages", :action => "move_node").name(:page_move)
-          c.resources(:types, :controller => "content/page_types", :name_prefix => "page") do |p|
-            p.resources(:sections, :controller => "content/page_sections")
-          end
-          c.resources(:layouts, :controller => "content/layouts")
         end
         
         # Asset Library
@@ -66,15 +59,11 @@ module Gluttonberg
       additional_params, conditions = Gluttonberg::Router.localization_details(params)
       page = Gluttonberg::Page.first_with_localization(conditions.merge(:path => params[:full_path]))
       if page
-        case page.behaviour
-          when :component
+        case page.description[:behaviour]
+          when :rewrite
             Gluttonberg::Router.rewrite(page, params[:full_path], request, params, additional_params)
-          when :passthrough
-            page.passthrough_target.load_localization(
-              :locale   => additional_params[:locale].id,
-              :dialect  => additional_params[:dialect].id
-            )
-            redirect(Gluttonberg::Router.localized_url(page.current_localization.path))
+          when :redirect
+            redirect(page.description.redirect_url(page, params))
           else
             {
               :controller => params[:controller], 
@@ -86,10 +75,11 @@ module Gluttonberg
       else
         # TODO: The string concatenation here is Sqlite specific, we need to 
         # handle it differently per adapter.
+        names = PageDescription.names_for(:rewrite)
         component_conditions = conditions.merge(
-          "page.behaviour"  => :component,
-          :conditions       => ["? LIKE (path || '%')", params[:full_path]], 
-          :order            => [:path.asc]
+          "page.description_name" => names,
+          :conditions             => ["? LIKE (path || '%')", params[:full_path]], 
+          :order                  => [:path.asc]
         )
         page = Gluttonberg::Page.first_with_localization(component_conditions)
         if page
@@ -160,7 +150,8 @@ module Gluttonberg
     def self.rewrite(page, original_path, request, params, additional_params)
       additional_params[:page] = page
       additional_params[:format] = params[:format]
-      request.env["REQUEST_PATH"] = original_path.gsub(page.current_localization.path, "/public/#{page.component}")
+      rewrite_path = Merb::Router.url(page.description.rewrite_route)
+      request.env["REQUEST_PATH"] = original_path.gsub(page.current_localization.path, rewrite_path)
       new_params = Merb::Router.match(request)[1]
       new_params.merge(additional_params)
     end

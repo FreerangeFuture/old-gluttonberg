@@ -11,6 +11,26 @@ other Merb app, but is given access to the CMS's API i.e. for authentication.
 It's in a minimal state currently, but we have detailed our development plans
 here: http://github.com/lukesutton/gluttonberg/wikis
 
+Upgrading
+=========
+For those of you that have been testing early versions of Gluttonberg there are 
+some changes in this latest version which you will need to be aware of.
+
+Previously pages and their contents were described using the PageType, 
+PageSection and Layout models. This was not a particularly elegant. So we've 
+now replaced these models with a DSL for describing the pages instead. 
+
+Typically, the documentation for this feature is lacking. Sorry :)
+
+But if you feel like playing about, there are some examples of how to use the
+descriptions in spec/lib/page_description_spec.rb
+
+In the future we will be expanding the documentation on how to use this feature.
+
+For those of you that aren't ready to move to this new method, you can stick
+with the previous version for now. We've tagged 0.0.2 in the repository. This 
+tag will only receive bug-fixes from here on out.
+
 Contributing
 ============
 

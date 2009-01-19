@@ -22,7 +22,8 @@ module Gluttonberg
       # Returns the content record for the specified section. It will include
       # the relevant localized version based the current locale/dialect
       def content_for(section_name, opts = nil)
-        @page.localized_contents.pluck {|c| c.section.name == section_name}
+        section_name = section_name.to_sym
+        @page.localized_contents.pluck {|c| c.section[:name] == section_name}
       end
 
       def render_rich_text_content(content, opts = nil)
