@@ -1,7 +1,0 @@
-= form_for(@layout, :action => action) do
-  = error_messages_for(@layout)
-  = block do
-    = text_field(:name, :label => "Name", :class => "wide")
-    = text_field(:filename, :label => "File Name", :class => "wide")
-
-  = form_controls(slice_url(:layouts))

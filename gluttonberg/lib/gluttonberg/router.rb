@@ -18,10 +18,6 @@ module Gluttonberg
             p.resources(:localizations, :controller => "content/page_localizations")
           end
           c.match("/pages/move(.:format)").to(:controller => "content/pages", :action => "move_node").name(:page_move)
-          c.resources(:types, :controller => "content/page_types", :name_prefix => "page") do |p|
-            p.resources(:sections, :controller => "content/page_sections")
-          end
-          c.resources(:layouts, :controller => "content/layouts")
         end
         
         # Asset Library

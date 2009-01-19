@@ -69,8 +69,6 @@ module Gluttonberg
       def prepare_to_edit
         @pages      = params[:id] ? Page.all(:id.not => params[:id]) : Page.all
         @dialects   = Dialect.all
-        @types      = PageType.all
-        @layouts    = Layout.all
         @locales    = Locale.all
       end
 

@@ -18,11 +18,9 @@ module Gluttonberg
     # running
     def self.setup
       Merb.logger.info("Setting up content classes and assocations")
-      [Page, PageSection].each do |klass|
-        klass.class_eval do
-          Gluttonberg::Content.content_classes.each do |klass| 
-            has n, klass.association_name, :class_name => klass.name 
-          end
+      Page.class_eval do
+        Gluttonberg::Content.content_classes.each do |klass| 
+          has n, klass.association_name, :class_name => klass.name 
         end
       end
       # Create associations between content localizations and PageLocalization

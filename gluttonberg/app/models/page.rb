@@ -66,7 +66,10 @@ module Gluttonberg
 
     # Returns a hash containing the paths to the page and layout templates.
     def template_paths(opts = {})
-      {:page => PageType.template_for(view, opts), :layout => Layout.template_for(layout, opts)}
+      {
+        :page => Gluttonberg::Templates.template_for(:pages, view, opts), 
+        :layout => Gluttonberg::Templates.template_for(:layout, layout, opts)
+      }
     end
 
     def slug=(new_slug)
