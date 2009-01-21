@@ -3,7 +3,7 @@
     %span{:class => "#{drag_tree_drag_point_class} #{page.home ? "home" : "page"}"}
       = page.home ? "#{page.name} (Home page)" : page.name
   %td.published= "Yes"
-  %td.behaviour= page.description[:label]
+  %td.behaviour= page.description ? page.description[:label] : "None set"
   %td.controls
     %ul
       %li= link_to 'Details', slice_url(:page, page)

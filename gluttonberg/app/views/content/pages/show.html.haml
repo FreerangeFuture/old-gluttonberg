@@ -16,13 +16,14 @@
     %dt Layout
     %dd= @page.layout || "None set"
     %dt Description
-    %dd= @page.description[:name]
+    %dd= @page.description ? @page.description[:label] : "None set"
 
-%div#pageContent.pageBlock
-  %h2 Content
-  %ul
-    - @page.description.sections.each do |name, section|
-      %li= "#{section[:label]} <span>(#{section[:type].to_s.gsub!("_", " ").capitalize})</span>"
+- if @page.description
+  %div#pageContent.pageBlock
+    %h2 Content
+    %ul
+      - @page.description.sections.each do |name, section|
+        %li= "#{section[:label]} <span>(#{section[:type].to_s.gsub!("_", " ").capitalize})</span>"
 
 %div.pageBlock
   %h2 Localizations
