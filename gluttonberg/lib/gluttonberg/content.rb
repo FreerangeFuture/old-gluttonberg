@@ -1,6 +1,7 @@
 content = Pathname(__FILE__).dirname.expand_path
 
 require content / "content" / "block"
+require content / "content" / "block_localization"
 require content / "content" / "localization"
 require content / "content" / "textilized"
 require content / "content" / "text_filters"

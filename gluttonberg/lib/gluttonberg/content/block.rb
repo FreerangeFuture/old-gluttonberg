@@ -48,7 +48,7 @@ module Gluttonberg
           Gluttonberg.const_set(class_name, localized_model)
         
           # Mix in our base set of properties and methods
-          localized_model.send(:include, Gluttonberg::Content::Localization)
+          localized_model.send(:include, Gluttonberg::Content::BlockLocalization)
           localized_model.send(:include, Gluttonberg::Content::Textilized)
           # Generate additional properties from the block passed in
           localized_model.class_eval(&blk)
