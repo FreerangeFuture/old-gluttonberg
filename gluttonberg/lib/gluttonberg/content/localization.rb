@@ -168,7 +168,6 @@ module Gluttonberg
             belongs_to :locale,   :class_name => "Gluttonberg::Locale"
           end
         end
-        
       end
     end # Localization
   end # Content

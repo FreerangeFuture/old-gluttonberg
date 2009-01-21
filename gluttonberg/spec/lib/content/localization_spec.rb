@@ -15,11 +15,11 @@ module Gluttonberg
         include Content::Localization
         
         property :id,   Serial
-        property :name, String, :nullable => false
+        property :name, String
         
         is_localized do
-          property :title,      String, :nullable => false
-          property :biography,  Text,   :nullable => false
+          property :title,      String
+          property :biography,  Text
         end
       end
       
@@ -73,6 +73,13 @@ module Gluttonberg
     
     it "should associate the localization to it's model" do
       StaffProfile.localized_model.relationships[:parent].should_not be_nil
+    end
+    
+    it "should return a model with the correct localization" do
+      model = StaffProfile.first_with_localization(:dialect => 1, :locale => 1)
+      model.should_not be_nil
+      model.current_localization.dialect_id.should == 1
+      model.current_localization.locale_id.should == 1
     end
     
     it "should return a collection of models with the correct localizations" do
@@ -170,6 +177,5 @@ module Gluttonberg
         @model.current_localization.valid?.should be_false
       end
     end
-    
   end
 end
