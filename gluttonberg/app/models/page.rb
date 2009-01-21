@@ -49,19 +49,19 @@ module Gluttonberg
 
     # Returns the PageDescription associated with this page.
     def description
-      PageDescription[description_name.to_sym] if description_name
+      @description = PageDescription[description_name.to_sym] if description_name
     end
     
     # Returns the name of the view template specified for this page —
     # determined via the associated PageDescription
     def view
-      description[:view]
+      @description[:view] if @description
     end
     
     # Returns the name of the layout template specified for this page —
     # determined via the associated PageDescription
     def layout
-      description[:layout]
+      @description[:layout] if @description
     end
 
     # Returns a hash containing the paths to the page and layout templates.
