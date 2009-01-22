@@ -126,6 +126,7 @@ if defined?(Merb::Plugins)
   require 'digest/sha1'
 
   # Various mixins and classes
+  require "gluttonberg/config"
   require "gluttonberg/content"
   require "gluttonberg/library"
   require "gluttonberg/router"
