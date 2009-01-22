@@ -95,6 +95,12 @@ module Gluttonberg
               m
             end
           end
+          
+          private 
+          
+          def extract_localization_opts(opts)
+            {:dialect_id => opts.delete(:dialect), :locale_id => opts.delete(:locale)}
+          end
         end
         
         module InstanceMethods
