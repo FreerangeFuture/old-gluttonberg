@@ -37,9 +37,9 @@
           %th.controls Controls
       %tbody
         - for localization in @page.localizations
-          - pair = "#{localization.locale.slug}/#{localization.dialect.code}"
+          - pair = "#{localization.locale[:location][:code]}/#{localization.locale[:dialect][:code]}"
           %tr
-            %td= "<strong>#{localization.locale.name}/#{localization.dialect.name}</strong> <span>(#{pair})</span>"
+            %td= "<strong>#{localization.location_name}/#{localization.dialect_name}</strong> <span>(#{pair})</span>"
             %td= pair / localization.path
             %td.controls= link_to("Edit", slice_url(:edit_page_localization, :page_id => @page, :id => localization))
 

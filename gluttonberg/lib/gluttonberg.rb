@@ -51,6 +51,10 @@ if defined?(Merb::Plugins)
       Merb.add_mime_type(:htmlf, :to_htmlf, %w(text/html application/xhtml+xml), {}, 0.1)
       Merb.add_mime_type(:html, :to_html, %w(text/html application/xhtml+xml), {}, 1)
       
+      # Load the configuration if available
+      config_path = Merb.dir_for(:config) / "gluttonberg.rb"
+      require config_path if File.exists? config_path
+      
       PageDescription.setup
       Content.setup
       Library.setup

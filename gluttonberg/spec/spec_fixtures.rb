@@ -52,21 +52,17 @@ module Gluttonberg
 
   Page.fixture(:parent) {{
     :name     => (name = /\w+/.gen),
-    :slug     => name.downcase.gsub(" ", "_"),
-    :type     => PageType.pick,
-    :layout   => Layout.pick
+    :slug     => name.downcase.gsub(" ", "_")
   }}
 
   Page.fixture(:child) {{
     :parent     => Page.pick(:parent),
     :name       => (name = /\w+/.gen),
-    :slug       => name.downcase.gsub(" ", "_"),
-    :type     => PageType.pick,
-    :layout   => Layout.pick
+    :slug       => name.downcase.gsub(" ", "_")
   }}
 
   PageLocalization.fixture {{
-    :name => (name = (1..3).of { /\w+/.gen }).capitalize,
+    :name => (name = (1..3).of { /\w+/.gen.capitalize }.join(" ")),
     :slug => name.downcase.gsub(" ", "_")
   }}
   

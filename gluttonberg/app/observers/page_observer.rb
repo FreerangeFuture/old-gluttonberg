@@ -9,14 +9,8 @@ module Gluttonberg
     # admin interface for editing.
     after :create do      
       Merb.logger.info("Generating page localizations")
-      Locale.all.each do |locale|
-        locale.dialects.all.each do |dialect|
-          loc = localizations.create(
-            :name     => name,
-            :dialect  => dialect,
-            :locale   => locale
-          )
-        end
+      Config::Locale.all.each do |name, locale|
+        loc = localizations.create(:name => name, :locale_name => locale[:name])
       end
         
       unless description.sections.empty?

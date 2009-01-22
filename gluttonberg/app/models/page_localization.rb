@@ -7,16 +7,33 @@ module Gluttonberg
     property :navigation_label, String,   :length => 0..100
     property :slug,             String,   :length => 0..50
     property :path,             String,   :length => 255, :writer => :private
+    property :locale_name,      String,   :length => 50
     property :created_at,       Time
     property :updated_at,       Time
 
     belongs_to :page
-    belongs_to :dialect
-    belongs_to :locale
 
     after :save, :update_content_localizations
 
     attr_accessor :paths_need_recaching, :content_needs_saving
+
+    # Returns the locale for this localization based on it's dialect and 
+    # location codes.
+    def locale
+      Config::Locale[locale_name.to_sym]
+    end
+    
+    # Returns the location for this localization based on the assigned locale.
+    # Will return the translated version if passed the :translated symbol.
+    def location_name(mode = :name)
+      locale[:location][mode]
+    end
+    
+    # Returns the dialect for this localization based on the assigned locale.
+    # Will return the translated version if passed the :translated symbol.
+    def dialect_name(mode = :name)
+      locale[:dialect][mode]
+    end
 
     # Write an explicit setter for the slug so we can check it’s not a blank 
     # value. This stops it being overwritten with an empty string.
@@ -53,7 +70,7 @@ module Gluttonberg
     end
 
     def name_and_code
-      "#{name} (#{locale.name}/#{dialect.code})"
+      "#{name} (#{locale[:location][:name]}/#{locale[:dialect][:code]})"
     end
     
     # Forces the localization to regenerate it's full path. It will firstly
