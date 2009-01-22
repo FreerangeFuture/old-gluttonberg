@@ -15,11 +15,11 @@ module Gluttonberg
         include Content::Localization
         
         property :id,   Serial
-        property :name, String
+        property :name, String, :nullable => false
         
         is_localized do
-          property :title,      String
-          property :biography,  Text
+          property :title,      String, :nullable => false
+          property :biography,  Text,   :nullable => false
         end
       end
       
@@ -75,13 +75,6 @@ module Gluttonberg
       StaffProfile.localized_model.relationships[:parent].should_not be_nil
     end
     
-    it "should return a model with the correct localization" do
-      model = StaffProfile.first_with_localization(:dialect => 1, :locale => 1)
-      model.should_not be_nil
-      model.current_localization.dialect_id.should == 1
-      model.current_localization.locale_id.should == 1
-    end
-    
     it "should return a collection of models with the correct localizations" do
       collection = StaffProfile.all_with_localization(:dialect => 1, :locale => 1)
       collection.each do |model|
@@ -90,5 +83,87 @@ module Gluttonberg
         model.current_localization.locale_id.should == 1
       end
     end
+    
+    describe "A model with a localization loaded" do
+      before :all do
+        @model = StaffProfile.first_with_localization(:dialect => 1, :locale => 2)
+      end
+      
+      it "should return a model with the correct localization" do
+        @model.should_not be_nil
+        @model.current_localization.dialect_id.should == 1
+        @model.current_localization.locale_id.should == 2
+      end
+      
+      it "should return the localized_attributes" do
+        @model.localized_attributes.should == @model.current_localization.attributes
+      end
+    end
+    
+    describe "Creating a new model with localization" do
+      before :all do
+        attrs = {
+          :name => "Stonking", 
+          :localized_attributes => {:title => "Le Manager", :biography => "Full of biographical wonderment."}
+        }
+        @model = StaffProfile.new_with_localization(attrs)
+      end
+      
+      it "should return a new model" do
+        @model.class.should == StaffProfile
+        @model.new_record?.should be_true
+      end
+      
+      it "should create a localization" do
+        @model.current_localization.should_not be_nil
+      end
+      
+      it "should set attributes on the model" do
+        @model.attributes[:name].should == "Stonking"
+      end
+      
+      it "should set attributes on the localization" do
+        @model.localized_attributes[:title].should == "Le Manager"
+        @model.localized_attributes[:biography].should == "Full of biographical wonderment."
+      end
+    end
+    
+    describe "Updating a valid model" do
+      before :all do
+        @model = StaffProfile.first_with_localization(:dialect => 1, :locale => 1)
+        attrs = {:name => "Mungo", :localized_attributes => {:title => "Monster Wrangler", :biography => "Lives on beetles."}}
+        @model.update_attributes(attrs)
+        @model.reload
+      end
+      
+      it "should update the model" do
+        @model.name.should == "Mungo"
+      end
+      
+      it "should update the localization" do
+        @model.localized_attributes[:title].should == "Monster Wrangler"
+        @model.localized_attributes[:biography].should == "Lives on beetles."
+      end
+    end
+    
+    describe "Validating updates" do
+      before :all do
+        attrs = {:localized_attributes => {:title => "Paifu!"}}
+        @model = StaffProfile.new_with_localization(attrs)
+      end
+      
+      it "should be invalid" do
+        @model.valid?.should be_false
+      end
+      
+      it "should have errors for the localization" do
+        @model.errors[:biography].should_not be_nil
+      end
+      
+      it "should have an invalid localization" do
+        @model.current_localization.valid?.should be_false
+      end
+    end
+    
   end
 end

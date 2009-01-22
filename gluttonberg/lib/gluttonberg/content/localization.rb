@@ -44,24 +44,50 @@ module Gluttonberg
             # Associate the model and it’s localization
             has(n, :localizations, :class_name => self.name + "Localization")
             @localized_model.belongs_to(:parent, :class_name => self.name, :child_key => [:parent_id])
+            
+            # Set up validations for when we update in the presence of a localization
+            after :valid?, :validate_current_localization
           end
           
           def localized?
             @localized
           end
           
+          # Returns a new instance of the model, with a localization instance 
+          # already assigned to it based on the options passed in.
+          #
+          # The options may also include the attributes for the new model. To 
+          # specify attributes for the localized instance, you can pass them in
+          # via an entry with the key :localized_attributes, e.g.
+          #
+          #   {:name => "spong", :localized_attributes => {:name =>"le spong"}}
+          def new_with_localization(opts)
+            localization_opts = extract_localization_opts(opts)
+            new_model = new
+            new_model.instance_variable_set(:@current_localization, @localized_model.new(localization_opts))
+            new_model.localizations << new_model.current_localization
+            new_model.attributes = opts
+            new_model
+          end
+          
           def all_with_localization(opts)
-            localization_opts = {:dialect_id => opts.delete(:dialect), :locale_id => opts.delete(:locale)}
+            localization_opts = extract_localization_opts(opts)
             matches = all(opts)
             matches.each { |match| match.load_localization(localization_opts) }
             matches
           end
           
           def first_with_localization(opts)
-            localization_opts = {:dialect_id => opts.delete(:dialect), :locale_id => opts.delete(:locale)}
+            localization_opts = extract_localization_opts(opts)
             match = first(opts)
             match.load_localization(localization_opts)
             match
+          end
+          
+          private 
+          
+          def extract_localization_opts(opts)
+            {:dialect_id => opts.delete(:dialect), :locale_id => opts.delete(:locale)}
           end
         end
         
@@ -78,6 +104,37 @@ module Gluttonberg
             opts[:parent_id] = self.id
             # Go and find the localization
             @current_localization = self.class.localized_model.first(opts)
+          end
+          
+          def current_dialect
+            current_localization.dialect if current_localization
+          end
+          
+          def current_locale
+            current_localization.locale if current_localization
+          end
+          
+          # Returns the current localization's attributes
+          def localized_attributes
+            current_localization.attributes if current_localization
+          end
+          
+          # Assigns the hash of values passed in to the current localization's
+          # attributes.
+          def localized_attributes=(new_attributes)
+            current_localization.attributes = new_attributes if current_localization
+          end
+          
+          private
+          
+          # Validates the current_localization. If it is invalid, it's errors 
+          # are appended to the model's own errors.
+          def validate_current_localization
+            if current_localization
+              unless current_localization.valid?
+                current_localization.errors.each { |name, error| errors.add(name, error) }
+              end
+            end
           end
         end
       end
@@ -96,7 +153,6 @@ module Gluttonberg
             belongs_to :locale,   :class_name => "Gluttonberg::Locale"
           end
         end
-        
         
       end
     end # Localization
