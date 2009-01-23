@@ -84,6 +84,12 @@ module Gluttonberg
       end
     end
     
+    it "should not overwrite the current localization if it exists" do
+      profile = StaffProfile.first_with_localization(:locale => 1, :dialect => 1)
+      profile.ensure_localization!
+      profile.current_localization.new_record?.should be_false
+    end
+    
     describe "A model with a localization loaded" do
       before :all do
         @model = StaffProfile.first_with_localization(:dialect => 1, :locale => 2)
