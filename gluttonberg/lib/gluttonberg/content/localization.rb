@@ -42,8 +42,8 @@ module Gluttonberg
             self.after_class_method(:auto_upgrade!) { @localized_model.auto_upgrade! }
             
             # Associate the model and it’s localization
-            has(n, :localizations, :class_name => self.name + "Localization")
-            @localized_model.belongs_to(:parent, :class_name => self.name, :child_key => [:parent_id])
+            has(n, :localizations, :class_name => self.name + "Localization", :parent_key => [:id], :child_key => [:parent_id])
+            @localized_model.belongs_to(:parent, :class_name => self.name, :parent_key => [:parent_key], :child_key => [:id])
             
             # Set up validations for when we update in the presence of a localization
             after :valid?, :validate_current_localization
@@ -80,14 +80,20 @@ module Gluttonberg
           def first_with_localization(opts)
             localization_opts = extract_localization_opts(opts)
             match = first(opts)
-            match.load_localization(localization_opts)
-            match
+            if match
+              match.load_localization(localization_opts)
+              match
+            end
           end
           
           private 
           
           def extract_localization_opts(opts)
-            {:dialect_id => opts.delete(:dialect), :locale_id => opts.delete(:locale)}
+            # Coerce each entry into an integer
+            [:dialect, :locale].inject({}) do |m, n|
+              m[:"#{n}_id"] = opts.delete(n).to_i if opts[n]
+              m
+            end
           end
         end
         
@@ -102,6 +108,8 @@ module Gluttonberg
             # Inject additional conditions, since DataMapper isn't scoping on 
             # collections correctly.
             opts[:parent_id] = self.id
+            # Stash the opts so we can use em later
+            @localization_opts = opts
             # Go and find the localization
             @current_localization = self.class.localized_model.first(opts)
           end
@@ -112,6 +120,13 @@ module Gluttonberg
           
           def current_locale
             current_localization.locale if current_localization
+          end
+          
+          # If the record doesn't have a localization, this will generate a new one
+          def ensure_localization!
+            unless @current_localization
+              @current_localization = self.class.localized_model.new(@localization_opts)
+            end
           end
           
           # Returns the current localization's attributes
