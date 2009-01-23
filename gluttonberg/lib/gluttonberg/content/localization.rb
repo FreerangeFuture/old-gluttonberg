@@ -99,7 +99,11 @@ module Gluttonberg
           private 
           
           def extract_localization_opts(opts)
-            {:dialect_id => opts.delete(:dialect), :locale_id => opts.delete(:locale)}
+            # Coerce each entry into an integer
+            [:dialect, :locale].inject({}) do |m, n|
+              m[:"#{n}_id"] = opts.delete(n).to_i if opts[n]
+              m
+            end
           end
         end
         
