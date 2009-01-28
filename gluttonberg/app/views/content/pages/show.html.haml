@@ -16,7 +16,7 @@
     %dt Layout
     %dd= @page.layout || "None set"
     %dt Description
-    %dd= @page.description[:name]
+    %dd= @page.description ? @page.description[:name] : "None set"
 
 %div#pageContent.pageBlock
   %h2 Content
