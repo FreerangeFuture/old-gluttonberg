@@ -130,7 +130,7 @@ module Gluttonberg
       # OMGWTFBBQ: I shouldn't have explicitly set the id in the conditions
       # like this, since I’m going through an association.
       conditions[:page_id] = id 
-      @current_localization = localizations.first(conditions) unless conditions.empty?
+      @current_localization = PageLocalization.first(conditions) unless conditions.empty?
     end
 
     def home=(state)
