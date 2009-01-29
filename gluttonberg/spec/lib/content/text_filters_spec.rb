@@ -4,7 +4,7 @@ module Gluttonberg
   describe Content::TextFilters do
     before :all do
       class JamFilter < Merb::PartController
-        is_text_filter
+        is_text_filter :jam
         
         def index
           "This is the index."
@@ -12,7 +12,7 @@ module Gluttonberg
       end
       
       class MelonFilter < Merb::PartController
-        is_text_filter
+        is_text_filter :melon
         
         def squeeze
           "You squeezed my melon!"
@@ -34,11 +34,11 @@ module Gluttonberg
     end
     
     it "should return the correct part" do
-      Content::TextFilters.get(:jam_filter).should == JamFilter
+      Content::TextFilters.get(:jam).should == JamFilter
     end
     
     it "should call part on the correct class" do
-      content = "This is some content {{jam_filter/index/1}}"
+      content = "This is some content {{jam/index/1}}"
       helper = HelperTest.new
       helper.filter_text(content)
       helper.part_args[:id].should == "1"

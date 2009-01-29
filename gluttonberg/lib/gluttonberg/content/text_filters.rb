@@ -11,14 +11,13 @@ module Gluttonberg
         @@filters[name.to_sym]
       end
       
-      def self.register(klass)
-        name = Extlib::Inflection.underscore(Extlib::Inflection.demodulize(klass.name)).to_sym
-        @@filters[name] = klass
+      def self.register(name, klass)
+        @@filters[name.to_sym] = klass
       end
       
       module PartMixin
-        def is_text_filter
-          Gluttonberg::Content::TextFilters.register(self)
+        def is_text_filter(name)
+          Gluttonberg::Content::TextFilters.register(name, self)
         end
       end
       
