@@ -183,19 +183,25 @@ module Gluttonberg
         Gluttonberg::DragTree::RouteHelpers.build_drag_tree_routes(self) unless Gluttonberg.standalone?
 
         # See if we need to add the prefix
-        path = opts[:prefix] ? "/#{opts[:prefix]}" : ""
+        path = opts[:prefix] ? "/#{opts[:prefix]}/" : "/"
         # Check to see if this is localized or translated and if either need to
         # be added as a URL prefix. For now we just assume it's going into the
         # URL.
-        path << if Gluttonberg.localized_and_translated?
-          "/:locale/:dialect"
+        if Gluttonberg.localized_and_translated?
+          path << ":locale/:dialect"
         elsif Gluttonberg.localized?
-          "/:locale"
+          path << ":locale"
         elsif Gluttonberg.translated?
-          "/:dialect"
+          path << ":dialect"
         end
-
-        path = "/" if path == ''
+        
+        # Build the full path, which includes the format. This needs to account
+        # for the simple case where we match from "/"
+        full_path = if Gluttonberg.localized? || Gluttonberg.translated?
+          path + "/:full_path(.:format)"
+        else
+          path + ":full_path(.:format)"
+        end
 
         controller = Gluttonberg.standalone? ? "content/public" : "gluttonberg/content/public"
         # Set up the defer to block
