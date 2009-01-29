@@ -28,12 +28,14 @@ module Gluttonberg
         #   {{movies/summary/3}}
         #
         def filter_text(text)
-          text.gsub(%r{(<p>)?\{\{\S+\}\}(</p>)?}) do |match|
-            extract = match.match(/(\w+)\/(\w+)\/(\w+)/)
-            klass = Gluttonberg::Content::TextFilters.get(extract[1])
-            # Now actually call the part. It's return value will be used as the 
-            # replacement text in the gsub.
-            part klass => extract[2].to_sym, :id => extract[3]
+          if text
+            text.gsub(%r{(<p>)?\{\{\S+\}\}(</p>)?}) do |match|
+              extract = match.match(/(\w+)\/(\w+)\/(\w+)/)
+              klass = Gluttonberg::Content::TextFilters.get(extract[1])
+              # Now actually call the part. It's return value will be used as the 
+              # replacement text in the gsub.
+              part klass => extract[2].to_sym, :id => extract[3]
+            end
           end
         end
       end
