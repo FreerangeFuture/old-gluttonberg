@@ -45,23 +45,6 @@ module Gluttonberg
     :dialects => (1..3).of { Dialect.generate }
   }}
 
-  PageSection.fixture {{
-    :name => (1..3).of { /\w+/.gen }.join(" ").capitalize,
-    :name => /\w+/.gen,
-    :type => "rich_texts"
-  }}
-
-  PageType.fixture {{
-    :name     => (1..3).of { /\w+/.gen }.join(" ").capitalize,
-    :filename => /\w+/.gen,
-    :sections => (1..5).of { PageSection.generate }
-  }}
-  
-  Layout.fixture {{
-    :name     => (1..3).of { /\w+/.gen }.join(" ").capitalize,
-    :filename => /\w+/.gen
-  }}
-
   Page.fixture(:no_templates) {{
     :name     => (name = (1..3).of { /\w+/.gen }.join(" ")).capitalize,
     :slug     => name.downcase.gsub(" ", "_")
