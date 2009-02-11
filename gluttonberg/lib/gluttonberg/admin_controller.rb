@@ -8,11 +8,40 @@ module Gluttonberg
       end
     end
     
+    # This is to be called from within a controller — i.e. the delete action — 
+    # and it will display a dialog which allows users to either confirm 
+    # deleting a record or cancelling the action.
     def display_delete_confirmation(opts)
       @options = opts
       @options[:title]    ||= "Delete Record?"
       @options[:message]  ||= "If you delete this record, it will be gone permanently. There is no undo."
       render :template => "shared/delete", :layout => false
+    end
+    
+    # A helper for finding shortcutting the steps in finding a model ensuring
+    # it has a localization and raising a NotFound if it’s missing.
+    def with_localization(model, id)
+      result = model.first_with_localization(localization_ids.merge(:id => id))
+      raise NotFound unless result
+      result.ensure_localization!
+      result
+    end
+    
+    # Returns a hash with the locale and dialect ids extracted from the params
+    # or where they're missing, it will grab the defaults.
+    def localization_ids
+      @localization_opts ||= begin
+        if params[:localization]
+          ids = params[:localization].split("-")
+          {:locale => ids[0], :dialect => ids[1]}
+        else
+          dialect = Gluttonberg::Dialect.first(:default => true)
+          locale = Gluttonberg::Locale.first(:default => true)
+          # Inject the ids into the params so our form fields behave
+          params[:localization] = "#{locale.id}-#{dialect.id}"
+          {:locale => locale.id, :dialect => dialect.id}
+        end
+      end
     end
     
     # Returns an array containing the current page, total page count and 

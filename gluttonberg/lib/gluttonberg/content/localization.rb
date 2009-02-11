@@ -46,7 +46,8 @@ module Gluttonberg
             @localized_model.belongs_to(:parent, :class_name => self.name, :parent_key => [:parent_key], :child_key => [:id])
             
             # Set up validations for when we update in the presence of a localization
-            after :valid?, :validate_current_localization
+            after :valid?,  :validate_current_localization
+            after :save,    :save_current_localization
           end
           
           def localized?
@@ -62,7 +63,7 @@ module Gluttonberg
           #
           #   {:name => "spong", :localized_attributes => {:name =>"le spong"}}
           def new_with_localization(opts)
-            localization_opts = extract_localization_opts(opts)
+            localization_opts = inject_localization_opts(opts)
             new_model = new
             new_model.instance_variable_set(:@current_localization, @localized_model.new(localization_opts))
             new_model.localizations << new_model.current_localization
@@ -71,14 +72,14 @@ module Gluttonberg
           end
           
           def all_with_localization(opts)
-            localization_opts = extract_localization_opts(opts)
+            localization_opts = inject_localization_opts(opts)
             matches = all(opts)
             matches.each { |match| match.load_localization(localization_opts) }
             matches
           end
           
           def first_with_localization(opts)
-            localization_opts = extract_localization_opts(opts)
+            localization_opts = inject_localization_opts(opts)
             match = first(opts)
             if match
               match.load_localization(localization_opts)
@@ -88,8 +89,9 @@ module Gluttonberg
           
           private 
           
-          def extract_localization_opts(opts)
+          def inject_localization_opts(opts)
             # Coerce each entry into an integer
+            # If a particular entry is missing, grab the default
             [:dialect, :locale].inject({}) do |m, n|
               m[:"#{n}_id"] = opts.delete(n).to_i if opts[n]
               m
@@ -159,6 +161,12 @@ module Gluttonberg
               unless current_localization.valid?
                 current_localization.errors.each { |name, error| errors.add(name, error) }
               end
+            end
+          end
+          
+          def save_current_localization
+            if current_localization && current_localization.dirty?
+              current_localization.save
             end
           end
         end
