@@ -2,6 +2,60 @@ module Gluttonberg
   module Helpers
     module Admin
       
+      # Returns a form for selecting the localized version of a page you want 
+      # to edit.
+      def localization_picker(url)
+        # Collect the locale/dialect pairs
+        locales = ::Gluttonberg::Locale.all(:fields => [:id, :name])
+        localizations = []
+        locales.each do |locale|      
+          locale.dialects.each do |dialect|
+            localizations << ["#{locale.id}-#{dialect.id}", "#{locale.name} - #{dialect.name}"]
+          end
+        end
+        # Output the form for picking the locale
+        form(:action => url, :method => :get, :id => "select-localization") do
+          output = ""
+          output << select(:name => :localization, :collection => localizations, :label => "Select localization", :selected => params[:localization])
+          output << button("Edit", :class => "buttonGrey")
+        end
+      end
+
+      # Returns a text field with the name, id and values for the localized
+      # version of the specified attribute.
+      def localized_text_field(name, opts = {})
+        final_opts = localized_field_opts(name)
+        text_field(final_opts.merge!(opts))
+      end
+      
+      # Returns a text area with the name, id and values for the localized
+      # version of the specified attribute.
+      def localized_text_area(name, opts = {})
+        text_area(get_localized_value(name), localized_field_opts(name, false).merge!(opts))
+      end
+
+      # Returns a hash of common options to be used in the localized versions 
+      # of fields.
+      def localized_field_opts(name, set_value = true)
+        prefix = current_form_context.instance_variable_get(:@name)
+        opts = {
+          :name   => "#{prefix}[localized_attributes][#{name}]",
+          :id     => "#{prefix}_localized_#{name}"
+        }
+        opts[:value] = get_localized_value(name) if set_value
+        opts
+      end
+
+      # Returns a hidden field which stores the localization param in the form.
+      def localization_field
+        hidden_field(:name => "localization", :value => params[:localization])
+      end
+
+      def get_localized_value(name)
+        @localized_model ||= current_form_context.instance_variable_get(:@obj)
+        @localized_model.current_localization.send(name)
+      end
+      
       # Checks to see if there is a matching help page for this particular 
       # controller/action. If there is it renders a link to the help 
       # controller.

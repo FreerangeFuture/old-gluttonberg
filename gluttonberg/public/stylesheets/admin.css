@@ -315,6 +315,19 @@ form p.help {
   float: left;
   clear: both; }
 
+/* Localization selector */
+#select-localization {
+  border-bottom: 1px solid #cccccc;
+  background: #E9E9E9;
+  padding-top: 0.7em;
+  height: 0.8em; }
+  #select-localization label {
+    position: absolute;
+    left: -1000em; }
+  #select-localization select {
+    font-size: 1.2em;
+    margin: 0.1em 0.6em 0 0; }
+
 table {
   width: 100%;
   clear: both; }
