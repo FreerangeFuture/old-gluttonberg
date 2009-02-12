@@ -8,6 +8,7 @@ module Gluttonberg
           
           class << self; attr_reader :localized, :localized_model; end
           attr_reader :current_localization
+          alias :localized :current_localization
           @localized = false
         end
       end
@@ -48,6 +49,7 @@ module Gluttonberg
             # Set up validations for when we update in the presence of a localization
             after :valid?,  :validate_current_localization
             after :save,    :save_current_localization
+            after :destroy, :cleanup_localizations
           end
           
           def localized?
@@ -168,6 +170,10 @@ module Gluttonberg
             if current_localization && current_localization.dirty?
               current_localization.save
             end
+          end
+          
+          def cleanup_localizations
+            localizations(:parent_id => id).destroy!
           end
         end
       end
