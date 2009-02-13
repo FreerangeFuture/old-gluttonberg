@@ -50,6 +50,11 @@ module Gluttonberg
             after :valid?,  :validate_current_localization
             after :save,    :save_current_localization
             after :destroy, :cleanup_localizations
+            
+            # Clear the ivars which contain the default dialect/locale
+            after_class_method :new_with_localization, :clear_fallback_vars
+            after_class_method :all_with_localization, :clear_fallback_vars
+            after_class_method :first_with_localization, :clear_fallback_vars
           end
           
           def localized?
@@ -74,17 +79,19 @@ module Gluttonberg
           end
           
           def all_with_localization(opts)
+            fallback = check_for_fallback(opts)
             localization_opts = inject_localization_opts(opts)
             matches = all(opts)
-            matches.each { |match| match.load_localization(localization_opts) }
+            matches.each { |match| match.load_localization(localization_opts, fallback || false) }
             matches
           end
           
           def first_with_localization(opts)
+            fallback = check_for_fallback(opts)
             localization_opts = inject_localization_opts(opts)
             match = first(opts)
             if match
-              match.load_localization(localization_opts)
+              match.load_localization(localization_opts, fallback || false)
               match
             end
           end
@@ -109,6 +116,18 @@ module Gluttonberg
               m
             end
           end
+          
+          def check_for_fallback(opts)
+            if fallback = opts.delete(:fallback)
+              @@locale   = Locale.first(:default => true)
+              @@dialect  = Dialect.first(:default => true)
+            end
+            fallback
+          end
+          
+          def clear_fallback_vars
+            @@locale, @@dialect = nil
+          end
         end
         
         module InstanceMethods
@@ -116,7 +135,7 @@ module Gluttonberg
             self.class.is_localized?
           end
           
-          def load_localization(opts)
+          def load_localization(opts, fallback = false)
             # Convert keys into ids if they are not already
             opts.each { |key, value| opts[key] = value.id unless value.is_a? Numeric }
             # Inject additional conditions, since DataMapper isn't scoping on 
@@ -126,6 +145,10 @@ module Gluttonberg
             @localization_opts = opts
             # Go and find the localization
             @current_localization = self.class.localized_model.first(opts)
+            # Check to see if we missed the load and if we also need the fallback
+            if @current_localization.nil? && fallback
+              @current_localization = self.class.localized_model.first(opts.merge(:dialect => @@dialect, :locale => @@locale))
+            end
           end
           
           def current_dialect
