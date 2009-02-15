@@ -70,7 +70,7 @@ module Gluttonberg
           #
           #   {:name => "spong", :localized_attributes => {:name =>"le spong"}}
           def new_with_localization(opts)
-            localization_opts = inject_localization_opts(opts)
+            localization_opts = extract_localization_opts(opts)
             new_model = new
             new_model.instance_variable_set(:@current_localization, @localized_model.new(localization_opts))
             new_model.localizations << new_model.current_localization
