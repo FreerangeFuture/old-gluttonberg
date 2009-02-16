@@ -6,10 +6,13 @@ module Gluttonberg
           extend  Model::ClassMethods
           include Model::InstanceMethods
           
-          class << self; attr_reader :localized, :localized_model; end
+          class << self; 
+            attr_reader :localized, :localized_model, :locale, :dialect;
+          end
+          @localized = false
+          
           attr_reader :current_localization
           alias :localized :current_localization
-          @localized = false
         end
       end
       
@@ -47,9 +50,9 @@ module Gluttonberg
             @localized_model.belongs_to(:parent, :class_name => self.name, :parent_key => [:parent_key], :child_key => [:id])
             
             # Set up validations for when we update in the presence of a localization
-            after :valid?,  :validate_current_localization
-            after :save,    :save_current_localization
-            after :destroy, :cleanup_localizations
+            after   :valid?,  :validate_current_localization
+            after   :save,    :save_current_localization
+            before  :destroy, :cleanup_localizations
             
             # Clear the ivars which contain the default dialect/locale
             after_class_method :new_with_localization, :clear_fallback_vars
@@ -70,7 +73,7 @@ module Gluttonberg
           #
           #   {:name => "spong", :localized_attributes => {:name =>"le spong"}}
           def new_with_localization(opts)
-            localization_opts = extract_localization_opts(opts)
+            localization_opts = inject_localization_opts(opts)
             new_model = new
             new_model.instance_variable_set(:@current_localization, @localized_model.new(localization_opts))
             new_model.localizations << new_model.current_localization
@@ -109,14 +112,14 @@ module Gluttonberg
           
           def check_for_fallback(opts)
             if fallback = opts.delete(:fallback)
-              @@locale   = Locale.first(:default => true)
-              @@dialect  = Dialect.first(:default => true)
+              @locale   = Locale.first(:default => true)
+              @dialect  = Dialect.first(:default => true)
             end
             fallback
           end
           
           def clear_fallback_vars
-            @@locale, @@dialect = nil
+            @locale, @dialect = nil
           end
         end
         
@@ -137,7 +140,10 @@ module Gluttonberg
             @current_localization = self.class.localized_model.first(opts)
             # Check to see if we missed the load and if we also need the fallback
             if @current_localization.nil? && fallback
-              @current_localization = self.class.localized_model.first(opts.merge(:dialect => @@dialect, :locale => @@locale))
+              @current_localization = self.class.localized_model.first(opts.merge(
+                :dialect_id => self.class.dialect.id, 
+                :locale_id  => self.class.locale.id
+              ))
             end
           end
           
