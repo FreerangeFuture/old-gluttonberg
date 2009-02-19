@@ -7,12 +7,12 @@ module Gluttonberg
           include Model::InstanceMethods
           
           class << self; 
-            attr_reader :localized, :localized_model, :locale, :dialect;
+            attr_reader :localized, :localized_model, :localized_fields, :locale, :dialect;
           end
           @localized = false
+          @localized_fields = []
           
           attr_reader :current_localization
-          alias :localized :current_localization
         end
       end
       
@@ -40,6 +40,24 @@ module Gluttonberg
             # Add the properties declared in the block, and sprinkle in our own mixins
             @localized_model.class_eval(&blk)
             @localized_model.send(:include, ModelLocalization)
+            
+            # For each property on the localization model, create an accessor on 
+            # the parent model, without over-writing any of the existing methods.
+            exclusions = [:id, :created_at]
+            localized_properties = @localized_model.properties.reject { |p| exclusions.include? p.name }
+            localized_properties.each do |prop|
+              # Store a reference to this field so we can strip it from 
+              # conditions later on.
+              @localized_fields << prop.name
+              # Create the accessor that points to the localized version
+              unless respond_to? prop.name
+                class_eval %{
+                  def #{prop.name}
+                    localized.#{prop.name}
+                  end
+                }
+              end
+            end
             
             # Set up filters on the class to make sure the localization gets migrated
             self.after_class_method(:auto_migrate!) { @localized_model.auto_migrate! }
@@ -73,7 +91,7 @@ module Gluttonberg
           #
           #   {:name => "spong", :localized_attributes => {:name =>"le spong"}}
           def new_with_localization(opts)
-            localization_opts = inject_localization_opts(opts)
+            localization_opts = extract_localization_conditions(opts)
             new_model = new
             new_model.instance_variable_set(:@current_localization, @localized_model.new(localization_opts))
             new_model.localizations << new_model.current_localization
@@ -83,30 +101,52 @@ module Gluttonberg
           
           def all_with_localization(opts)
             fallback = check_for_fallback(opts)
-            localization_opts = inject_localization_opts(opts)
-            matches = all(opts)
+            localization_opts = extract_localization_conditions(opts)
+            matches = all(prefix_localized_fields(opts))
             matches.each { |match| match.load_localization(localization_opts, fallback || false) }
             matches
           end
           
           def first_with_localization(opts)
             fallback = check_for_fallback(opts)
-            localization_opts = inject_localization_opts(opts)
-            match = first(opts)
+            localization_opts = extract_localization_conditions(opts)
+            match = first(prefix_localized_fields(opts))
             if match
               match.load_localization(localization_opts, fallback || false)
               match
             end
           end
           
-          private 
+          # For fields in the conditons which actually belong to the 
+          # localization, prefix it with the association name — localization in
+          # this case.
+          def prefix_localized_fields(conditions)
+            @localized_fields.inject(conditions) do |hash, field|
+              if conditions[field]
+                hash["localized.#{field}"] = conditions[field]
+                conditions.delete(field)
+              end
+              hash
+            end
+          end
+
+          def extract_localization_conditions(conditions)
+            extractions = {
+              :dialect  => conditions.delete(:dialect),
+              :locale   => conditions.delete(:locale)
+            }
+            coerce_localization_conditions(extractions)
+          end
           
-          def inject_localization_opts(opts)
-            # Coerce each entry into an integer
-            # If a particular entry is missing, grab the default
-            [:dialect, :locale].inject({}) do |m, n|
-              m[:"#{n}_id"] = opts.delete(n).to_i if opts[n]
-              m
+          def coerce_localization_conditions(conditions)
+            [:dialect, :locale].inject({}) do |hash, entry|
+              if conditions[entry]
+                hash[:"#{entry}_id"] = case conditions[entry]
+                  when Numeric, String then conditions[entry].to_i
+                  else conditions[entry].id
+                end
+              end
+              hash
             end
           end
           
@@ -147,12 +187,16 @@ module Gluttonberg
             end
           end
           
-          def current_dialect
-            current_localization.dialect if current_localization
-          end
-          
-          def current_locale
-            current_localization.locale if current_localization
+          # Returns the loaded localization, of it it's missing, loads the locale 
+          # based on the details stored in the current thread.
+          def localized
+            if @current_localization
+              @current_localization
+            else
+              opts = self.class.coerce_localization_conditions(current_locale)
+              load_localization(opts)
+              @current_localization
+            end
           end
           
           # If the record doesn't have a localization, this will generate a new one

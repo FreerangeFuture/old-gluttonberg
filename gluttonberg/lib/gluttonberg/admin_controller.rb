@@ -8,6 +8,11 @@ module Gluttonberg
       end
     end
     
+    # This is to be used in a before filter.
+    def set_locale
+      Thread.current[:locale] = localization_ids
+    end
+    
     # This is to be called from within a controller — i.e. the delete action — 
     # and it will display a dialog which allows users to either confirm 
     # deleting a record or cancelling the action.
