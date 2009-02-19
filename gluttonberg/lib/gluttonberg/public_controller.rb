@@ -6,12 +6,17 @@ module Gluttonberg
         self._template_roots << [Gluttonberg::Templates.root, :_template_location]
         before :store_models_and_templates
         before :find_pages
+        before :set_locale
         @@_before_filters.each {|f| before(*f) }
         @@_after_filters.each {|f| after(*f) }
       end
     end
     
     private
+    
+    def set_locale
+      Thread.current[:locale] = {:locale => params[:locale], :dialect => params[:dialect]}
+    end
     
     def find_pages
       @pages = Page.all_with_localization(:parent_id => nil, :dialect => params[:dialect], :locale => params[:locale], :order => [:position.asc])

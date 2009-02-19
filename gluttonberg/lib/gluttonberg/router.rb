@@ -57,6 +57,8 @@ module Gluttonberg
     PUBLIC_DEFER_PROC = lambda do |request, params|
       params[:full_path] = "" unless params[:full_path]
       additional_params, conditions = Gluttonberg::Router.localization_details(params)
+      # Stash the locale details in a thread local variable
+      Thread.current[:locale] = {:locale => additional_params[:locale], :dialect => additional_params[:dialect]}
       page = Gluttonberg::Page.first_with_localization(conditions.merge(:path => params[:full_path]))
       if page
         case page.description[:behaviour]
