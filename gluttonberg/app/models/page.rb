@@ -9,6 +9,7 @@ module Gluttonberg
     property :slug,             String,   :length => 1..100
     property :description_name, String,   :length => 1..100
     property :home,             Boolean,  :default => false,  :writer => :private
+    property :depth,            Integer,  :length => 2, :default => 0, :writer => :private
     property :created_at,       Time
     property :updated_at,       Time
 
@@ -136,6 +137,18 @@ module Gluttonberg
     def home=(state)
       attribute_set(:home, state)
       @home_updated = state
+    end
+    
+    # Sets the depth explicitly
+    def set_depth(new_depth)
+      @depths_need_recaching = true
+      attribute_set(:depth, new_depth)
+    end
+    
+    # Does the same as set_depth, but saves the record immediately after.
+    def set_depth!(new_depth)
+      set_depth(new_depth)
+      save
     end
 
     private
