@@ -10,8 +10,7 @@ if defined?(Merb::Plugins)
 
   load_dependency 'merb-slices', merb_version
   Merb::Plugins.add_rakefiles "gluttonberg/tasks/merbtasks", "gluttonberg/tasks/slicetasks"
-  Merb::Plugins.add_rakefiles "gluttonberg/tasks/assettasks"
-  Merb::Plugins.add_rakefiles "gluttonberg/tasks/dragtreetasks"
+  Merb::Plugins.add_rakefiles "gluttonberg/tasks/assettasks", "gluttonberg/tasks/dragtreetasks", "gluttonberg/tasks/pagetasks"
 
   # Register the Slice for the current host application
   Merb::Slices::register(__FILE__)

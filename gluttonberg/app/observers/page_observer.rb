@@ -35,19 +35,38 @@ module Gluttonberg
       end
     end
     
-    # This checks to make see if we need to regenerate paths for child-pages
-    # and adds a flag if it does.
+    
     before :update do
+      # This checks to make see if we need to regenerate paths for child-pages
+      # and adds a flag if it does.
       if attribute_dirty?(:parent_id) || attribute_dirty?(:slug)
         @paths_need_recaching = true
       end
     end
+    
+    before :save do
+      # We also need to check if the depths need to be recalculated for this
+      # page and for it's children
+      if attribute_dirty?(:parent_id) || new_record?
+        if parent_id
+          set_depth(parent.depth + 1)
+        else
+          set_depth(0)
+        end
+      end
+    end
 
-    # This has the page localizations regenerate their path if the slug or 
-    # parent for this page has changed.
     after :update do
+      # This has the page localizations regenerate their path if the slug or 
+      # parent for this page has changed.
       if paths_need_recaching?
         localizations.each { |l| l.regenerate_path! }
+      end
+      
+      # Set off some code which causes a recursion through all the child pages
+      # and updates their depth
+      if @depths_need_recaching
+        children.each { |c| c.set_depth!(depth + 1) }
       end
     end
     
