@@ -65,7 +65,8 @@ module Gluttonberg
           when :rewrite
             Gluttonberg::Router.rewrite(page, params[:full_path], request, params, additional_params)
           when :redirect
-            redirect(page.description.redirect_url(page, params))
+            destination = page.description.redirect_url(page, params)
+            {:controller => "gluttonberg/redirect", :action => "to", :redirect_url => destination}
           else
             {
               :controller => params[:controller], 
@@ -165,19 +166,34 @@ module Gluttonberg
         [{:full_path => path}, :page]
       end
       if ::Gluttonberg.localized_and_translated?
-        opts.merge!(:locale => params[:locale].slug, :dialect => params[:dialect].code)
+        opts.merge!(:locale => coerce_locale(params), :dialect => coerce_dialect(params))
       elsif ::Gluttonberg.localized?
-        opts.merge!(:locale => params[:locale].slug)
+        opts.merge!(:locale => coerce_locale(params))
       elsif ::Gluttonberg.translated?
-        opts.merge!(:dialect => params[:dialect].code)
+        opts.merge!(:dialect => coerce_dialect(params))
       end
       Merb::Router.url((Gluttonberg.standalone? ? :"gluttonberg_public_#{named_route}" : :"public_#{named_route}"), opts)
+    end
+    
+    def self.coerce_locale(params)
+      if params[:locale].is_a? String
+        params[:locale]
+      else
+        params[:locale].slug
+      end
+    end
+    
+    def self.coerce_dialect(params)
+      if params[:dialect].is_a? String
+        params[:dialect]
+      else
+        params[:dialect].code
+      end
     end
     
     Merb::Router.extensions do
       def gluttonberg_public_routes(opts = {})
         Merb.logger.info("Adding Gluttonberg's public routes")
-
 
         # Only generate DragTree routes if we are NOT running as a standalone slice
         # users of DragTree within the slice need to explicitly set the route!

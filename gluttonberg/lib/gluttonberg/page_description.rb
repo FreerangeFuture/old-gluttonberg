@@ -115,9 +115,13 @@ module Gluttonberg
     end
     
     def redirect_to(type = nil, opt = nil, &blk)
-      @redirect_option      = opt if opt
-      @redirect_block       = blk if block_given?
-      @redirect_type        = type
+      if block_given?
+        @redirect_block = blk
+        @redirect_type  = :block
+      else
+        @redirect_option  = opt if opt
+        @redirect_type    = type
+      end
       @options[:behaviour]  = :redirect
     end
     
@@ -132,7 +136,9 @@ module Gluttonberg
     def redirect_url(page, params)
       case @redirect_type
         when :remote
-          redirect_value(page, params)
+          @redirect_option
+        when :block
+          @redirect_block.call(page, params)
         when :path
           Router.localized_url(redirect_value(page, params), params)
         when :page
@@ -141,10 +147,6 @@ module Gluttonberg
     end
     
     private
-    
-    def redirect_value(page, params)
-      @redirect_block ? @redirect_block.call(page, params) : @redirect_option
-    end
     
     def path_to_page(page, params)
       localization = PageLocalization.first(
