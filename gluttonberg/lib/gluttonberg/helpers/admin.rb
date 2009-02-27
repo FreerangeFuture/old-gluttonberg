@@ -2,6 +2,18 @@ module Gluttonberg
   module Helpers
     module Admin
       
+      def page_editors?
+        glob = dir = Gluttonberg::Templates.path_for("editors") / "pages" / "*"
+        !Dir[glob].empty?
+      end
+      
+      def page_editors
+        dir = Gluttonberg::Templates.path_for("editors") / "pages"
+        Dir[dir / "*"].inject("") do |output, editor|
+          output << partial(dir / editor.match(/\/_(\w+)\.\S+/)[1])
+        end
+      end
+      
       # Returns a form for selecting the localized version of a page you want 
       # to edit.
       def localization_picker(url)

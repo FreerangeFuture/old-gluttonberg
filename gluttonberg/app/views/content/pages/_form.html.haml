@@ -11,6 +11,9 @@
     = check_box(:home)
     %label{:for => "page_home", :class => "checkbox"} Set as homepage
   
+  - if page_editors?
+    = page_editors
+  
   = block("Page Description") do
     %p.help
       Page descriptions are used to define how this page behaves. For example,
