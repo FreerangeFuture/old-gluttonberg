@@ -1,11 +1,14 @@
 module Gluttonberg
   class Help < Gluttonberg::Application
     include Gluttonberg::AdminController
-    self._template_roots = [[Gluttonberg.root / "help", :_template_location]]
-    layout "help"
+    
     # Default help paths
-    @@help_template_paths = Mash.new
-    @@help_template_paths[:gluttonberg] = Gluttonberg.root / "help"
+    @@gluttonberg_help_path = Gluttonberg.root / "help"
+    @@app_help_path = Merb.root / "help" unless Gluttonberg.standalone?
+    
+    self._template_roots = [[@@gluttonberg_help_path, :_template_location]]
+    
+    layout "help"
     
     def show
       template = self.class.path_to_template(:controller => params[:module_and_controller], :page => params[:page])
@@ -34,8 +37,13 @@ module Gluttonberg
     end
     
     def self.template_dir(opts)
-      match = opts[:controller].match(%r{^(\w+)/(\S+)})
-      "#{@@help_template_paths[match[1]]}/#{match[2]}" if match
+      if opts[:controller].index("gluttonberg")
+        match = opts[:controller].match(%r{^gluttonberg/(\S+)})
+        "#{@@gluttonberg_help_path}/#{match[1]}" if match
+      else
+        # Strip the admin module
+        "#{@@app_help_path}/#{opts[:controller].gsub("admin/", "")}"
+      end
     end
   end
 end
