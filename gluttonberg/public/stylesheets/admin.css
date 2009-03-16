@@ -252,9 +252,11 @@ input.medium,
 textarea.medium {
   width: 10em; }
 
-input.large,
-textarea.large {
+input.large {
   width: 20em; }
+
+textarea.large {
+  width: 35em; }
 
 textarea.short {
   height: 5em; }
