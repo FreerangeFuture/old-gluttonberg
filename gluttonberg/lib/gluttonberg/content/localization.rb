@@ -265,6 +265,10 @@ module Gluttonberg
             belongs_to :locale,   :class_name => "Gluttonberg::Locale"
           end
         end
+        
+        def locale_name
+          "#{locale.name} - #{dialect.name}"
+        end
       end
     end # Localization
   end # Content
