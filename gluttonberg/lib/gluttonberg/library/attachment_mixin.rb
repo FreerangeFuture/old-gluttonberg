@@ -54,7 +54,7 @@ module Gluttonberg
         # user.
         def sizes
           @thumbnail_sizes ||= if Gluttonberg.config[:thumbnails]
-            DEFAULT_THUMBNAILS.merge(Gluttonberg.config[:thumbnails])
+            Gluttonberg.config[:thumbnails].merge(DEFAULT_THUMBNAILS)
           else
             DEFAULT_THUMBNAILS
           end
