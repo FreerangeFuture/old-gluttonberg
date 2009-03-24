@@ -137,7 +137,6 @@ var AssetBrowser = {
     var target = $(this);
     if (target.is(".assetLink")) {
       var id = target.attr("href").match(/\d+$/);
-      console.log(AssetBrowser.target[0])
       AssetBrowser.target.attr("value", id);
       var name = target.find("h2").html();
       AssetBrowser.nameDisplay.html(name);
