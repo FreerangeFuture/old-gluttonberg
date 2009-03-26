@@ -1,6 +1,8 @@
 module Gluttonberg
   module Library
     class Main < Gluttonberg::Application
+      include Gluttonberg::AdminController
+      
       def index
         # Get the latest assets, ensuring that we always grab at least 15 records
         range = ((Time.now - 24.hours)..Time.now)
