@@ -90,7 +90,7 @@ module Gluttonberg
         # Returns the URL for the specified image size.
         def url_for(name)
           if custom_thumbnail
-            filename = self.class.thumbnail_sizes[name][:filename]
+            filename = self.class.sizes[name][:filename]
             "/assets/#{asset_hash}/#{filename}.jpg"
           else
             if Gluttonberg.standalone?
