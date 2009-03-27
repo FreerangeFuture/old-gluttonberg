@@ -47,3 +47,62 @@
       Or it can be ~subscript~
     %td
       Or it can be <sub>subscript</sub>
+      
+      
+%h2
+  Headings in Textile
+
+      
+%p
+  Some textile commands, such as headings, don't need to be added around an item, and can just be added at the start.
+  
+%table
+  %tr
+    %th
+      Textile modifiers
+    %th
+      Result
+      
+  %tr
+    %td
+      h1. This is a "H1" (largest and most important) heading
+    %td
+      %span{:style => "font-size: 1.5em; font-weight: bold;"}
+        This is a "H1" (largest and most important) heading
+      
+  %tr
+    %td
+      h2. This is a "H2" (second most important) heading
+    %td
+      %span{:style => "font-size: 1.3em; font-weight: bold;"}
+        This is a "H2" (second most important) heading
+      
+  %tr
+    %td
+      h3. This is a "H3" (third most important) heading
+    %td
+      %span{:style => "font-size: 1.1em; font-weight: bold;"}
+        This is a "H3" (third most important) heading
+        
+        
+%h2
+  Numbered and Bulleted Lists
+  
+%table
+  %tr
+    %th
+      Textile modifiers
+    %th
+      Result
+  
+  %tr
+    %td
+      * Item 1
+      %br
+      * Item 2
+    %td
+      %ul
+        %li
+          Item 1
+        %li
+          Item 2

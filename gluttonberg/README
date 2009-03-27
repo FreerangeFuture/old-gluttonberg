@@ -80,7 +80,7 @@ an interactive merb session and auto migrate DataMapper.
 
   $ slice -i
   $ DataMapper.auto_migrate!
-  $ Gluttonberg::User.create({:name => 'admin', :email => 'admin@localhost.localdomain', :password => 'password', :password_confirmation => 'password'})
+  $ Gluttonberg::User.create({:name => 'admin', :email => 'admin@localhost', :password => 'password', :password_confirmation => 'password'})
 
 This migrates the database to create the tables and then creates an initial user
 to be able to login with.
