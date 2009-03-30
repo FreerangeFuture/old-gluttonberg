@@ -106,3 +106,73 @@
           Item 1
         %li
           Item 2
+  %tr
+    %td
+      \# Item 1
+      %br
+      \# Item 2
+    %td
+      %ol
+        %li
+          Item 1
+        %li
+          Item 2
+          
+          
+%h2
+  Adding hyperlinks:
+  
+%table
+  %tr
+    %th
+      Textile modifiers
+    %th
+      Result
+  %tr
+    %td
+      "link name":http://www.google.com
+    %td
+      %a{:href => "http://www.google.com"}
+        link name
+      
+%h2
+  Adding items from your Asset Library
+  
+%p
+  Sometimes you might need to add a picture or a link to another item from your Asset Library.
+  
+%p
+  %strong
+    NOTE:
+  You will need the
+  %em
+    asset number
+  of the asset you want to use. This asset number can be found in the web address within the Asset Library.
+  
+%table
+  %tr
+    %th
+      Textile modifiers
+    %th
+      Result
+  %tr
+    %td
+      !asset:4!
+    %td
+      = image_tag "help/help-kitty.jpg"
+      
+  %tr
+    %td
+      !asset:4/thumb!:asset:4
+    %td
+      = image_tag "help/help-kitty-small.jpg"
+  %tr
+    %td
+      "filename":asset:4
+    %td
+      Example
+  %tr
+    %td
+      "filename":asset:4/preview
+    %td
+      Example
