@@ -7,6 +7,10 @@
 %h2= @asset.name
 %p{:id => "categoryAndType", :class => @asset.category}
   = h(@asset.asset_type.name)
+  
+%p{:id => "assetID"}
+  %strong= @asset.id
+  Asset ID
 
 - unless @asset.description.blank?
   %p#description= @asset.description
