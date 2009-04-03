@@ -72,7 +72,8 @@ module Gluttonberg
             if (clean_filename == '_thumb_small.jpg') || (clean_filename == '_thumb_large.jpg')
               clean_filename = 'thumb.jpg'
             end
-
+            
+            attribute_set(:mime_type, new_file[:content_type])
             attribute_set(:file_name, clean_filename)
             attribute_set(:size, new_file[:size])
             @file = new_file

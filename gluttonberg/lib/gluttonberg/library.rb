@@ -74,6 +74,7 @@ module Gluttonberg
       ensure_type('Uncompressed Video', 'video/raw', AssetCategory.video_category)
       ensure_type('Mpeg Playlist (mxu,m4u)', 'video/vnd.mpegurl', AssetCategory.video_category)
       ensure_type('Avi Video (avi)', 'video/x-msvideo', AssetCategory.video_category)
+      ensure_type('Flash Video', 'video/x-flv', AssetCategory.video_category)
 
       ensure_type('Generic Document', 'application/x-csh application/x-dvi application/oda application/pgp-encrypted application/pgp-keys application/pgp-signature', AssetCategory.document_category)
       ensure_type('Calendar Document', 'text/calendar text/x-vcalendar', AssetCategory.document_category)
