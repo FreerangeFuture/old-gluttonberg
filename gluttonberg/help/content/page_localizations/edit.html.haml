@@ -13,36 +13,56 @@
   
 %table
   %tr
-    %th
+    %th{:width => "33%"}
+      Formatting
+    %th{:width => "33%"}
       Textile modifiers
-    %th
+    %th{:width => "33%"}
       Result
+      
   %tr
+    %th
+      Bold
     %td
       This is *bold* text
     %td
       This is <strong>bold</strong> text
+      
   %tr
+    %th
+      Italic
     %td
       This is _italic_ text
     %td
       This is <em>italic</em> text
+      
   %tr
+    %th
+      Underline
     %td
       You can +underline+ text too
     %td
       You can <u>underline</u> text too
+      
   %tr
+    %th
+      Strikethrough
     %td
       Or -strikethrough- text
     %td
       Or <s>strikethrough</s> text
+      
   %tr
+    %th
+      Superscript
     %td
       Text can be ^superscript^
     %td
       Text can be <sup>superscript</sup>
+      
   %tr
+    %th
+      Subscript
     %td
       Or it can be ~subscript~
     %td
@@ -58,12 +78,16 @@
   
 %table
   %tr
-    %th
+    %th{:width => "33%"}
+      Formatting
+    %th{:width => "33%"}
       Textile modifiers
-    %th
+    %th{:width => "33%"}
       Result
       
   %tr
+    %th
+      H1 Heading
     %td
       h1. This is a "H1" (largest and most important) heading
     %td
@@ -71,6 +95,8 @@
         This is a "H1" (largest and most important) heading
       
   %tr
+    %th
+      H2 Heading
     %td
       h2. This is a "H2" (second most important) heading
     %td
@@ -78,6 +104,8 @@
         This is a "H2" (second most important) heading
       
   %tr
+    %th
+      H3 Heading
     %td
       h3. This is a "H3" (third most important) heading
     %td
@@ -90,12 +118,16 @@
   
 %table
   %tr
-    %th
+    %th{:width => "33%"}
+      Formatting
+    %th{:width => "33%"}
       Textile modifiers
-    %th
+    %th{:width => "33%"}
       Result
   
   %tr
+    %th
+      Bulleted List
     %td
       * Item 1
       %br
@@ -107,6 +139,8 @@
         %li
           Item 2
   %tr
+    %th
+      Numbered List
     %td
       \# Item 1
       %br
@@ -124,11 +158,15 @@
   
 %table
   %tr
-    %th
+    %th{:width => "33%"}
+      Formatting
+    %th{:width => "33%"}
       Textile modifiers
-    %th
+    %th{:width => "33%"}
       Result
   %tr
+    %th
+      Hyperlink
     %td
       "link name":http://www.google.com
     %td
@@ -151,30 +189,100 @@
   
 %table
   %tr
-    %th
+    %th{:width => "33%"}
+      Formatting
+    %th{:width => "33%"}
       Textile modifiers
-    %th
+    %th{:width => "33%"}
       Result
+      
   %tr
+    %th
+      Add an item from your Asset Library
     %td
       !asset:4!
     %td
       = image_tag "help/help-kitty.jpg"
       
   %tr
+    %th
+      Add a thumbnail from your Asset Library
     %td
       !asset:4/thumb!:asset:4
     %td
       = image_tag "help/help-kitty-small.jpg"
   %tr
+    %th
+      Link to an item in your Asset Library
     %td
       "filename":asset:4
     %td
       %a{:href => "/images/help/help-kitty.jpg"}
         filename
   %tr
+    %th
+      Link to a thumbnail in your Asset Library
     %td
       "filename":asset:4/preview
     %td
       %a{:href => "/images/help/help-kitty-small.jpg"}
         filename
+        
+        
+        
+%h2
+  Adding a table
+  
+
+
+%table
+  %tr
+    %th{:width => "33%"}
+      Formatting
+    %th{:width => "33%"}
+      Textile modifiers
+    %th{:width => "33%"}
+      Result
+      
+  %tr
+    %th
+      Table
+    %td
+      | name | age | sex |
+      %br
+      | joan | 24 | f |
+      %br
+      | archie | 29 | m |
+      %br
+      | bella | 45 | f |
+      %br
+    %td
+      %table
+        %tr
+          %td
+            name
+          %td
+            age
+          %td
+            sex
+        %tr
+          %td
+            joan
+          %td
+            24
+          %td
+            f
+        %tr
+          %td
+            archie
+          %td
+            29
+          %td
+            m
+        %tr
+          %td
+            bella
+          %td
+            45
+          %td
+            f

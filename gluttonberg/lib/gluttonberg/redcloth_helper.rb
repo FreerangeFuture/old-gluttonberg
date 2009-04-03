@@ -77,13 +77,11 @@ module RedCloth::Formatters::HTML
       param = r[4]
       asset = Gluttonberg::Asset.get(asset_id)
       if asset then
-        if param == 'thumb' then
-          result_href = asset.thumb_small_url
-        elsif param == 'preview' then
-          result_href = asset.thumb_large_url
-        else
-          result_href = asset.url
-        end
+        if param and asset.url_for(param.to_sym)
+         result_href = asset.url_for(param.to_sym)
+       else
+         result_href = asset.url
+       end
       end
     end
     result_href
