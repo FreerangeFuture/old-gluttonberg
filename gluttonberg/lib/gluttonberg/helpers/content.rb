@@ -12,7 +12,7 @@ module Gluttonberg
         if content.current_localization.blank? 
         	#raise Gluttonberg::ContentRenderError, "Don't know how to render this content"
         	puts "Localization not found"
-        	raise Gluttonberg::ExceptionsMixin.unauthenticated
+        	#raise Gluttonberg::ExceptionsMixin.unauthenticated
         	return
         end
         	
