@@ -31,15 +31,16 @@ module Gluttonberg
         end
       end
 
-      def update        
+      def update 
+    		#if localization record alread exist then update its content
         unless @page_localization.contents.blank?       
 	        unless @page_localization.update_attributes(params["gluttonberg::page_localization"]) && !@page_localization.dirty?	          
 	          render :edit
 	        end              
-        else      
-      	
+        else #if localization content records does not exist then create new record here
+      	  
       	  @page_localization.empty_contents.each do |content|      	
-      		 name = Extlib::Inflection.underscore(content.class.to_s.split("::")[1]).pluralize
+      		name = Extlib::Inflection.underscore(content.class.to_s.split("::")[1]).pluralize
 	      	val = params["gluttonberg::page_localization"]["contents"][name][content.id.to_s]["text"]
 	      	if content.model.localized?                  	
 	              content.localizations.create(:parent => content, :page_localization => @page_localization , :text=>val)            

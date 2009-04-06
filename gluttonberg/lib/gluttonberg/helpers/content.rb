@@ -11,8 +11,9 @@ module Gluttonberg
         content = content_for(section_name)
         if content.current_localization.blank? 
         	#raise Gluttonberg::ContentRenderError, "Don't know how to render this content"
-        	puts "Localization not found"
-        	#raise Gluttonberg::ExceptionsMixin.unauthenticated
+        	puts "Localization not found"        	
+        	#Exception#not_found
+        	#raise Merb::ControllerExceptions::NotFound
         	return
         end
         	

@@ -41,6 +41,8 @@ module Gluttonberg
     end
     
         # Returns an array of content 
+        #it is being used when localization content is not found then we try to find 
+        #content info to take descion for showing localization content form
     def empty_contents
       @contents = begin
         # First collect the localized content

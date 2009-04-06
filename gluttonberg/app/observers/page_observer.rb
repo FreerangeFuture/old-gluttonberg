@@ -26,6 +26,7 @@ module Gluttonberg
           association = send(section[:type].to_s.pluralize)
           content = association.create(:section_name => name)
           # Create each localization
+# stop autogeneration of localization content record.          
 #          if content.model.localized?
 #            localizations.all.each do |localization|
 #              content.localizations.create(:parent => content, :page_localization => localization)
