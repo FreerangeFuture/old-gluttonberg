@@ -31,12 +31,23 @@ module Gluttonberg
         end
       end
 
-      def update
-        if @page_localization.update_attributes(params["gluttonberg::page_localization"]) || !@page_localization.dirty?
-          redirect slice_url(:page, params[:page_id])
-        else
-          render :edit
-        end
+      def update        
+        unless @page_localization.contents.blank?       
+	        unless @page_localization.update_attributes(params["gluttonberg::page_localization"]) && !@page_localization.dirty?	          
+	          render :edit
+	        end              
+        else      
+      	
+      	  @page_localization.empty_contents.each do |content|      	
+      		 name = Extlib::Inflection.underscore(content.class.to_s.split("::")[1]).pluralize
+	      	val = params["gluttonberg::page_localization"]["contents"][name][content.id.to_s]["text"]
+	      	if content.model.localized?                  	
+	              content.localizations.create(:parent => content, :page_localization => @page_localization , :text=>val)            
+	         end
+          end  
+        end	
+      
+        redirect slice_url(:page, params[:page_id])        
       end
 
       def destroy

@@ -18,7 +18,7 @@ module Gluttonberg
 
     attr_accessor :paths_need_recaching, :content_needs_saving
 
-    # Write an explicit setter for the slug so we can check it’s not a blank 
+    # Write an explicit setter for the slug so we can check itâ€™s not a blank 
     # value. This stops it being overwritten with an empty string.
     def slug=(new_slug)
       attribute_set(:slug, new_slug) unless new_slug.blank?
@@ -28,15 +28,27 @@ module Gluttonberg
     def contents
       @contents ||= begin
         # First collect the localized content
-        contents = Gluttonberg::Content.localization_associations.inject([]) do |memo, assoc|
-          memo += send(assoc).all
+        contents = Gluttonberg::Content.localization_associations.inject([]) do |memo, assoc|                         memo += send(assoc).all              
         end
+                                
         # Then grab the content that belongs directly to the page
-        Gluttonberg::Content.non_localized_associations.inject(contents) do |memo, assoc|
+        Gluttonberg::Content.non_localized_associations.inject(contents) do |memo, assoc|        
           contents += page.send(assoc).all
         end
+        
+        
       end
     end
+    
+        # Returns an array of content 
+    def empty_contents
+      @contents = begin
+        # First collect the localized content
+        contents = Gluttonberg::Content.content_associations.inject([]) do |memo, assoc|                        	memo += page.send(assoc).all                  
+        end        
+      end
+    end
+
     
     # Updates each localized content record and checks their validity
     def contents=(params)
@@ -82,7 +94,7 @@ module Gluttonberg
     
     private
     
-    def update_content_localizations
+    def update_content_localizations    
       contents.each { |c| c.save } if self.content_needs_saving
     end
   end

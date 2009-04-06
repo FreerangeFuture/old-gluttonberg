@@ -26,13 +26,14 @@ module Gluttonberg
           association = send(section[:type].to_s.pluralize)
           content = association.create(:section_name => name)
           # Create each localization
-          if content.model.localized?
-            localizations.all.each do |localization|
-              content.localizations.create(:parent => content, :page_localization => localization)
-            end
-          end
+#          if content.model.localized?
+#            localizations.all.each do |localization|
+#              content.localizations.create(:parent => content, :page_localization => localization)
+#            end
+#          end
         end
       end
+      
     end
     
     
@@ -57,6 +58,7 @@ module Gluttonberg
     end
 
     after :update do
+    
       # This has the page localizations regenerate their path if the slug or 
       # parent for this page has changed.
       if paths_need_recaching?

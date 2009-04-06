@@ -5,7 +5,7 @@ module Gluttonberg
       
       provides :htmlf, :html, :js, :xml, :json
       
-      def show
+      def show        
         if content_type == :htmlf
           render(:template => page_template, :layout => false, :format => :html)
         else

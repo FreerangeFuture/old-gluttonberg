@@ -9,6 +9,13 @@ module Gluttonberg
         # At present this generates a bunch of queries. Eventually we should 
         # look at caching section names to save some DB hits.
         content = content_for(section_name)
+        if content.current_localization.blank? 
+        	#raise Gluttonberg::ContentRenderError, "Don't know how to render this content"
+        	puts "Localization not found"
+        	raise Gluttonberg::ExceptionsMixin.unauthenticated
+        	return
+        end
+        	
         render_method = :"render_#{content.content_type}"
         if respond_to? render_method
           send(:"render_#{content.content_type}", content, opts)
