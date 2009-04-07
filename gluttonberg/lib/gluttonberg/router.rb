@@ -216,14 +216,14 @@ module Gluttonberg
         # Build the full path, which includes the format. This needs to account
         # for the simple case where we match from "/"
         full_path = if Gluttonberg.localized? || Gluttonberg.translated?
-          path + "/:full_path(.:format)"
+          "/:full_path(.:format)"
         else
-          path + ":full_path(.:format)"
+          ":full_path(.:format)"
         end
 
         controller = Gluttonberg.standalone? ? "content/public" : "gluttonberg/content/public"
         # Set up the defer to block
-        match(path + "/:full_path(.:format)", :full_path => /[a-z0-9\-_\/]+/).defer_to(
+        match(path + full_path, :full_path => /[a-z0-9\-_\/]+/).defer_to(
           {:controller => controller, :action => "show"}, 
           &Gluttonberg::Router::PUBLIC_DEFER_PROC
         ).name(:public_page)
