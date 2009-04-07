@@ -5,6 +5,7 @@
   %h1 Login
   
   = text_field(:name => "email", :value => params[:email], :label => "E-mail", :class => "large")
+  %br
   = password_field(:name => "password", :label => "Password", :class => "medium")
 
   = submit("Login", :class => "buttonGrey")
