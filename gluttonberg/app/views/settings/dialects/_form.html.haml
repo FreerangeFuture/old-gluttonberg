@@ -2,7 +2,9 @@
   = error_messages_for(@dialect)
   = block("Dialect") do
     = text_field(:code, :label => "Code")
+    %br
     = text_field(:name, :label => "Name")
+    %br
     = check_box(:default)
     %label{:for => "dialect_default", :class => "checkbox"} Make default
   

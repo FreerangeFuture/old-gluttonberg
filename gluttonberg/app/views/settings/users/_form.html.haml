@@ -3,10 +3,12 @@
   
   = block("Details") do
     = text_field(:name, :class => "large", :label => "Name")
+    %br
     = text_field(:email, :class => "large", :label => "E-mail")
     
   = block("Password") do
     = password_field(:password, :class => "medium", :label => "Password")
+    %br
     = password_field(:password_confirmation, :class => "medium", :label => "Confirm Password")
     
   = form_controls(slice_url(:users))

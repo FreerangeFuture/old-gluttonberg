@@ -4,10 +4,14 @@
   
   = block("General") do
     = text_field(:name, :label => "Name", :id => "page_title")
+    %br
     = text_field(:navigation_label, :label => "Navigation Label")
+    %br
     = text_field(:slug, :label => "Slug", :id => 'page_slug')
+    %br
     - unless @pages.empty?
       = select(:parent_id, :collection => @pages, :value_method => "id", :text_method => "name", :label => "Parent page", :include_blank => true)
+    %br
     = check_box(:home)
     %label{:for => "page_home", :class => "checkbox"} Set as homepage
   
@@ -20,7 +24,9 @@
       all of it’s contents may be editable, or it may be generated dynamically.
       
     - Gluttonberg::PageDescription.all.each do |name, desc|
+      %br
       = radio_button(:description_name, :value => name)
       %label{:for => "gluttonberg::page_description_name", :class => "inline"}= desc[:label]
+      %br
    
   = form_controls(slice_url(:pages))
