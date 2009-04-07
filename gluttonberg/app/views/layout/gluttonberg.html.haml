@@ -27,7 +27,8 @@
           %br/
           %strong= session.user.name
           %a{:href => url(:gluttonberg_logout)} logout
-    
+    %div
+      &nbsp;
     %div#wrapper
       %h1#pageTitle= @page_title || "No title set"
       = contextual_help
