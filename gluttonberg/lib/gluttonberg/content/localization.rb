@@ -139,14 +139,18 @@ module Gluttonberg
           end
           
           def coerce_localization_conditions(conditions)
-            [:dialect, :locale].inject({}) do |hash, entry|
-              if conditions[entry]
-                hash[:"#{entry}_id"] = case conditions[entry]
-                  when Numeric, String then conditions[entry].to_i
-                  else conditions[entry].id
+            if conditions
+              [:dialect, :locale].inject({}) do |hash, entry|
+                if conditions[entry]
+                  hash[:"#{entry}_id"] = case conditions[entry]
+                    when Numeric, String then conditions[entry].to_i
+                    else conditions[entry].id
+                  end
                 end
+                hash
               end
-              hash
+            else
+              {}
             end
           end
           
