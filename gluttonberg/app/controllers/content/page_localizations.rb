@@ -4,7 +4,7 @@ module Gluttonberg
       include Gluttonberg::AdminController
       
       before :find_localization, :exclude => [:index, :new, :create]
-      before :create_localization_content, :only => [:edit]
+      
       def index
         @page_localizations = PageLocalization.all
         display @page_localizations
@@ -66,11 +66,7 @@ module Gluttonberg
         @page_localization = PageLocalization.get(params[:id])
         raise NotFound unless @page_localization
       end
-      def create_localization_content
-                       
-          #@page_localization.contents
-      end
-
+      
     end
   end  
 end
