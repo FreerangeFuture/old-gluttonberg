@@ -168,7 +168,7 @@ JAVASCRIPT_CODE
       # For adding a tab to the tab bar. It will automatically mark the current
       # tab by examining the request path.
       def tab(label, url)
-        if request.env["REQUEST_PATH"].match(%r{^#{url}})
+        if request.env["REQUEST_PATH"] && request.env["REQUEST_PATH"].match(%r{^#{url}})
           tag(:li, link_to(label, url), :class => "current")
         else
           tag(:li, link_to(label, url))
