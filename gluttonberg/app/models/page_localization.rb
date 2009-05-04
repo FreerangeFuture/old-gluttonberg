@@ -28,7 +28,8 @@ module Gluttonberg
     def contents
       @contents ||= begin
         # First collect the localized content
-        contents = Gluttonberg::Content.localization_associations.inject([]) do |memo, assoc|                         memo += send(assoc).all              
+        contents = Gluttonberg::Content.localization_associations.inject([]) do |memo, assoc|
+                                 memo += send(assoc).all              
         end
                                 
         # Then grab the content that belongs directly to the page
@@ -46,11 +47,42 @@ module Gluttonberg
     def empty_contents
       @contents = begin
         # First collect the localized content
-        contents = Gluttonberg::Content.content_associations.inject([]) do |memo, assoc|                        	memo += page.send(assoc).all                  
+        contents = Gluttonberg::Content.content_associations.inject([]) do |memo, assoc| 
+         memo += page.send(assoc).all                  
         end        
       end
     end
+    
+  
+    def save_contents(params)
+          error_flag = false
+          local_collection = []
+      	  self.empty_contents.each do |content|      	
+      		 name = Extlib::Inflection.underscore(content.class.to_s.split("::")[1]).pluralize
+	      	 val = params["gluttonberg::page_localization"]["contents"][name][content.id.to_s]
+	      	 if content.model.localized?           	      	      
+	      	      attributes = val.merge( :parent => content, :page_localization => self )
+	              local_collection << content.localizations.new(attributes)
+	              error_flag = true unless content.localizations.last.valid?     
+	         end	        
+         end                  
+          unless error_flag
+            local_collection.each do |item|
+              item.save
+            end
+          end
+        return error_flag
+    end
+    
 
+    #create empty content for localizations
+    def generate_empty_contents
+            empty_contents.each do |content|
+	      	if content.model.localized?                  	
+	              content.localizations.new(:parent => content, :page_localization => self)            
+	         end
+          end
+    end
     
     # Updates each localized content record and checks their validity
     def contents=(params)

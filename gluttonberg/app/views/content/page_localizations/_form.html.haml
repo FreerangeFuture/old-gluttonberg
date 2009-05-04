@@ -7,12 +7,8 @@
     = text_field(:slug, :label => "Slug")
     
   = block("Content") do  
-    - unless @page_localization.contents.blank?
-      - for content in @page_localization.contents      
-        = content_editor(content)
-    - else    
-      - for content in @page_localization.empty_contents      
-        = content_editor(content)
+    - for content in @page_localization.contents      
+      = content_editor(content)
      
     
   

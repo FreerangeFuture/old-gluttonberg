@@ -4,7 +4,7 @@ module Gluttonberg
       include Gluttonberg::AdminController
       
       before :find_localization, :exclude => [:index, :new, :create]
-
+      before :create_localization_content, :only => [:edit]
       def index
         @page_localizations = PageLocalization.all
         display @page_localizations
@@ -19,6 +19,9 @@ module Gluttonberg
 
       def edit
         only_provides :html
+        if @page_localization.contents.blank?
+          @page_localization.generate_empty_contents           
+        end
         render
       end
 
@@ -31,24 +34,22 @@ module Gluttonberg
         end
       end
 
-      def update 
-    		#if localization record alread exist then update its content
+      def update
+      #if localization record alread exist then update its content
+        error_flag  = false
         unless @page_localization.contents.blank?       
 	        unless @page_localization.update_attributes(params["gluttonberg::page_localization"]) && !@page_localization.dirty?	          
-	          render :edit
+	          error_flag = true;
 	        end              
         else #if localization content records does not exist then create new record here
-      	  
-      	  @page_localization.empty_contents.each do |content|      	
-      		name = Extlib::Inflection.underscore(content.class.to_s.split("::")[1]).pluralize
-	      	val = params["gluttonberg::page_localization"]["contents"][name][content.id.to_s]["text"]
-	      	if content.model.localized?                  	
-	              content.localizations.create(:parent => content, :page_localization => @page_localization , :text=>val)            
-	         end
-          end  
+      	        error_flag = @page_localization.save_contents params                  
         end	
-      
-        redirect slice_url(:page, params[:page_id])        
+         if error_flag
+            render :edit 
+         else   
+          redirect slice_url(:page, params[:page_id])        
+         end
+       
       end
 
       def destroy
@@ -64,6 +65,10 @@ module Gluttonberg
       def find_localization
         @page_localization = PageLocalization.get(params[:id])
         raise NotFound unless @page_localization
+      end
+      def create_localization_content
+                       
+          #@page_localization.contents
       end
 
     end
