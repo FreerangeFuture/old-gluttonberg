@@ -64,8 +64,11 @@ module Gluttonberg
       module InstanceMethods
         def file=(new_file)
           unless new_file.blank?
+            Merb.logger.info("\nFILENAME: #{new_file[:filename]} \n\n")
+            
             # Forgive me this naive sanitisation, I'm still a regex n00b
-            clean_filename = new_file[:filename].gsub(" ", "_").gsub(/[^A-Za-z0-9\-_.]/, "").downcase
+            clean_filename = new_file[:filename].split(%r{[\\|/]}).last
+            clean_filename = clean_filename.gsub(" ", "_").gsub(/[^A-Za-z0-9\-_.]/, "").downcase
 
             # _thumb.jpg is a reserved name for the thumbnailing system, so if the user
             # has a file with that name rename it.

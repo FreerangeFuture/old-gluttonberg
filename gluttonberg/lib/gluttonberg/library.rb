@@ -45,7 +45,7 @@ module Gluttonberg
       ensure_type('Unknown Binary', 'binary application', AssetCategory.binary_category)
       ensure_type('Unknown File',   'multi-part model message unknown', AssetCategory.uncategorised_category)
 
-      ensure_type('Jpeg Image', 'image/jpeg', AssetCategory.image_category)
+      ensure_type('Jpeg Image', 'image/jpeg image/pjpeg', AssetCategory.image_category)
       ensure_type('Gif Image', 'image/gif', AssetCategory.image_category)
       ensure_type('Png Image', 'image/png', AssetCategory.image_category)
       ensure_type('Tiff Image', 'image/tiff', AssetCategory.image_category)
