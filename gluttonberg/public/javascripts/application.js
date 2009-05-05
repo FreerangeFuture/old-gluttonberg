@@ -22,7 +22,6 @@ var Dialog = {
         object.displayPadding += parseInt(object.display.css(this.PADDING_ATTRS[i]).match(/\d+/)[0]);
       };
     }
-    //console.log(object.frame.innerHeight() - (offsetHeight + object.displayPadding))
     object.display.height(object.frame.innerHeight() - (offsetHeight + object.displayPadding));
   }
 };
