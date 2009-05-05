@@ -69,7 +69,7 @@ var Help = {
       this.overlay.show();
       this.frame.show();
     }
-  },
+  }
 };
 
 $(document).ready(function() {
@@ -291,7 +291,7 @@ function showAssetBrowser(config){
 }
 
 function writeAssetToField(fieldId){
-  field = $("#" + fieldId);
+  var field = $("#" + fieldId);
   field.attr("value", id);
 }
 
