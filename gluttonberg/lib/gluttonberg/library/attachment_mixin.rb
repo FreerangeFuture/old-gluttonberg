@@ -3,8 +3,9 @@ module Gluttonberg
     module AttachmentMixin
       DEFAULT_THUMBNAILS = {
         :small_thumb => {:label => "Small Thumb", :filename => "_thumb_small", :width => 110, :height => 75},
-        :large_thumb => {:label => "Large Thumb", :filename => "_thumb_large", :width => 250, :height => 200}
+        :large_thumb => {:label => "Large Thumb", :filename => "_thumb_large", :width => 250, :height => 200} 
       }
+      MAX_IMAGE_SIZE = {:width => 500, :height => 400}
 
       def self.included(klass)
         klass.class_eval do
@@ -43,7 +44,8 @@ module Gluttonberg
           assets = Gluttonberg::Asset.all
           assets.each do |asset|
             p "thumb-nailing '#{asset.file_name}'"
-            asset.generate_image_thumb
+            
+	    asset.generate_image_thumb
             asset.save
           end
           'done' # this just makes the output nicer when running from slice -i
@@ -59,7 +61,11 @@ module Gluttonberg
             DEFAULT_THUMBNAILS
           end
         end
+	def max_image_size
+	  Gluttonberg.config[:max_image_size] || MAX_IMAGE_SIZE
+        end
       end
+      
       
       module InstanceMethods
         def file=(new_file)
@@ -116,24 +122,31 @@ module Gluttonberg
         def location_on_disk
           directory / file_name
         end
+	
+	def original_file_on_disk
+	  directory / "original_"+file_name
+	end
 
         def directory
           Library.root / asset_hash
         end
 
-        def generate_thumb
-          # first assign the default thumbs for the category
+        def generate_thumb_and_proper_resolution
+          
+	  # first assign the default thumbs for the category
           # then spawn a worker to generate thumbs if possible and update
           asset_id_to_process = self.id
           run_later do
             asset = Asset.get(asset_id_to_process)
             if asset
+	      asset.generate_proper_resolution
               asset.generate_image_thumb
               asset.save!
             end
           end
         end
 
+	
         # TODO: generate thumbnails with the correct extension
         def generate_image_thumb
           if self.class.generate_thumbs
@@ -141,20 +154,19 @@ module Gluttonberg
               ImageScience.with_image(location_on_disk) do |img|
                 self.class.sizes.each_pair do |name, config|
                   path = File.join(directory, "#{config[:filename]}.jpg")
-
-                  if img.height >= img.width
-                    if img.height > config[:height]
-                      img.thumbnail(config[:height]) { |thumb| thumb.save(path) }
-                    else
-                      img.save(path)
-                    end
-                  else
-                    if img.width > config[:width]
-                      img.thumbnail(config[:width]) { |thumb| thumb.save(path) }
-                    else
-                      img.save(path)
-                    end
-                  end
+		  if img.height >= img.width
+		    if img.height > config[:height]
+		      img.thumbnail(config[:height]) { |thumb| thumb.save(path) }
+		    else
+		      img.save(path)
+		    end
+		  else
+		    if img.width > config[:width]
+		      img.thumbnail(config[:width]) { |thumb| thumb.save(path) }
+		    else
+		      img.save(path)
+		    end
+		  end               
                 end
                 attribute_set(:custom_thumbnail, true)
               end
@@ -166,8 +178,40 @@ module Gluttonberg
           end
         end
 
+	def generate_proper_resolution
+    
+          if self.class.generate_thumbs
+            begin
+              ImageScience.with_image(location_on_disk) do |img|
+                  config = self.class.max_image_size
+                  path = File.join(directory, file_name)
+		    if img.height >= img.width
+		      if img.height > config[:height]
+			make_backup
+			img.thumbnail(config[:height]) { |thumb| thumb.save(path) }		      
+		      end
+		    else
+		      if img.width > config[:width]
+			make_backup
+			img.thumbnail(config[:width]) { |thumb| thumb.save(path) }
+		      end
+		    end                 
+                #end
+                #attribute_set(:custom_thumbnail, true)
+              end
+            rescue TypeError => error
+              # ignore TypeErrors, just means it wasn't a supported image
+            end
+          else
+            attribute_set(:custom_thumbnail, false)
+          end
+        end
         private
 
+	def make_backup
+	    FileUtils.cp location_on_disk, original_file_on_disk
+            FileUtils.chmod(0755,original_file_on_disk)
+	end
         def run_later(&blk)
           Merb::Dispatcher.work_queue << blk
         end
@@ -181,10 +225,12 @@ module Gluttonberg
         def update_file_on_disk
           if file
             FileUtils.mkdir(directory) unless File.exists?(directory)
-            FileUtils.cp file[:tempfile].path, location_on_disk
+	    FileUtils.cp file[:tempfile].path, location_on_disk
             FileUtils.chmod(0755, location_on_disk)
+	   
             # new file has been upload, if it is an image, then create a thumbnail
-            generate_thumb
+            
+	    generate_thumb_and_proper_resolution
           end
         end
 
