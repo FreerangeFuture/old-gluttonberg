@@ -1,0 +1,7 @@
+h1. Page Description DSL
+
+h2. Limits
+
+Each page description can optionally have a limit set. This defines how many times it may be used in a site. It defaults to unlimited. The option may be set to either an integer — indicating the maximum — or a range — indicating the minimum and maximum.
+
+
