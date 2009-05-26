@@ -3,9 +3,8 @@ if defined?(Merb::Plugins)
   merb_version = ">= 1.0"
   merb_parts_version = ">= 0.9.8"
   datamapper_version = ">= 0.9.6"
-
- # wow a comment
-
+  
+  # Require everything relative to this file.
   $:.unshift File.dirname(__FILE__)
 
   load_dependency 'merb-slices', merb_version
@@ -15,7 +14,12 @@ if defined?(Merb::Plugins)
   # Register the Slice for the current host application
   Merb::Slices::register(__FILE__)
   
-  # Default configuration
+  # Default configuration. This can be modified by users in an application’s 
+  # init.rb inside of the before_app_loads block.
+  #
+  # Merb::BootLoader.before_app_loads do
+  #   Merb::Slices::config[:gluttonberg][:localize] = false
+  # end
   Merb::Slices::config[:gluttonberg] = {
     :layout         => :gluttonberg,
     :localize       => true,
@@ -25,10 +29,7 @@ if defined?(Merb::Plugins)
     :template_dir   => Merb.root / "templates"
   }.merge!(Merb::Slices::config[:gluttonberg])
   
-  # All Slice code is expected to be namespaced inside a module
   module Gluttonberg
-    
-    # Slice metadata
     self.description = "A content management system"
     self.version = "0.0.4"
     self.author = "Freerange Future (www.freerangefuture.com)"
@@ -43,18 +44,23 @@ if defined?(Merb::Plugins)
     def self.init
     end
     
-    # Activation hook - runs after AfterAppLoads BootLoader
+    # Activation hook - runs after AfterAppLoads BootLoader. This is where we 
+    # keep the majority of the code needed for bootstrapping the slice.
     def self.activate
       # Have to re-add the HTML mime-type again to ensure that it gets it's 
       # proper weighting, otherwise it seems our :htmlf format is swiping it.
       Merb.add_mime_type(:htmlf, :to_htmlf, %w(text/html application/xhtml+xml), {}, 0.1)
       Merb.add_mime_type(:html, :to_html, %w(text/html application/xhtml+xml), {}, 1)
       
+      # Call set up on the various components inside of Gluttonberg. If you’re 
+      # not sure where some configuration or defaults are being set, these 
+      # modules are the first place to look.
       PageDescription.setup
       Content.setup
       Library.setup
       Templates.setup
 
+      # 
       Merb::Authentication.user_class = Gluttonberg::User
       Merb::Authentication.activate!(:default_password_form)
       Merb::Plugins.config[:"merb-auth"][:login_param] = "email"
@@ -73,25 +79,34 @@ if defined?(Merb::Plugins)
     def self.deactivate
     end
     
+    # The actual routing setup is palmed off to our Router module. This is 
+    # purely because it’s so big and nasty, it’d just clutter up this file.
     def self.setup_router(scope)
       Gluttonberg::Router.setup(scope)
     end
     
-   # Bunch of methods related to the configuration
-   def self.localized_and_translated?
+    # Checks to see if Gluttonberg has been configured to have a locale/location
+    # and a translation.
+    def self.localized_and_translated?
       config[:localize] && config[:translate]
-   end
+    end
    
+    # Check to see if Gluttonberg is configured to be localized.
     def self.localized?
       config[:localize]
     end
     
+    # Check to see if Gluttonberg has been configured to translate contents.
     def self.translated?
       config[:translate]
     end
   end
   
+  # Auto-load models. This isn’t supported in merb-slices by default.
   Gluttonberg.push_path(:models, Gluttonberg.root / "app" / "models")
+  
+  # Don’t require the observers in tests. They interfere with the fixture
+  # generation.
   unless Merb.environment == 'test'
     Gluttonberg.push_path(:observers, Gluttonberg.root / "app" / "observers")
   end
@@ -124,7 +139,7 @@ if defined?(Merb::Plugins)
   # Stdlib dependencies
   require 'digest/sha1'
 
-  # Various mixins and classes
+  # The various mixins and classses that make up Gluttonberg.
   require "gluttonberg/content"
   require "gluttonberg/library"
   require "gluttonberg/router"

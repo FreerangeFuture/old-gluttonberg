@@ -1,5 +1,9 @@
 module Gluttonberg
+  # This mixin is used to integrate arbitrary controllers into Gluttonberg’s 
+  # backend. It sets the layout, mixes in a bunch of helpers for forms and 
+  # navigation widgets and adds the authentication hooks.
   module AdminController
+    # Use the included hook to set up the layout and install the authentication
     def self.included(klass)
       klass.class_eval do
         self._template_roots << [Gluttonberg.root / "app" / "views", :_template_location]
@@ -49,32 +53,41 @@ module Gluttonberg
       end
     end
     
-    # Returns an array containing the current page, total page count and 
-    # the results
+    # This is our friendly paginator class. It’s job is to help navigate through
+    # pages of records, it is particularly useful within views, since it allows
+    # us to easily check if there are next or previous pages and get their offset.
     class Paginator
       attr_reader :current, :total
+      
       def initialize(current, total)
         @current  = current
         @total    = total
       end
       
+      # Checks to see if there are any other pages behind the current one.
       def previous?
         @current > 1
       end
       
+      # Checks to see if there are any pages beyond the current one.
       def next?
         @current < @total
       end
       
+      # Returns the page number for the previous page. When at the first page,
+      # it just returns 1
       def previous
         @current > 1 ? @current - 1 : 1
       end
       
+      # Returns the page number for the next page. When at the final page, it 
+      # just returns it’s index.
       def next
         @current < @total ? @current + 1 : @total
       end
     end
     
+    # Returns an array containing a paginator instance and the matching records
     def paginate(model_or_association_proxy, opts = {})
       if params[:page]
         page = params[:page].to_i 
