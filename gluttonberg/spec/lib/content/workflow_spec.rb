@@ -6,8 +6,9 @@ module Gluttonberg
     
     class TestPage
       include DataMapper::Resource
+      include Gluttonberg::Content::Publishable
       include Gluttonberg::Content::Workflow
-
+      
       property :id,               Integer,  :serial => true, :key => true
       property :name,             String,   :length => 1..100
     end
@@ -52,7 +53,15 @@ module Gluttonberg
       TestPage.all(:name=>"Test3").first.state.should == :approved
     end
         
-      
+    it "should approved" do
+      test1 = TestPage.first(:name=>"Test1")
+      test1.approve!
+      test1.publish!
+      result = TestPage.all_approved_and_published()
+      result.length.should == 1
+      result.first.state.should == :approved
+      result.first.published?.should == true
+    end  
  
   end
 end
