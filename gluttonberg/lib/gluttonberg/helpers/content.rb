@@ -33,8 +33,6 @@ module Gluttonberg
       def render_image_content(content, opts = {})
         if content.asset
           image_tag(content.asset.url, opts.merge!(:alt => content.asset.name))
-        else
-          tag(:p, "Image missing")
         end
       end
 

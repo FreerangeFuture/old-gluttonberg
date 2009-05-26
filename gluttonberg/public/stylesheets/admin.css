@@ -639,6 +639,9 @@ ul.assetList {
   border-color: #244e66;
   color: #244e66; }
 
+.clear-asset {
+  margin-left: 0.5em; }
+
 p.empty {
   font-size: 2em;
   color: #cccccc;

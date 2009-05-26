@@ -135,10 +135,12 @@ module Gluttonberg
         # Output it all
         link_contents = "<strong class=\"#{indicator}\">#{asset_name}</strong>"
         link_contents << link_to("Browse", url(:gluttonberg_asset_browser), :class => "buttonGrey", :rel => rel)
+        link_contents << link_to("Remove", "#{}", :class => "buttonGrey clear-asset", :rel => "clear-asset")
+        link_contents << (bound ? hidden_field(args.first, opts) : hidden_field(opts))
         output = ""
         output << tag(:label, opts[:label]) if opts[:label]
         output << tag(:p, link_contents, :class => "assetBrowserLink")
-        output << (bound ? hidden_field(args.first, opts) : hidden_field(opts))
+        
         
       end
 
