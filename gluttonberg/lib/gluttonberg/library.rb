@@ -1,8 +1,11 @@
 require Pathname(__FILE__).dirname.expand_path / "library" / "attachment_mixin"
 
 module Gluttonberg
+  # The library module encapsulates the few bits of functionality that lives 
+  # outside of the library models and controllers. It contains some 
+  # configuration details and is responsible for bootstrapping the various bits
+  # of meta-data used when categorising uploaded assets.
   module Library
-
     UNCATEGORISED_CATEGORY = 'uncategorised'
     ::Extlib::Inflection.plural_word(UNCATEGORISED_CATEGORY, UNCATEGORISED_CATEGORY)
       
@@ -18,10 +21,13 @@ module Gluttonberg
       FileUtils.mkdir(root) unless File.exists?(root) || File.symlink?(root)
     end
     
+    # Returns the path to the directory where assets are stored.
     def self.root
       @@assets_root
     end
 
+    # This method is mainly for administrative purposes. It will rebuild the 
+    # table of asset types, then recategorise each asset.
     def self.rebuild
       Asset.clear_all_asset_types
       flush_asset_types
@@ -29,11 +35,13 @@ module Gluttonberg
       Asset.refresh_all_asset_types
     end
 
+    # Removes and re-adds all asset types.
     def self.flush_asset_types
       AssetType.all.each{|asset_type| asset_type.destroy}
       AssetMimeType.all.each{|asset_mime_type| asset_mime_type.destroy}
     end
 
+    # Adds a the inbuilt asset types to the database.
     def self.build_default_asset_types
       # ensure that all the categories exist
       AssetCategory.build_defaults
@@ -190,7 +198,9 @@ module Gluttonberg
     end
 
     private
-
+    
+    # Makes sure the specified type exists in the DB, if it doesn’t it creates 
+    # a new record.
     def self.ensure_type(name, mime_type, category)
       asset_type = AssetType.first(:name => name)
       if asset_type then
@@ -204,7 +214,6 @@ module Gluttonberg
         asset_mime_type.save
       end
       asset_type.save
-     
     end
-  end
-end
+  end # Library
+end # Gluttonberg
