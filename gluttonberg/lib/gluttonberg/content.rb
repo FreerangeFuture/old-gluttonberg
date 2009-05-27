@@ -5,7 +5,8 @@ require content / "content" / "block_localization"
 require content / "content" / "localization"
 require content / "content" / "textilized"
 require content / "content" / "text_filters"
-
+require content / "content" / "publishable"
+require content / "content" / "workflow"
 module Gluttonberg
   module Content
     @@content_associations = nil
