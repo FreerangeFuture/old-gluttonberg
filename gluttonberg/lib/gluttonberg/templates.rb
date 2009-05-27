@@ -1,5 +1,8 @@
 module Gluttonberg
+  # This module mainly acts as container for configuration related to the
+  # Gluttonberg templates.
   module Templates
+    # Stubs out template directories if they are missing.
     def self.setup
       dir = Gluttonberg.config[:template_dir]
       unless File.exists?(dir)
@@ -8,10 +11,16 @@ module Gluttonberg
       end
     end
     
+    # Returns the path to the template root. Each template type then has a 
+    # directory under it.
     def self.root
       Gluttonberg.config[:template_dir]
     end
     
+    # Return the path for a specific template directory.
+    #
+    #   Templates.path_for(:pages) # => "/var/www/app/templates/pages"
+    #
     def self.path_for(type)
       self.root / type
     end
