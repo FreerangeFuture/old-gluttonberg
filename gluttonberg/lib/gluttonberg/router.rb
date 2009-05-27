@@ -1,4 +1,11 @@
 module Gluttonberg
+  # The Router module is used to declare the routes in Gluttonberg — of which 
+  # there is a heap — and also provides helpers for setting the locale and
+  # dialect for each incoming request.
+  #
+  # It does this via a defer_to block. This block also finds the matching page
+  # which it injects into the params. In the case where it finds a page that
+  # is defined as a rewrite, it will do that. A rewrite that is.
   module Router
     # Set up the many and various routes for Gluttonberg
     def self.setup(scope)
@@ -32,9 +39,6 @@ module Gluttonberg
           a.resources(:collections, :controller => "library/collections")          
           a.match("/collections/:id/add_asset").to(:controller => "library/collections", :action => "add_asset").name(:add_asset_to_collection)
           a.match("/collections/:id(/by-:order)(/:page)(.:format)").to(:controller => "library/collections", :action => "show").name(:collection_show)
-     #     a.resources(:asset_types, :controller => "library/asset_types")
-     #     a.resources(:asset_categories, :controller => "library/asset_categories")
-     #     a.resources(:asset_mime_types, :controller => "library/asset_mime_types")
         end
       
         # Settings
@@ -52,8 +56,15 @@ module Gluttonberg
       end
     end
     
-    # TODO: look at matching a root, which people might hit without 
-    # selecting a locale or dialect
+    # The huge and scary defer_to block. This block has a few different 
+    # responsibilities.
+    #
+    # * Find the locale and dialect records, including falling back to defaults
+    # * Find the matching page:
+    #     - Full match for regular pages, but if that fails
+    #     - Partial match triggering a rewrite
+    # * Check for redirects
+    # * Store the original path in params, since it may be rewritten later
     PUBLIC_DEFER_PROC = lambda do |request, params|
       params[:full_path] = "" unless params[:full_path]
       additional_params, conditions = Gluttonberg::Router.localization_details(params)
@@ -93,6 +104,12 @@ module Gluttonberg
       end
     end
     
+    # This is a helper method used to find a matching locale and dialect based on 
+    # entries in the params. It also builds SQL conditions that can be used to 
+    # find matching pages — or any other records which use the dialect/locale.
+    #
+    # It returns the locale/dialect in a hash and a hash of conditions to be 
+    # used in queries.
     def self.localization_details(params)
       # check to see if we're localized, translated etc, then build the 
       # conditions and the additional params with the locale/dialect stuffed
@@ -127,6 +144,11 @@ module Gluttonberg
       [additional_params, conditions]
     end
     
+    # Loops through a collection of dialect records and returns the first, 
+    # closest match.
+    #
+    # For example, if you pass in "en-au", it will first check for an exact
+    # match, if that is missing, it’ll next try "en".
     def self.cascade_to_dialect(dialects, requested_dialect)
       # If the dialects are empty, just return the default straight away.
       #
@@ -150,6 +172,9 @@ module Gluttonberg
       end
     end
     
+    # Rewrite the incoming path based on the route taken from the matching 
+    # page’s description. The request object is then passed through the router
+    # again to generate the params needed to route to the correct controller.
     def self.rewrite(page, original_path, request, params, additional_params)
       additional_params[:page] = page
       additional_params[:format] = params[:format]
@@ -159,6 +184,11 @@ module Gluttonberg
       new_params.merge(additional_params)
     end
     
+    # A helper which adds the localization details to the start of the path 
+    # passed in.
+    #
+    #   Gluttonberg::Router.localized_url("foo") # => "/au/en/foo"
+    #
     def self.localized_url(path, params)
       opts, named_route = if path == "/"
         [{}, :root]
@@ -175,6 +205,7 @@ module Gluttonberg
       Merb::Router.url((Gluttonberg.standalone? ? :"gluttonberg_public_#{named_route}" : :"public_#{named_route}"), opts)
     end
     
+    # Get the string representation of a locale from the params.
     def self.coerce_locale(params)
       if params[:locale].is_a? String
         params[:locale]
@@ -183,6 +214,7 @@ module Gluttonberg
       end
     end
     
+    # Get the string representation of a dialect from the params.
     def self.coerce_dialect(params)
       if params[:dialect].is_a? String
         params[:dialect]
@@ -191,7 +223,14 @@ module Gluttonberg
       end
     end
     
+    # Merb’s router extensions are used to add declarations that can be used 
+    # inside the router configuration.
     Merb::Router.extensions do
+      # This declaration sets up the routes that allow Gluttoberg to handle 
+      # requests from the public side of an app. Most of this logic is just
+      # figuring out what the components of the URL should look like — should
+      # it have a locale prefix? Then it declares a route, which defers to our
+      # PUBLIC_DEFER_PROC.
       def gluttonberg_public_routes(opts = {})
         Merb.logger.info("Adding Gluttonberg's public routes")
 
