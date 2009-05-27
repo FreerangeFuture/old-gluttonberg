@@ -1,12 +1,18 @@
 module Gluttonberg
   module Helpers
+    # Helpers specific to the administration interface. The majority are 
+    # related to forms, but there are other short cuts for things like navigation.
     module Admin
-      
+      # This checks to see if there have been any editors defined for the 
+      # content records associated with a page. These are partials that live in
+      # "<ROOT>/templates/editors/pages/"
       def page_editors?
         glob = dir = Gluttonberg::Templates.path_for("editors") / "pages" / "*"
         !Dir[glob].empty?
       end
       
+      # Returns a collection of paths paths to the content editors to be used
+      # by a page.
       def page_editors
         dir = Gluttonberg::Templates.path_for("editors") / "pages"
         Dir[dir / "*"].inject("") do |output, editor|
@@ -14,7 +20,7 @@ module Gluttonberg
         end
       end
       
-      # Returns a form for selecting the localized version of a page you want 
+      # Returns a form for selecting the localized version of a record you want 
       # to edit.
       def localization_picker(url)
         # Collect the locale/dialect pairs
@@ -224,6 +230,6 @@ JAVASCRIPT_CODE
           tag("li", link_to(text, url, opts), li_opts)
         end
       end
-    end
-  end
-end
+    end # Admin
+  end # Helpers
+end # Gluttonberg

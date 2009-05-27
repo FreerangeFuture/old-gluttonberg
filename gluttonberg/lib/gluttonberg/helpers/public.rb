@@ -1,5 +1,6 @@
 module Gluttonberg
   module Helpers
+    # A few simple helpers to be used when rendering page templates.
     module Public
       # A simple helper which loops through a heirarchy of pages and produces a
       # set of nested lists with links to each page.
@@ -21,6 +22,6 @@ module Gluttonberg
         path = path_or_page.is_a?(String) ? path_or_page : path_or_page.path
         ::Gluttonberg::Router.localized_url(path, params)
       end
-    end
-  end
-end
+    end # Public
+  end # Helpers
+end # Gluttonberg

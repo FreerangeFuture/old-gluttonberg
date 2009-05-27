@@ -26,16 +26,22 @@ module Gluttonberg
         @page.localized_contents.pluck {|c| c.section[:name] == section_name}
       end
 
+      # Render rich text content. Actually just lookf for the formatted_text 
+      # property on the content model.
       def render_rich_text_content(content, opts = nil)
         filter_text(content.current_localization.formatted_text)
       end
 
+      # Renders an image tag with the src set to the associated asset. If the
+      # asset is missing it returns nil.
       def render_image_content(content, opts = {})
         if content.asset
           image_tag(content.asset.url, opts.merge!(:alt => content.asset.name))
         end
       end
 
+      # Simple as it gets, it just pulles the text property from the content 
+      # record
       def render_plain_text_content(content, opts = nil)
         content.current_localization.text
       end
@@ -52,6 +58,6 @@ module Gluttonberg
           partial("content/editors/#{type}", locals)
         end
       end
-    end
-  end
-end
+    end # Content
+  end # Helpers
+end # Gluttonberg

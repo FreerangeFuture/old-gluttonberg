@@ -1,5 +1,7 @@
 class Array
-  if !respond_to?(:pluck) 
+  if !respond_to?(:pluck)
+    # Accepts a block and returns the first element for which the block
+    # returns true.
     def pluck(&blk)
       i = 0
       while i < length
