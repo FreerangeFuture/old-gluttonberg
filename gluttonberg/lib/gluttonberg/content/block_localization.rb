@@ -1,5 +1,10 @@
 module Gluttonberg
   module Content
+    # The mixin used when generating a localization for content classes. It
+    # adds the base properties — e.g. id — and associations. It also comes with
+    # some convenience methods for accessing the associated section in a page.
+    # 
+    # These just defer to the parent class.
     module BlockLocalization
       def self.included(klass)
         klass.class_eval do

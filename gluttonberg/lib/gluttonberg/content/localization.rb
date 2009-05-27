@@ -1,6 +1,11 @@
 module Gluttonberg
   module Content
+    # A mixin with allows for any arbitrary model to be localized. It will 
+    # generate the localization models and add methods for creating and 
+    # retrieving localized versions of a record.
     module Localization
+      # The included hook is used to create a bunch of class ivars we need to
+      # store various bits of configuration.
       def self.included(klass)
         klass.class_eval do
           extend  Model::ClassMethods

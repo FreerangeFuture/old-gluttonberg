@@ -2,8 +2,10 @@ module Gluttonberg
   module Content
     # This module can be mixed into a class to make it behave like a content 
     # block. A content block is a class that can be associated with a section
-    # on a page.
+    # on in a page description.
     module Block
+      # This included hook is used to declare the various properties and class
+      # ivars we need.
       def self.included(klass)
         klass.class_eval do
           extend Block::ClassMethods
@@ -36,8 +38,11 @@ module Gluttonberg
       end
     
       module ClassMethods
-        # TODO: Have this create an alias between the parent and localization's
-        # properties. Maybe use the Delegate model.
+        # This declaration is used to create properties on a model which need 
+        # to be localized. It does this by generating a localized class and
+        # association. 
+        #
+        # It also registers the class as being localized.
         def is_localized(&blk)
           self.localized = true
         
@@ -84,14 +89,19 @@ module Gluttonberg
       end
       
       module InstanceMethods
+        # Returns the section this content instance is associated with. It does 
+        # this by looking at the associated page, it’s description then the 
+        # matching section.
         def section
           @section ||= page.description.sections[section_name.to_sym]
         end
         
+        # Checks to see if this content class has localized properties.
         def localized?
           self.class.localized?
         end
         
+        # The name of the generated association. This is the association that 
         def association_name
           self.class.association_name
         end
@@ -104,7 +114,8 @@ module Gluttonberg
           section[:label]
         end
         
-        # Just delegates to the class.
+        # Content type is simply the inflected version of the content class 
+        # name, e.g. FooContent becomes :foo_content
         def content_type
           self.class.content_type
         end

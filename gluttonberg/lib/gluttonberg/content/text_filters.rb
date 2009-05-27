@@ -1,21 +1,37 @@
 module Gluttonberg
   module Content
+    # The text filters module is used to extend Textile in a sneaky way. Within
+    # any textual content in the site, users can use custom syntax for inserting
+    # additional content. Typically this is used with textile, but will work 
+    # inside of any text.
+    #
+    # The actual filters themselves are implemented as Merb parts. This gives 
+    # them access to all the lovely filtering and rendering found in controllers.
+    #
+    # Parts can be turned into a filter by including the module 
+    # Gluttonberg::TextFilters::PartMixin and then calling the is_text_filter
+    # declaration.
     module TextFilters
       @@filters = {}
       
+      # Returns all registered filters as a hash, keyed to the filter name.
       def self.all
         @@filters.values
       end
       
+      # Get a specific filter by name.
       def self.get(name)
         @@filters[name.to_sym]
       end
       
+      # Register a part controller as a filter. Generally doesn’t need to be 
+      # called, since the is_text_filter declaration calls this under the hood.
       def self.register(name, klass)
         @@filters[name.to_sym] = klass
       end
       
       module PartMixin
+        # A declaration for defining this part controller as a text filter.
         def is_text_filter(name)
           Gluttonberg::Content::TextFilters.register(name, self)
         end
