@@ -10,6 +10,9 @@
     %script{:src => gluttonberg_public_path_for(:javascript, "jquery.ui.all.min.js"), :type => "text/javascript", :charset => "utf-8"}
     %script{:src => gluttonberg_public_path_for(:javascript, "jquery.dragTree.js"), :type => "text/javascript", :charset => "utf-8"}
     %script{:src => gluttonberg_public_path_for(:javascript, "application.js"), :type => "text/javascript", :charset => "utf-8"}
+    %script{:src => gluttonberg_public_path_for(:javascript, "tiny_mce/tiny_mce.js"), :type => "text/javascript", :charset => "utf-8"}
+    %script{:src => gluttonberg_public_path_for(:javascript, "html_content.js"), :type => "text/javascript", :charset => "utf-8"}
+
     = include_required_js
   %body{:id => params[:controller].match(%r{\w+$}), :class => params[:action]}
     %div#sidebar

@@ -79,6 +79,7 @@ module Merb
         ::Gluttonberg.slice_path_for(type, *segments)
       end
       
+      
     end
   end
 end

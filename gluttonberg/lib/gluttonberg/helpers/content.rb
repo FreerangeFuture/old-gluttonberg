@@ -26,6 +26,12 @@ module Gluttonberg
         @page.localized_contents.pluck {|c| c.section[:name] == section_name}
       end
 
+      # Render html content. Actually just lookf for the text 
+      # property on the content model.
+      def render_html_content(content, opts = nil)
+        filter_text(content.current_localization.text)
+      end
+      
       # Render rich text content. Actually just lookf for the formatted_text 
       # property on the content model.
       def render_rich_text_content(content, opts = nil)
@@ -58,6 +64,12 @@ module Gluttonberg
           partial("content/editors/#{type}", locals)
         end
       end
+      
+      # takes id of the text_area tag and generate javascript code to enable tinymce on it.
+      def enable_tinymce_on(id)
+        "enable_tinyMCE_on(\"#{id}\")"
+      end
+      
     end # Content
   end # Helpers
 end # Gluttonberg
