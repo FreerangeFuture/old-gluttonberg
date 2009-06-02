@@ -14,5 +14,6 @@ namespace :slices do
     task :rebuild_asset_types => :merb_env do
       Gluttonberg::Library.rebuild
     end
+    
   end
 end
