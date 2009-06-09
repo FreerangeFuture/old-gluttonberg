@@ -6,7 +6,7 @@ module Gluttonberg
       before :find_user, :exclude => [:index, :new, :create]
       
       def index
-        @users = User.all
+        @users = User.all_for_user(session.user)
         display @users
       end
   
@@ -62,7 +62,7 @@ module Gluttonberg
       private
       
       def find_user
-        @user = User.get(params[:id])        
+        @user = User.get_for_user(session.user , params[:id])        
         raise NotFound unless @user
       end
   

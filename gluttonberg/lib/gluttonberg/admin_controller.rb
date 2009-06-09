@@ -98,5 +98,15 @@ module Gluttonberg
       results = model_or_association_proxy.send(:paginated, opts)
       [Paginator.new(page, results[0]), results[1]]
     end
+    
+    def paginate_for_user(user , model_or_association_proxy , options = {})
+          if user.is_super_admin
+            @paginator, @assets = paginate(model_or_association_proxy, options)            
+          else
+            options[:user_id] = user.id
+            @paginator, @assets = paginate(model_or_association_proxy, options)                        
+          end
+    end
+    
   end
 end

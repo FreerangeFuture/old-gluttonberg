@@ -3,10 +3,10 @@ module Gluttonberg
     class Dialects < Gluttonberg::Application
       include AdminController
 
-      before :find_dialect, :only => [:delete, :edit, :delete, :update, :destroy]
+      before :find_dialect, :only => [:delete, :edit, :update, :destroy]
 
       def index
-        @dialects = Dialect.all
+        @dialects = Dialect.all_for_user(session.user)
         display @dialects
       end
 
@@ -30,6 +30,7 @@ module Gluttonberg
 
       def create
         @dialect = Dialect.new(params["gluttonberg::dialect"])
+        @dialect.user_id = session.user.id
         if @dialect.save
           redirect slice_url(:gluttonberg, :dialects)
         else
@@ -56,7 +57,7 @@ module Gluttonberg
       private
 
       def find_dialect
-        @dialect = Dialect.get(params[:id])
+        @dialect = Dialect.get_for_user(session.user , params[:id])
         raise NotFound unless @dialect
       end
 

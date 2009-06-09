@@ -1,6 +1,7 @@
 module Gluttonberg
   class Locale
     include DataMapper::Resource
+    include Gluttonberg::Authorizable
 
     property :id,       Integer,  :serial   => true, :key => true
     property :name,     String,   :length   => 1..70, :nullable => false

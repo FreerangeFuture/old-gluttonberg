@@ -22,5 +22,24 @@ module Gluttonberg
       all( :is_super_admin => false )
     end
     
+    def self.all_for_user(user , options = {})
+        if user.is_super_admin
+            all(options)
+        else
+            options[:id] = user.id
+            all(options)
+        end
+    end
+    
+    def self.get_for_user(user , id)          
+        found_user = nil          
+        if user.is_super_admin            
+            found_user = get(id)
+        else
+            found_user = user  if user.id.to_s == id.to_s               
+        end
+          found_user
+    end  
+    
   end
 end

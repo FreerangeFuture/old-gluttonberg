@@ -4,8 +4,10 @@ module Gluttonberg
       include AdminController
       # provides :xml, :yaml, :js
 
+      before :find_locale, :only => [:delete, :edit, :update, :destroy]
+      
       def index
-        @locales = Locale.all(:order => [:name.asc])
+        @locales = Locale.all_for_user(session.user , :order => [:name.asc])
         display @locales
       end
 
@@ -18,16 +20,12 @@ module Gluttonberg
 
       def edit
         only_provides :html
-        @locale = Locale.get(params[:id])
-        raise NotFound unless @locale
         prepare_to_edit
         render
       end
 
       def delete
         only_provides :html
-        @locale = Locale.get(params[:id])
-        raise NotFound unless @locale
         display_delete_confirmation(
           :title      => "Delete the “#{@locale.name}” locale?",
           :action     => slice_url(:locale, @locale),
@@ -37,6 +35,7 @@ module Gluttonberg
 
       def create
         @locale = Locale.new(params["gluttonberg::locale"])
+        @locale.user_id = session.user.id
         if @locale.save
           redirect slice_url(:locales)
         else
@@ -46,9 +45,7 @@ module Gluttonberg
       end
 
       def update
-        @locale = Locale.get(params[:id])
-        raise NotFound unless @locale
-
+       
         unless params["gluttonberg::locale"].has_key?('dialect_ids')
           # no dialect ids were supplied so need to delete all dialect associations
           @locale.clear_all_dialects
@@ -63,8 +60,7 @@ module Gluttonberg
       end
 
       def destroy
-        @locale = Locale.get(params[:id])
-        raise NotFound unless @locale
+       
         if @locale.destroy
           redirect slice_url(:locales)
         else
@@ -78,9 +74,15 @@ module Gluttonberg
       def prepare_to_edit
         locale_opts = {:order => [:name.desc]}
         locale_opts[:id.not] = @locale.id unless @locale.new_record?
-        @locales  = Locale.all(locale_opts)
-        @dialects = Dialect.all
+        @locales  = Locale.all_for_user(session.user, locale_opts)
+        @dialects = Dialect.all_for_user(session.user)        
       end
+      
+     def find_locale
+        @locale = Locale.get_for_user(session.user , params[:id])
+        raise NotFound unless @locale
+      end
+      
     end
     
   end

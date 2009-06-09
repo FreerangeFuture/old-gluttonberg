@@ -16,6 +16,10 @@ module Gluttonberg
 
       module ClassMethods
         
+        # Returns all matching records that are authorize to provided user. 
+        # For Super admin users returns all records
+        # For other non-super-users checks th condition of user_id
+        # May be called with additional conditions.
         def all_for_user(user , options = {})
           if user.is_super_admin
             all(options)
@@ -24,7 +28,10 @@ module Gluttonberg
             all(options)
           end
         end  
-
+        
+        # Returns first matching records that is authorize to provided user with given id. 
+        # For Super admin users it checks only id but for non-super-users checks additionally it checks condition of user_id
+        
         def get_for_user(user , id)
           options = {:id => id }
           if user.is_super_admin            

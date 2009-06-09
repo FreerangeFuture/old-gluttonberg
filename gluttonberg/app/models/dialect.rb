@@ -1,6 +1,7 @@
 module Gluttonberg
   class Dialect
     include DataMapper::Resource
+    include Gluttonberg::Authorizable
 
     property :id,       Integer,  :serial   => true,  :key => true
     property :code,     String,   :length   => 2..15, :nullable => false

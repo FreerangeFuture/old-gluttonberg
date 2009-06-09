@@ -24,11 +24,11 @@ module Gluttonberg
         provides :json
         conditions = {:order => get_order, :per_page => 18}
         if params[:category] == "all" then
-          @paginator, @assets = paginate(Asset, conditions)
+          @paginator, @assets = paginate_for_user(session.user, Asset, conditions)
         else
           req_category = AssetCategory.first(:name => params[:category])
           raise BadRequest.new("Unknown category '#{params[:category]}'") if req_category.nil?
-          @paginator, @assets = paginate(req_category.assets, conditions)
+          @paginator, @assets = paginate_for_user(session.user, req_category.assets, conditions)
         end
 
         @paginate_previous_url = slice_url(:asset_category, :category => params[:category], :page => @paginator.previous, :order => params[:order] || 'name')
@@ -78,6 +78,7 @@ module Gluttonberg
         end
 
         @asset = Asset.new(params["gluttonberg::asset"])
+        @asset.user_id = session.user.id
         if @asset.save
           redirect(slice_url(:asset, @asset))
         else
@@ -115,7 +116,7 @@ module Gluttonberg
       private
       
       def find_asset
-        @asset = Asset.get(params[:id])
+        @asset = Asset.get_for_user(session.user , params[:id])
         raise NotFound unless @asset
       end
       
