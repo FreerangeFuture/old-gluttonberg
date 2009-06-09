@@ -1,5 +1,8 @@
-class Gluttonberg::Application < Merb::Controller
+module Gluttonberg
   
-  controller_for_slice
-  
+  class Application < Merb::Controller
+    
+    controller_for_slice
+    
+  end  
 end

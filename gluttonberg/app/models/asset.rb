@@ -2,6 +2,7 @@ module Gluttonberg
   class Asset
     include DataMapper::Resource
     include Library::AttachmentMixin
+    include Gluttonberg::Authorizable
     
     property :id,         Serial 
     property :mime_type,  String
@@ -13,6 +14,7 @@ module Gluttonberg
     has n, :collections, :through => Resource, :class_name => "Gluttonberg::AssetCollection"
 
     belongs_to  :asset_type, :class_name => "Gluttonberg::AssetType"
+    
 
     # This replaces the existing set of associated collections with a new set based
     # on the array of IDs passed in.

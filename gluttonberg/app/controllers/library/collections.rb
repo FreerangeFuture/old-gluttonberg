@@ -6,7 +6,7 @@ module Gluttonberg
       before :find_collection, :exclude => [:index, :new, :create]
 
       def index
-        @collections = AssetCollection.all
+        @collections = AssetCollection.all_for_user(session.user)
         display @collections
       end
       
@@ -61,6 +61,7 @@ module Gluttonberg
       
       def create
         @collection = AssetCollection.new(params["gluttonberg::asset_collection"])
+        @collection.user_id = session.user.id
         if @collection.save
           redirect(slice_url(:library))
         else
@@ -84,7 +85,7 @@ module Gluttonberg
       private
       
       def find_collection
-        @collection = AssetCollection.get(params[:id])
+        @collection = AssetCollection.get_for_user(session.user , params[:id])
         raise NotFound unless @collection
       end
     end

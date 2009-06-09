@@ -151,5 +151,6 @@ if defined?(Merb::Plugins)
   require "gluttonberg/helpers"
   require "gluttonberg/page_description"
   require "gluttonberg/drag_tree_helper"
+  require "gluttonberg/authorizable"
   
 end

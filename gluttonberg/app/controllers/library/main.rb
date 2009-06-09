@@ -8,7 +8,7 @@ module Gluttonberg
         range = ((Time.now - 24.hours)..Time.now)
         @assets = Asset.all(:updated_at => range, :order => [:updated_at.asc], :limit => 15)
         # Collections
-        @collections = AssetCollection.all(:order => [:name.desc])
+        @collections = AssetCollection.all_for_user(session.user , :order => [:name.desc])
         @categories = AssetCategory.all
         render
       end

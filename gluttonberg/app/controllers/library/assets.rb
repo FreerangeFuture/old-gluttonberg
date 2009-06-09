@@ -11,7 +11,7 @@ module Gluttonberg
       
       def browser
         @assets = []
-        @collections = AssetCollection.all(:order => [:name.asc])
+        @collections = AssetCollection.all_for_user(session.user , :order => [:name.asc])
         @categories = AssetCategory.all
         if params["no_frame"]
           partial(:browser_root)
@@ -68,6 +68,7 @@ module Gluttonberg
       end
       
       def create
+        params["new_collection"][:user] = session.user
         the_collection = find_or_create_asset_collection_from_hash(params["new_collection"])
         if the_collection
           params["gluttonberg::asset"]['collection_ids'] = params["gluttonberg::asset"]['collection_ids'] || []
@@ -90,7 +91,7 @@ module Gluttonberg
           # no collection ids were supplied so need to delete all collection associations
           @asset.clear_all_collections
         end
-        
+        params["new_collection"][:user] = session.user
         the_collection = find_or_create_asset_collection_from_hash(params["new_collection"])
         if the_collection
           unless params["gluttonberg::asset"]['collection_ids'].include?(the_collection.id.to_s)
@@ -121,7 +122,7 @@ module Gluttonberg
       def prepare_to_edit
         @dialects = Dialect.all
         @locales = Locale.all
-        @collections = AssetCollection.all
+        @collections = AssetCollection.all_for_user(session.user)
       end
       
       def get_order

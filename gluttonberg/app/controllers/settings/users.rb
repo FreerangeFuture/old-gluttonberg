@@ -4,7 +4,7 @@ module Gluttonberg
       include Gluttonberg::AdminController
       
       before :find_user, :exclude => [:index, :new, :create]
-  
+      
       def index
         @users = User.all
         display @users
@@ -62,7 +62,7 @@ module Gluttonberg
       private
       
       def find_user
-        @user = User.get(params[:id])
+        @user = User.get(params[:id])        
         raise NotFound unless @user
       end
   

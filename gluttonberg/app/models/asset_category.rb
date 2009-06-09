@@ -9,7 +9,7 @@ module Gluttonberg
 
     has n, :asset_types
     has n, :assets, :through => :asset_types
-
+    
     validates_is_unique :name
 
     def self.method_missing(methId, *args)
@@ -34,6 +34,8 @@ module Gluttonberg
       ensure_exists('binary',   false)
       ensure_exists(Library::UNCATEGORISED_CATEGORY, true)
     end
+    
+    
 
     private
 

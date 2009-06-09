@@ -1,4 +1,5 @@
-require Pathname(__FILE__).dirname.expand_path / "library" / "attachment_mixin"
+library = Pathname(__FILE__).dirname.expand_path
+require library / "library" / "attachment_mixin"
 
 module Gluttonberg
   # The library module encapsulates the few bits of functionality that lives 
