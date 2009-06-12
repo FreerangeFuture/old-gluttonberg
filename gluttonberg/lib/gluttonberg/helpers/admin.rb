@@ -38,6 +38,7 @@ module Gluttonberg
           output << button("Edit", :class => "buttonGrey")
         end
       end
+            
 
       # Returns a text field with the name, id and values for the localized
       # version of the specified attribute.

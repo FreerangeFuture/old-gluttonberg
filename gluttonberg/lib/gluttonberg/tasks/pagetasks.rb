@@ -10,6 +10,11 @@ namespace :slices do
     task :convert_rich_text_into_html_contents => :merb_env do
       Gluttonberg::RichTextContent.convert_to_html_content
     end
+
+    desc "Generate localization records for all pages"
+    task :generate_localizations_for_all_pages => :merb_env do
+      Gluttonberg::Page.generate_localizations_for_all_pages
+    end
     
   end
 end

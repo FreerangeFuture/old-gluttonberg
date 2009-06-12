@@ -8,7 +8,7 @@ module Gluttonberg
       before :find_page, :only => [:show, :edit, :delete, :update, :destroy]
 
       def index
-        @pages = Page.all(:parent_id => nil, :order => [:position.asc])
+        @pages = Page.all_for_user(session.user , :parent_id => nil, :order => [:position.asc])
         display @pages
       end
 
@@ -40,6 +40,7 @@ module Gluttonberg
 
       def create
         @page = Page.new(params["gluttonberg::page"])
+        @page.user_id = session.user.id
         if @page.save
           redirect slice_url(:page, @page)
         else
@@ -67,13 +68,13 @@ module Gluttonberg
       private
 
       def prepare_to_edit
-        @pages      = params[:id] ? Page.all(:id.not => params[:id]) : Page.all
+        @pages      = params[:id] ? Page.all_for_user(session.user , :id.not => params[:id]) : Page.all
         @dialects   = Dialect.all
         @locales    = Locale.all
       end
 
       def find_page
-        @page = Page.get(params[:id])
+        @page = Page.get_for_user(session.user, params[:id])
         raise NotFound unless @page
       end
       

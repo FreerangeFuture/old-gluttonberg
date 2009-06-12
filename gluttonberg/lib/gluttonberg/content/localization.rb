@@ -18,6 +18,7 @@ module Gluttonberg
           @localized_fields = []
           
           attr_reader :current_localization
+          #attr_reader :all_localizations
         end
       end
       
@@ -100,6 +101,24 @@ module Gluttonberg
             new_model = new
             new_model.instance_variable_set(:@current_localization, @localized_model.new(localization_opts))
             new_model.localizations << new_model.current_localization
+            new_model.attributes = opts
+            new_model
+          end
+          
+          def new_with_all_localization(opts)
+            localization_opts = extract_localization_conditions(opts)
+            new_model = new
+            new_model.instance_variable_set(:@current_localization, @localized_model.new(localization_opts))
+            
+            Locale.all.each do |locale|
+                locale.dialects.all.each do |dialect|
+                  localization_opts[:dialect_id] = dialect.id
+                  localization_opts[:locale_id] = locale.id
+                  localization_opts[:locale_id] = locale.id
+                  #localization_opts[:parent_id] = new_model.id
+                  new_model.localizations << @localized_model.new(localization_opts)
+                end
+            end                
             new_model.attributes = opts
             new_model
           end
@@ -251,7 +270,7 @@ module Gluttonberg
           def save_current_localization
             if current_localization && current_localization.dirty?
               current_localization.save
-            end
+            end            
           end
           
           def cleanup_localizations

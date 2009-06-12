@@ -1,6 +1,7 @@
 module Gluttonberg
   class Page
     include DataMapper::Resource
+    include Gluttonberg::Authorizable
 
     property :id,               Integer,  :serial => true, :key => true
     property :parent_id,        Integer
@@ -151,6 +152,59 @@ module Gluttonberg
       save
     end
 
+    #
+    
+    def self.generate_localizations_for_all_pages
+          Page.all.each do |page|
+            page.generate_all_page_localizations
+          end
+    end
+    
+    def self.generate_localizations_for(id)          
+          page.generate_all_page_localizations
+    end
+    
+    def generate_all_page_localizations
+        Merb.logger.info("Generating page localizations")
+              
+              Locale.all.each do |locale|
+                locale.dialects.all.each do |dialect|
+                  loc1 = localizations.all( :locale_id => locale.id , :dialect_id => dialect.id )
+                  if loc1.blank?
+                    loc = localizations.create(
+                      :name     => name,
+                      :dialect  => dialect,
+                      :locale   => locale
+                    )
+                  end
+                end
+              end
+              
+                            
+              unless description.sections.empty?
+                Merb.logger.info("Generating stubbed content for new page")
+                description.sections.each do |name, section|
+                  # Create the content
+                  
+                  association = send(section[:type].to_s.pluralize)
+                  content1 = association.all(:section_name => name)
+                  if content1.blank?
+                      content = association.create(:section_name => name) 
+                  else
+                      content = content1.first
+                  end    
+                  # Create each localization
+                  if content.model.localized?
+                    localizations.all.each do |localization|                      
+                      loc2 = content.localizations.all(:page_localization_id => localization.id)
+                      if loc2.blank?
+                        content.localizations.create(:parent => content, :page_localization => localization)                      
+                      end
+                    end
+                  end
+                end
+              end
+    end
     private
 
     def slug_management

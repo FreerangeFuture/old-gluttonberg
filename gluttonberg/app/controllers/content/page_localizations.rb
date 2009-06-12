@@ -13,7 +13,7 @@ module Gluttonberg
       def new
         only_provides :html
         @page_localization = PageLocalization.new
-        @page = Page.get(params[:page_id])
+        @page = Page.get_for_user(session.user , params[:page_id])
         render
       end
 
@@ -23,7 +23,7 @@ module Gluttonberg
       end
 
       def create
-        @page_localization.page = Page.get(params[:page_id])
+        @page_localization.page = Page.get_for_user(session.user , params[:page_id])
         if @page_localization.save
           redirect slice_url(:page, params[:page_id])
         else

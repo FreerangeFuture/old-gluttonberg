@@ -10,6 +10,7 @@ module Gluttonberg
     belongs_to :asset
     belongs_to :locale
     belongs_to :dialect
+    
 
     after :save, :update_file_on_disk
 
