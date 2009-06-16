@@ -173,15 +173,15 @@ module Gluttonberg
                   if loc1.blank?
                     loc = localizations.create(
                       :name     => name,
-                      :dialect  => dialect,
-                      :locale   => locale
+                      :dialect_id  => dialect.id,
+                      :locale_id   => locale.id
                     )
                   end
                 end
               end
               
                             
-              unless description.sections.empty?
+              if !description.blank? && !description.sections.empty?
                 Merb.logger.info("Generating stubbed content for new page")
                 description.sections.each do |name, section|
                   # Create the content

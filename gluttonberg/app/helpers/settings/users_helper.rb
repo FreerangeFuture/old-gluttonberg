@@ -1,7 +1,6 @@
 module Merb
   module Settings
-    module UsersHelper
-  
+    module UsersHelper        
     end
   end # Settings
 end # Merb

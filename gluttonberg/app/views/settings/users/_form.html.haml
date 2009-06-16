@@ -6,6 +6,10 @@
     %br
     = text_field(:email, :class => "large", :label => "E-mail")
     
+    
+    = admin_rights_form(session.user)
+    
+    
   = block("Password") do
     = password_field(:password, :class => "medium", :label => "Password")
     %br
