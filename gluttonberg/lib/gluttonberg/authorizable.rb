@@ -10,7 +10,7 @@ module Gluttonberg
           extend ClassMethods
           include InstanceMethods
           
-          belongs_to :user
+          belongs_to :user , :class_name => "Gluttonberg::User"
         end
       end
 
