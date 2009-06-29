@@ -7,6 +7,7 @@ require content / "content" / "textilized"
 require content / "content" / "text_filters"
 require content / "content" / "publishable"
 require content / "content" / "workflow"
+require content / "content" / "versioning"
 
 module Gluttonberg
   # The content module contains a whole bunch classes and mixins related to the 

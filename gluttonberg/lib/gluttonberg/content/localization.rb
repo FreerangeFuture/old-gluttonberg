@@ -17,8 +17,7 @@ module Gluttonberg
           @localized = false
           @localized_fields = []
           
-          attr_reader :current_localization
-          #attr_reader :all_localizations
+          attr_reader :current_localization          
         end
       end
       
@@ -105,24 +104,7 @@ module Gluttonberg
             new_model
           end
           
-          def new_with_all_localization(opts)
-            localization_opts = extract_localization_conditions(opts)
-            new_model = new
-            new_model.instance_variable_set(:@current_localization, @localized_model.new(localization_opts))
-            
-            Locale.all.each do |locale|
-                locale.dialects.all.each do |dialect|
-                  localization_opts[:dialect_id] = dialect.id
-                  localization_opts[:locale_id] = locale.id
-                  localization_opts[:locale_id] = locale.id
-                  #localization_opts[:parent_id] = new_model.id
-                  new_model.localizations << @localized_model.new(localization_opts)
-                end
-            end                
-            new_model.attributes = opts
-            new_model
-          end
-          
+                   
           def all_with_localization(opts)
             fallback = check_for_fallback(opts)
             localization_opts = extract_localization_conditions(opts)
