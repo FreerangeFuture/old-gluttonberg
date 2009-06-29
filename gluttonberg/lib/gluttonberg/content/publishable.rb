@@ -16,6 +16,14 @@ module Gluttonberg
       end
 
       module ClassMethods
+        
+        # Returns the first matching record that is not published. May be called 
+        # with additional conditions.
+        def unpublished(options = {})
+          options[:published] = false
+          first(options)
+        end
+        
         # Returns the first matching record that is published. May be called 
         # with additional conditions.
         def published(options = {})
@@ -29,6 +37,30 @@ module Gluttonberg
           options[:published] = true
           all(options)
         end
+        
+        # Returns all matching records that are published for a particular user. May be called 
+        # with additional conditions.
+        def all_published_for_user( user , options = {})
+          options[:published] = true
+          options[:user_id] = user.id unless user.is_super_admin        
+          all(options)
+        end
+        
+        # Returns all matching records that are published. May be called 
+        # with additional conditions.
+        def all_unpublished(options = {})
+          options[:published] = false
+          all(options)
+        end
+        
+        # Returns all matching records that are published for a particular user. May be called 
+        # with additional conditions.
+        def all_unpublished_for_user( user , options = {})
+          options[:published] = false
+          options[:user_id] = user.id unless user.is_super_admin        
+          all(options)
+        end
+        
       end
 
       module InstanceMethods

@@ -349,3 +349,9 @@ $(document).ready(function() {
 
   dragTreeManager.init();
 });
+
+function publish(id)
+{
+  var element = document.getElementById(id);
+  element.value = "1";  
+}

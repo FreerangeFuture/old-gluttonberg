@@ -203,6 +203,16 @@ JAVASCRIPT_CODE
         content = "#{submit("Save")} or #{link_to("<strong>Cancel</strong>", return_url)}"
         tag(:p, content, :class => "controls")
       end
+      
+      # Controls for publishable forms. Writes out a draft ,  publish/unpublish button and a cancel link
+      def publishable_form_controls(return_url , object_name , is_published )
+        content = hidden_field(:published , :value => false) 
+        content += "#{submit("draft")}"        
+        content += " or #{submit("publish" , :onclick => "publish('#{object_name}_published')" )} "
+        content += " or #{submit("unpublish" )} " if is_published
+        content += " or #{link_to("<strong>Cancel</strong>", return_url)}"
+        tag(:p, content, :class => "controls")
+      end
 
       # Writes out a nicely styled subnav with an entry for each of the 
       # specified links.
