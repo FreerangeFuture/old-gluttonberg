@@ -25,7 +25,7 @@ module Gluttonberg
     # @overwritable
     def redirect_after_login
       message[:notice] = "Authenticated Successfully"
-      redirect_back_or slice_url(:admin_root), :message => message, :ignore => [slice_url(:login), slice_url(:logout)]
+      redirect_back_or url(:gluttonberg_admin_root), :message => message, :ignore => [slice_url(:login), slice_url(:logout)]
     end
   
     # @overwritable
