@@ -22,11 +22,6 @@
     %p.help
       Page descriptions are used to define how this page behaves. For example,
       all of it’s contents may be editable, or it may be generated dynamically.
-      
-    - Gluttonberg::PageDescription.all.each do |name, desc|
-      %br
-      = radio_button(:description_name, :value => name)
-      %label{:for => "gluttonberg::page_description_name", :class => "inline"}= desc[:label]
-      %br
-   
+    = select(:description_name, :collection => @descriptions, :label => "Page Description", :include_blank => true)  
+       
   = form_controls(slice_url(:pages))

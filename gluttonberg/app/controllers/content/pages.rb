@@ -71,6 +71,10 @@ module Gluttonberg
         @pages      = params[:id] ? Page.all_for_user(session.user , :id.not => params[:id]) : Page.all
         @dialects   = Dialect.all
         @locales    = Locale.all
+        @descriptions = []
+        Gluttonberg::PageDescription.all.each do |name, desc|
+            @descriptions << [ name ,desc[:label] ]
+        end       
       end
 
       def find_page
