@@ -249,7 +249,7 @@ JAVASCRIPT_CODE
           output << label( :for => "is_super_admin", :class => "checkbox" , :title=> "Full admin user" )
           output
          else
-           hidden_field (:is_super_admin , :value=>false)
+           hidden_field(:is_super_admin , :value=>false)
          end 
       end
       
