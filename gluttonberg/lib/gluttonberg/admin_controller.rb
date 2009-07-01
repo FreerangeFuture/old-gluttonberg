@@ -27,6 +27,17 @@ module Gluttonberg
       render :template => "shared/delete", :layout => false
     end
     
+    # This is to be called from within a controller — i.e. the delete action — 
+    # and it will display a dialog which allows users to either confirm 
+    # deleting a record or cancelling the action.
+    def display_generic_confirmation(name , opts)
+      @options = opts
+      @name = name
+      @options[:title]    ||= "#{@name.capitalize} Record?"
+      @options[:message]  ||= "If you #{@name.downcase} this record, it will be #{@name}"
+      render :template => "shared/generic", :layout => false
+    end
+    
     # A helper for finding shortcutting the steps in finding a model ensuring
     # it has a localization and raising a NotFound if it’s missing.
     def with_localization(model, id)

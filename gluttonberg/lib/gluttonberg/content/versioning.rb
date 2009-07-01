@@ -75,7 +75,7 @@ module Gluttonberg
             # Set up validations for when we update in the presence of a version
             after   :valid?,  :validate_current_version
             after   :save,    :save_current_version
-            before  :destroy, :cleanup_version
+            before  :destroy, :cleanup_versions
             
            
           end
@@ -221,16 +221,18 @@ module Gluttonberg
           end
           
           # this will generate a new version
-          def new_version!            
+          def new_version!(options = {}) 
             options[:vnumber] = versions.length + 1
-            @current_version= self.class.versioned_model.create(@version_opts)            
+            @current_version= self.class.versioned_model.new(options)            
             versions << @current_version
+            @current_version
           end
           
           def create_new_version!(options = {}) 
             options[:vnumber] = versions.length + 1
             @current_version= self.class.versioned_model.create(options)     
             versions << @current_version
+            @current_version
           end
           
           def latest_version
@@ -238,7 +240,7 @@ module Gluttonberg
           end
                     
           def save_current_version_into_original_table            
-            exclusions = [:id, :created_at , :updated_at , :parent_id]          
+            exclusions = [:id, :created_at , :updated_at , :parent_id , :vnumber]          
             opts = {}            
               self.versioned_attributes.each do |key , value|              
                 unless exclusions.include?(key)
@@ -247,10 +249,27 @@ module Gluttonberg
               end  
               self.update_attributes(opts)              
           end
-                              
+          
+                                        
           # Returns the current version's attributes
           def versioned_attributes
             @current_version.attributes if @current_version
+          end
+          
+          # Returns the current version's attributes
+          def filtered_versioned_attributes
+            opts = {}
+            if @current_version
+              @current_version.attributes 
+              exclusions = [:id, :created_at , :updated_at , :parent_id , :vnumber]          
+              opts = {}            
+                self.versioned_attributes.each do |key , value|              
+                  unless exclusions.include?(key)
+                    opts[key] = value
+                  end
+                end  
+             end
+             opts
           end
           
           # Assigns the hash of values passed in to the current version's

@@ -209,7 +209,7 @@ JAVASCRIPT_CODE
         content = hidden_field(:published , :value => false) 
         content += "#{submit("draft")}"        
         content += " or #{submit("publish" , :onclick => "publish('#{object_name}_published')" )} "
-        content += " or #{submit("unpublish" )} " if is_published
+        #content += " or #{submit("unpublish" )} " if is_published
         content += " or #{link_to("<strong>Cancel</strong>", return_url)}"
         tag(:p, content, :class => "controls")
       end

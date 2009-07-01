@@ -353,5 +353,5 @@ $(document).ready(function() {
 function publish(id)
 {
   var element = document.getElementById(id);
-  element.value = "1";  
+  element.value = "true";  
 }
