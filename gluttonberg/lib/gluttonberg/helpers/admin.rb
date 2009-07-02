@@ -253,6 +253,18 @@ JAVASCRIPT_CODE
          end 
       end
       
+      # 
+      def version_listing(versions , title_attribute , link_prefix)
+        output = "<div class='historycontrols'> <ul>"
+        versions.each do |version|
+          link = link_prefix + "/version/#{version.vnumber}"
+          snippet = "Updated #{version.updated_at.formatted(:long)}   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  #{version.attributes[title_attribute]}"
+          output += "<li><a href='#{link}'> #{snippet}  </a> </li>"
+        end 
+        output += "</ul> </div>"
+        output
+      end  
+      
     end # Admin
   end # Helpers
 end # Gluttonberg

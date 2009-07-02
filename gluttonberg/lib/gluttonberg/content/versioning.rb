@@ -256,20 +256,40 @@ module Gluttonberg
             @current_version.attributes if @current_version
           end
           
-          # Returns the current version's attributes
+          # Returns the current version's filtered attributes that are in original model as well
           def filtered_versioned_attributes
+            flag = true
             opts = {}
-            if @current_version
-              @current_version.attributes 
+            unless @current_version.blank?              
               exclusions = [:id, :created_at , :updated_at , :parent_id , :vnumber]          
               opts = {}            
                 self.versioned_attributes.each do |key , value|              
                   unless exclusions.include?(key)
+                    flag = false if attributes[key.to_sym] != value
                     opts[key] = value
                   end
                 end  
              end
-             opts
+             return flag, opts 
+          end
+          
+          # Replace the attributes of model with current version's attributes
+          def replace_with_version
+            flag = true
+            opts = {}
+            if @current_version
+              @current_version.attributes 
+              exclusions = [:id, :created_at , :updated_at , :parent_id , :vnumber]                        
+                self.versioned_attributes.each do |key , value|              
+                  unless exclusions.include?(key)                     
+                    if attributes[key.to_sym] != value                      
+                      attributes[key.to_sym] = value
+                      flag = false
+                    end
+                  end
+                end  
+             end
+             flag
           end
           
           # Assigns the hash of values passed in to the current version's
