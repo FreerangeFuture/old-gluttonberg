@@ -27,9 +27,9 @@ module Gluttonberg
       render :template => "shared/delete", :layout => false
     end
     
-    # This is to be called from within a controller — i.e. the delete action — 
+    # This is to be called from within a controller — i.e. the publish/unpublish action — 
     # and it will display a dialog which allows users to either confirm 
-    # deleting a record or cancelling the action.
+    # publish/unpublish a record or cancelling the action.
     def display_generic_confirmation(name , opts)
       @options = opts
       @name = name

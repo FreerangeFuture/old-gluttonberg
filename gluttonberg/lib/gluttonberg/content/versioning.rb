@@ -1,8 +1,9 @@
 module Gluttonberg
   module Content
-    # A mixin with allows for any arbitrary model to have multiple versions. It will 
-    # generate the versioning models and add methods for creating and 
+    # A mixin which allows for any arbitrary model to have multiple versions. It will 
+    # generate the versioning models and add methods for creating, managing and 
     # retrieving different versions of a record.
+    
     module Versioning
       # The included hook is used to create a bunch of class ivars we need to
       # store various bits of configuration.
@@ -28,7 +29,7 @@ module Gluttonberg
             # Why yes, this is versioned.
             @versioned = true
 
-            # Create the versioned model
+            # Create the versioned model for example model is Venue to versioned model will be VenueVersion
             class_name = self.name + "Version"
             table_name = Extlib::Inflection.tableize(class_name)
             # Check to see if the versioning is inside a constant
@@ -110,7 +111,7 @@ module Gluttonberg
             new_model
           end
           
-                  
+          # find all records of model including its versions using given options        
           def all_with_version(opts = {})
             version_opts = extract_version_conditions(opts)
             matches = all(prefix_versioned_fields(opts))
@@ -118,11 +119,11 @@ module Gluttonberg
             matches
           end
           
+          # find first records of model including its versions using given options        
           def first_with_version(opts = {})
             version_opts = extract_version_conditions(opts)
             v_attr = opts.delete(:versioned_attributes)
-            version_opts.merge(v_attr) unless v_attr.nil?
-            puts version_opts
+            version_opts.merge(v_attr) unless v_attr.nil?            
             #match = first(prefix_versioned_fields(opts))
             match = first(opts)
             if match
@@ -228,6 +229,7 @@ module Gluttonberg
             @current_version
           end
           
+          # this will create a new version
           def create_new_version!(options = {}) 
             options[:vnumber] = versions.length + 1
             @current_version= self.class.versioned_model.create(options)     
@@ -235,10 +237,12 @@ module Gluttonberg
             @current_version
           end
           
+          # find latestversion on the base of recent updated_at record
           def latest_version
             self.versions.first(:order => [:updated_at.desc])
           end
                     
+          # update original table data by using current versioned record
           def save_current_version_into_original_table            
             exclusions = [:id, :created_at , :updated_at , :parent_id , :vnumber]          
             opts = {}            
