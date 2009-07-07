@@ -68,7 +68,8 @@ module Gluttonberg
             # Set up filters on the class to make sure the versioning gets migrated
             self.after_class_method(:auto_migrate!) { @versioned_model.auto_migrate! }
             self.after_class_method(:auto_upgrade!) { @versioned_model.auto_upgrade! }
-            
+            #vnumber for original model            
+            property :vnumber,             Integer #, :nullable => false
             # Associate the model and it’s versioning
             has(n, :versions, :class_name => self.name + "Version", :parent_key => [:id], :child_key => [:parent_id])
             @versioned_model.belongs_to(:parent, :class_name => self.name, :parent_key => [:parent_key], :child_key => [:id])
@@ -96,15 +97,17 @@ module Gluttonberg
           
                   
           def new_with_version(opts)
-            opts[:vnumber] = 1
+            opts[:vnumber] = 1            
             version_opts = extract_version_conditions(opts)
             v_attr = opts.delete(:versioned_attributes)
+            
             unless v_attr.nil?
               v_attr.each do |key , val|
                 version_opts[key] = val
               end  
             end            
             new_model = new(opts)             
+            new_model.vnumber = 1
             new_model.instance_variable_set(:@current_version, @versioned_model.new(version_opts))
             new_model.versions << new_model.current_version                     
             new_model.attributes = opts
@@ -115,7 +118,10 @@ module Gluttonberg
           def all_with_version(opts = {})
             version_opts = extract_version_conditions(opts)
             matches = all(prefix_versioned_fields(opts))
-            matches.each { |match| match.load_version(version_opts, false) }
+            matches.each do |match|
+              version_opts[:vnumber] = match.vnumber              
+              match.load_version(version_opts, false) 
+            end
             matches
           end
           
@@ -124,13 +130,34 @@ module Gluttonberg
             version_opts = extract_version_conditions(opts)
             v_attr = opts.delete(:versioned_attributes)
             version_opts.merge(v_attr) unless v_attr.nil?            
-            #match = first(prefix_versioned_fields(opts))
+            #match = first(prefix_versioned_fields(opts))            
             match = first(opts)
+            version_opts[:vnumber] = match.vnumber if version_opts[:vnumber].blank?
+            attributes = match.attributes
             if match
               match.load_version(version_opts, false)
               match
             end
           end
+          
+          
+          # Returns the current version's filtered attributes that are in original model as well
+          def filtered_versioned_attributes(vattributes)
+            flag = true
+            opts = {}            
+              exclusions = [:id, :created_at , :updated_at , :parent_id]  
+              orignal = first(:id=>vattributes[:parent_id])
+              opts = {}            
+                vattributes.each do |key , value|              
+                  unless exclusions.include?(key)                                        
+                    #flag = false if orignal.attributes[key.to_sym].to_s != value.to_s                    
+                    opts[key] = value
+                  end
+                  flag = (orignal.attributes[:vnumber] == vattributes[:vnumber])
+                end              
+             return flag, opts 
+          end
+          
           
           # For fields in the conditons which actually belong to the 
           # version, prefix it with the association name — version in
@@ -223,7 +250,7 @@ module Gluttonberg
           
           # this will generate a new version
           def new_version!(options = {}) 
-            options[:vnumber] = versions.length + 1
+            options[:vnumber] = versions.length + 1            
             @current_version= self.class.versioned_model.new(options)            
             versions << @current_version
             @current_version
@@ -244,7 +271,7 @@ module Gluttonberg
                     
           # update original table data by using current versioned record
           def save_current_version_into_original_table            
-            exclusions = [:id, :created_at , :updated_at , :parent_id , :vnumber]          
+            exclusions = [:id, :created_at , :updated_at , :parent_id ]         #, :vnumber 
             opts = {}            
               self.versioned_attributes.each do |key , value|              
                 unless exclusions.include?(key)
@@ -261,15 +288,17 @@ module Gluttonberg
           end
           
           # Returns the current version's filtered attributes that are in original model as well
+          #Fixme : in some cases it does not work properly
           def filtered_versioned_attributes
             flag = true
             opts = {}
             unless @current_version.blank?              
-              exclusions = [:id, :created_at , :updated_at , :parent_id , :vnumber]          
+              exclusions = [:id, :created_at , :updated_at , :parent_id ]  #, :vnumber
+              orignal = self.get(self.versioned_attributes[:parent_id])
               opts = {}            
                 self.versioned_attributes.each do |key , value|              
-                  unless exclusions.include?(key)
-                    flag = false if attributes[key.to_sym] != value
+                  unless exclusions.include?(key)                    
+                    flag = false if orignal.attributes[key.to_sym] != value
                     opts[key] = value
                   end
                 end  
@@ -316,6 +345,7 @@ module Gluttonberg
           
           def save_current_version
             if @current_version && @current_version.dirty?
+              self.vnumber = @current_version.vnumber
               @current_version.save
             end            
           end
