@@ -222,7 +222,7 @@ module Gluttonberg
             # collections correctly.
             opts[:parent_id] = self.id
             # Stash the opts so we can use em later
-            
+            opts[:vnumber] = self.vnumber if opts[:vnumber].blank?
             # Go and find the latest version 
             @current_version = self.class.versioned_model.first(opts.merge(:order => [:updated_at.desc]))            
           end
