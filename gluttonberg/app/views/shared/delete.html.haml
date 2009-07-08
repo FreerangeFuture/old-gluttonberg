@@ -7,8 +7,12 @@
     = form(:action => @options[:action], :method => "delete") do
       %h1= @options[:title]
       %p.message= @options[:message]
+      %p.warning= @options[:warning] unless @options[:warning].blank?
       
       %p.controls
-        = submit("Delete")
-        or 
-        = link_to("<strong>Cancel</strong>", @options[:return_url])
+        - if @options[:do_not_delete].blank? || !(@options[:do_not_delete])
+          = submit("Delete")
+          or 
+          = link_to("<strong>Cancel</strong>", @options[:return_url])
+        - else
+          = link_to("<strong>Ok</strong>", @options[:return_url])

@@ -21,9 +21,16 @@ module Gluttonberg
     # and it will display a dialog which allows users to either confirm 
     # deleting a record or cancelling the action.
     def display_delete_confirmation(opts)
-      @options = opts
-      @options[:title]    ||= "Delete Record?"
-      @options[:message]  ||= "If you delete this record, it will be gone permanently. There is no undo."
+      @options = opts      
+      @do_not_delete = (@options[:do_not_delete].blank?)? false : @options[:do_not_delete]
+      
+      unless @do_not_delete
+        @options[:title]    ||= "Delete Record?"
+        @options[:message]  ||= "If you delete this record, it will be gone permanently. There is no undo."
+      else
+        @options[:title]    = "Sorry you cannot delete this record!"
+        @options[:message]  ||= "It is being used by some other records."
+      end  
       render :template => "shared/delete", :layout => false
     end
     
