@@ -103,7 +103,7 @@
 #
 #    (Examples in HAML)
 #
-#      %table{:class => drag_tree_table_class, :cellpadding => 0, :cellspacing => 0, :rel => drag_tree_url}
+#      %table{:class => drag_tree_table_class, :cellpadding => 0, :cellspacing => 0, :rel => drag_tree_url, :summary => "Drag Tree Table"}
 #        - for article in @articles
 #          %tr{:id => drag_tree_row_id(article), :class => drag_tree_row_class(article)}
 #            %td
