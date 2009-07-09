@@ -29,7 +29,7 @@ module Gluttonberg
         @options[:message]  ||= "If you delete this record, it will be gone permanently. There is no undo."
       else
         @options[:title]    = "Sorry you cannot delete this record!"
-        @options[:message]  ||= "It is being used by some other records."
+        @options[:message]  ||= "It is been used by some other records."
       end  
       render :template => "shared/delete", :layout => false
     end
@@ -39,10 +39,18 @@ module Gluttonberg
     # publish/unpublish a record or cancelling the action.
     def display_generic_confirmation(name , opts)
       @options = opts
+      @do_not_do = (@options[:do_not_do].blank?)? false : @options[:do_not_do]
       @name = name
-      @options[:title]    ||= "#{@name.capitalize} Record?"
-      @options[:message]  ||= "If you #{@name.downcase} this record, it will be #{@name}"
+      
+      unless @do_not_do
+        @options[:title]    ||= "#{@name.capitalize} Record?"
+        @options[:message]  ||= "If you #{@name.downcase} this record, it will be #{@name}"
+      else
+        @options[:title]    = "Sorry you cannot #{@name.capitalize} this record!"
+        @options[:message]  ||= "It's parent record is not #{@name.capitalize}."
+      end  
       render :template => "shared/generic", :layout => false
+      
     end
     
     # A helper for finding shortcutting the steps in finding a model ensuring

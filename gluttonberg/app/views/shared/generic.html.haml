@@ -10,6 +10,11 @@
       %p.warning= @options[:warning] unless @options[:warning].blank?
       
       %p.controls
-        = submit("#{@name.capitalize}")
-        or 
-        = link_to("<strong>Cancel</strong>", @options[:return_url])
+        - unless @do_not_do
+          = submit("#{@name.capitalize}")
+          or 
+          = link_to("<strong>Cancel</strong>", @options[:return_url])
+        - else
+          = link_to("<strong>Ok</strong>", @options[:return_url])
+        
+        
