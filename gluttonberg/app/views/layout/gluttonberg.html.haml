@@ -18,6 +18,7 @@
   %body{:id => params[:controller].match(%r{\w+$}), :class => params[:action]}
     %div#sidebar
       %h1 Gluttonberg
+      %h2#navTitle Navigation
       %ul#navigation
         = main_nav_entry("Dashboard", "dashboard", url(:gluttonberg_admin_root))
         = main_nav_entry("Content", "content", url(:gluttonberg_content))
@@ -34,6 +35,6 @@
     %div
       &nbsp;
     %div#wrapper
-      %h1#pageTitle= @page_title || "No title set"
+      %h2#pageTitle= @page_title || "No title set"
       = contextual_help
       = catch_content(:for_layout)
