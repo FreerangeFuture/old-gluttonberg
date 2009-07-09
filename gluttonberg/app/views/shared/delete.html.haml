@@ -10,7 +10,7 @@
       %p.warning= @options[:warning] unless @options[:warning].blank?
       
       %p.controls
-        - if @options[:do_not_delete].blank? || !(@options[:do_not_delete])
+        - unless @do_not_delete
           = submit("Delete")
           or 
           = link_to("<strong>Cancel</strong>", @options[:return_url])
