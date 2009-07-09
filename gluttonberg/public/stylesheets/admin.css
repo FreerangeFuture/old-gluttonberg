@@ -79,7 +79,7 @@ body {
     background-image: url(../images/sidebar/settings.png); }
   #sidebar p {
     background: left top no-repeat url(../images/sidebar/icon_logged_in.gif);
-    color: #666666;
+    color: #8b8b8b;
     padding: 0 0 0 30px;
     margin: 10px 20px 0 20px;
     width: 150px; }
@@ -347,7 +347,7 @@ thead th {
   font-weight: bold;
   font-size: 0.9em;
   padding: 0.4em 15px 0.5em 15px;
-  color: #666666; }
+  color: #616161; }
 
 tbody th {
   background: #F2F2F2;
