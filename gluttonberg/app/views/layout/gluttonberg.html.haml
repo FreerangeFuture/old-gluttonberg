@@ -20,12 +20,12 @@
       %h1 Gluttonberg
       %h2#navTitle Navigation
       %ul#navigation
-        = main_nav_entry("Dashboard", "dashboard", url(:gluttonberg_admin_root))
-        = main_nav_entry("Content", "content", url(:gluttonberg_content))
-        = main_nav_entry("Library", "library", url(:gluttonberg_library))
+        = main_nav_entry("Dashboard", "dashboard", url(:gluttonberg_admin_root), {:title => "Dashboard"})
+        = main_nav_entry("Content", "content", url(:gluttonberg_content), {:title => "Content"})
+        = main_nav_entry("Library", "library", url(:gluttonberg_library), {:title => "Library"})
         - for entry in Gluttonberg::Components.nav_entries
           = main_nav_entry(*entry)
-        = main_nav_entry("Settings", "settings", url(:gluttonberg_settings))
+        = main_nav_entry("Settings", "settings", url(:gluttonberg_settings), {:title => "Settings"})
       - if session.user
         %p
           Logged in as
