@@ -103,6 +103,15 @@ body {
     color: white;
     font-size: 1.6em;
     padding: 8px 15px; }
+  #wrapper h1#loginTitle {
+    background-color: #244e66;
+    background-position: left bottom;
+    background-repeat: repeat-x;
+    background-image: url(../images/pagetitle_bkg.gif);
+    color: white;
+    font-size: 1.6em;
+    padding: 8px 15px;
+    margin-bottom: 50px; }
 
 /* Sub-navigation */
 #subnav {
