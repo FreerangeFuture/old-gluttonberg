@@ -5,9 +5,9 @@
     - if @setting.delete_able
       = text_field(:name, :label => "Setting Name")      
       %br        
-      = text_field(:value, :label => "Setting Name")
+      = text_area(:value, :label => "Setting Value" , :class => "large tall")
     - else      
-      = text_field(:value, :label => @setting.name.capitalize)
+      = text_area(:value, :label => @setting.name.capitalize, :class => "large tall")
     
     %br
       

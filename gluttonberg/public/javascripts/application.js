@@ -1,3 +1,7 @@
+$(function() {                 
+                $("#tabs").tabs();                                
+});
+
 // Common utility functions shared between the different dialogs.
 var Dialog = {
   center: function() {
@@ -72,7 +76,7 @@ var Help = {
 };
 
 $(document).ready(function() {
-  $("#wrapper p#contextualHelp a").click(Help.click);
+  $("#wrapper p#contextualHelp a").click(Help.click);  
 });
 
 var AssetBrowser = {
@@ -312,6 +316,8 @@ function writeAssetToAssetCollection(assetId, assetCollectionUrl){
 $(document).ready(function() {
   // Temporary hack called by old Asset Browser code until it is updated to
   // use the new code
+  
+  
   $("#wrapper .assetBrowserLink").click(function(e) {
     if ($(e.target).is("a[rel='clear-asset']")) {
       var input = $(this).find("input[type=hidden]");
@@ -355,3 +361,5 @@ function publish(id)
   var element = document.getElementById(id);
   element.value = "true";  
 }
+
+

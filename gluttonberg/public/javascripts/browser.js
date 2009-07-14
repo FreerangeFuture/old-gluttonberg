@@ -1,6 +1,6 @@
-$(document).ready(function() {
+$(document).ready(function() {  
   var browser = $("#assetsDialog");
-  if (browser.length > 0) {
+  if (browser.length > 0) {    
     var display = browser.find("#assetsDisplay");
     var offsets = browser.find("> *:not(#assetsDisplay)");
     // Calculate the height used to calculate the display size

@@ -271,7 +271,7 @@ JAVASCRIPT_CODE
       end  
       
       def meta_keywords
-        Merb::Slices::config[:gluttonberg][:keyword]
+        Merb::Slices::config[:gluttonberg][:keywords]
       end 
       
       def meta_description

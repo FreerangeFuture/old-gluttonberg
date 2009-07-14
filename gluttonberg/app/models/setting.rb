@@ -5,7 +5,7 @@ module Gluttonberg
     
     property :id,               Serial 
     property :name,             String , :nullable => false
-    property :value,            String , :length => 255
+    property :value,            Text
     property :category,         DataMapper::Types::Enum[:meta_data, :website_info], :default => :meta_data
     property :row,              Integer
     property :delete_able,      Boolean, :default => true
@@ -19,7 +19,11 @@ module Gluttonberg
     end  
     
     def self.generate_common_settings
-      settings = {:title => [:meta_data , 0] , :description => [:meta_data, 2] , :keywords => [:meta_data, 1]}
+      settings = {
+        :title => [:meta_data , 0], 
+        :description => [:meta_data, 2], 
+        :keywords => [:meta_data, 1]
+      }
       self.generate_settings(settings)
     end  
     

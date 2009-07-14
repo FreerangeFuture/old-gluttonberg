@@ -18,6 +18,9 @@ module Gluttonberg
       end
 
       def edit
+        @page_localization.navigation_label = @page_localization.page.navigation_label if @page_localization.navigation_label.blank?
+        @page_localization.slug = @page_localization.page.slug  if @page_localization.slug.blank?
+        @page_localization.save!        
         only_provides :html
         render
       end

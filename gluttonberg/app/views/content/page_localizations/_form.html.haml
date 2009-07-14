@@ -1,11 +1,12 @@
+- require_js 'slug_management'
 = form_for(@page_localization, :action => action) do
   = error_messages_for(@page_localization)
   = block("Localization") do
-    = text_field(:name, :label => "Name")
+    = text_field(:name, :label => "Name", :id => "page_title")    
     %br
-    = text_field(:navigation_label, :label => "Navigation Label")
+    = text_field(:navigation_label, :label => "Navigation Label" )
     %br
-    = text_field(:slug, :label => "Slug")
+    = text_field(:slug, :label => "Slug", :id => 'page_slug')
     
   = block("Content") do
     - for content in @page_localization.contents

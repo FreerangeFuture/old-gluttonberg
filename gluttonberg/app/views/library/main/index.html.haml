@@ -3,32 +3,42 @@
   = nav_link("Add collection", slice_url(:new_collection))
   = nav_link("Add asset", slice_url(:new_asset))
 
-%h2.assetList Browse
-%ul.assetList
-  %li
-    %a{:href => slice_url(:asset_category, :category => 'all'), :class => "browseAll"}
-      %h3 All
-      /%p nil items
-  - @categories.each do |category|
+%div#tabs
+  %ul
     %li
-      %a{:href => slice_url(:asset_category, category.name), :class => "browse#{category.name.pluralize.capitalize}"}
-        %h3= category.name.pluralize.capitalize
+      %a{ :href => "#tabs-browse"} Browse
+    %li
+      %a{ :href => "#tabs-collection"} Collection
+    %li
+      %a{ :href => "#tabs-recent"} Recent
+  
+%div#tabs-browse
+  /%h2.assetList Browse
+  %ul.assetList
+    %li
+      %a{:href => slice_url(:asset_category, :category => 'all'), :class => "browseAll"}
+        %h3 All
         /%p nil items
-
-- unless @collections.empty?
-  %h2.assetList Collections
-  %ul.assetList
-    - for collection in @collections
+    - @categories.each do |category|
       %li
-        %a{:href => slice_url(:collection, collection), :class => "collection"}
-          %h3= collection.name
+        %a{:href => slice_url(:asset_category, category.name), :class => "browse#{category.name.pluralize.capitalize}"}
+          %h3= category.name.pluralize.capitalize
           /%p nil items
-
-- unless @assets.empty?
-  %h2.assetList Latest  
-  %ul.assetList
-    - for asset in @assets
-      %li
-        %a{:href => slice_url(:asset, asset), :class => "asset#{asset.category.capitalize}"}
-          %h3= asset.name
-          %p= asset.type
+%div#tabs-collection
+  - unless @collections.empty?
+    /%h2.assetList Collections
+    %ul.assetList
+      - for collection in @collections
+        %li
+          %a{:href => slice_url(:collection, collection), :class => "collection"}
+            %h3= collection.name
+            /%p nil items
+%div#tabs-recent
+  - unless @assets.empty?
+    /%h2.assetList Latest  
+    %ul.assetList
+      - for asset in @assets
+        %li
+          %a{:href => slice_url(:asset, asset), :class => "asset#{asset.category.capitalize}"}
+            %h3= asset.name
+            %p= asset.type
