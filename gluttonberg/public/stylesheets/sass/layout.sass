@@ -13,6 +13,12 @@
     :padding 8px 0
     :width 220px
     :height 1em
+  
+  h2#navTitle
+    :height 0
+    /* hide text
+    :letter-spacing -1000em
+    :text-indent -10000em
     
   form
     :padding 0
@@ -58,7 +64,7 @@
     
   p
     :background left top no-repeat url(../images/sidebar/icon_logged_in.gif)
-    :color #666666
+    :color= !login_grey
     :padding 0 0 0 30px
     :margin 10px 20px 0 20px
     :width 150px
@@ -73,8 +79,12 @@
   :width 100%
   :min-height 30em
   :float left
+
+  h2
+    :font
+      :size 1.2em  
   
-  h1
+  h2#pageTitle
     :background
       :color= !mid_aqua
       :position left bottom
@@ -84,9 +94,18 @@
     :font-size 1.6em
     :padding 8px 15px
     
-  h2
-    :font
-      :size 1.2em
+  h1#loginTitle
+    :background
+      :color= !mid_aqua
+      :position left bottom
+      :repeat repeat-x
+      :image url(../images/pagetitle_bkg.gif)
+    :color white
+    :font-size 1.6em
+    :padding 8px 15px
+    :margin-bottom 50px
+    
+
 
 /* Sub-navigation
 #subnav

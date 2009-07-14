@@ -1,7 +1,7 @@
 !!! Strict
-%html
+%html{:xmlns => "http://www.w3.org/1999/xhtml", "xml:lang" => "en", :lang => "en"}
   %head
-    %title Administration.
+    %title Gluttonberg
     %meta{"http-equiv" => "Content-Type", :content => "text/html;charset=utf-8" }/
     %link{:href => gluttonberg_public_path_for(:stylesheet, 'admin.css'), :type => "text/css", :charset => "utf-8", :rel => "stylesheet"}/
     = css_include_tag('custom.css')    
@@ -18,13 +18,14 @@
   %body{:id => params[:controller].match(%r{\w+$}), :class => params[:action]}
     %div#sidebar
       %h1 Gluttonberg
+      %h2#navTitle Navigation
       %ul#navigation
-        = main_nav_entry("Dashboard", "dashboard", url(:gluttonberg_admin_root))
-        = main_nav_entry("Content", "content", url(:gluttonberg_content))
-        = main_nav_entry("Library", "library", url(:gluttonberg_library))
+        = main_nav_entry("Dashboard", "dashboard", url(:gluttonberg_admin_root), {:title => "Dashboard"})
+        = main_nav_entry("Content", "content", url(:gluttonberg_content), {:title => "Content"})
+        = main_nav_entry("Library", "library", url(:gluttonberg_library), {:title => "Library"})
         - for entry in Gluttonberg::Components.nav_entries
           = main_nav_entry(*entry)
-        = main_nav_entry("Settings", "settings", url(:gluttonberg_settings))
+        = main_nav_entry("Settings", "settings", url(:gluttonberg_settings), {:title => "Settings"})
       - if session.user
         %p
           Logged in as
@@ -34,6 +35,6 @@
     %div
       &nbsp;
     %div#wrapper
-      %h1#pageTitle= @page_title || "No title set"
+      %h2#pageTitle= @page_title || "No title set"
       = contextual_help
       = catch_content(:for_layout)
