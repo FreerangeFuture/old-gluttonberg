@@ -1,0 +1,10 @@
+= form_for(@setting, :action => action) do
+  = error_messages_for(@setting)  
+  
+  = block("Setting") do
+    = text_field(:name, :label => "Setting Name")
+    %br
+    = text_field(:value, :label => "Setting Value")
+    %br
+      
+  = form_controls(slice_url(:generic_settings))

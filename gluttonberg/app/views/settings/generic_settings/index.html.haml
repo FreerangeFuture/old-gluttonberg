@@ -1,0 +1,24 @@
+- @page_title = "Meta Data"
+= sub_nav do
+  = back_link("Settings", slice_url(:settings))
+  = nav_link('New', slice_url(:new_generic_setting))
+  
+- if @settings.empty?
+  %p.empty No locales
+- else
+  %table{:cellspacing => 0, :cellpadding => 0, :summary => "List of Settings"}
+    %thead
+      %tr
+        %th Name
+        %th Value
+        %th.controls Controls
+    %tbody
+      - for setting in @settings
+        %tr
+          %td= setting.name
+          %td= setting.value
+          %td.controls
+            %ul
+              %li= link_to('Edit', slice_url(:edit_generic_setting,  setting))
+              - if setting.delete_able
+                %li= link_to('Delete', slice_url(:delete_generic_setting, setting))

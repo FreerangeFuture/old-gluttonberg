@@ -49,6 +49,7 @@ module Gluttonberg
           se.resources(:locales, :controller => "settings/locales")
           se.resources(:dialects, :controller => "settings/dialects")
           se.resources(:users, :controller => "settings/users")
+          se.resources(:generic_settings, :controller => "settings/generic_settings")
         end
         
         # Help
