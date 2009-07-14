@@ -5,7 +5,7 @@ module Gluttonberg
     
     property :id,               Serial 
     property :name,             String , :nullable => false
-    property :value,            String
+    property :value,            String , :length => 255
     property :category,         DataMapper::Types::Enum[:meta_data, :website_info], :default => :meta_data
     property :row,              Integer
     property :delete_able,      Boolean, :default => true

@@ -265,6 +265,18 @@ JAVASCRIPT_CODE
         output
       end  
       
+      def website_title
+        title = Merb::Slices::config[:gluttonberg][:title]
+        (title.blank?)? "Gluttonberg" : title
+      end  
+      
+      def meta_keywords
+        Merb::Slices::config[:gluttonberg][:keyword]
+      end 
+      
+      def meta_description
+        Merb::Slices::config[:gluttonberg][:description]
+      end
     end # Admin
   end # Helpers
 end # Gluttonberg

@@ -1,7 +1,9 @@
 !!! Strict
 %html{:xmlns => "http://www.w3.org/1999/xhtml", "xml:lang" => "en", :lang => "en"}
   %head
-    %title Gluttonberg
+    %title
+      = website_title
+      = "- #{@page_title}" if @page_title
     %meta{"http-equiv" => "Content-Type", :content => "text/html;charset=utf-8" }/
     %link{:href => gluttonberg_public_path_for(:stylesheet, 'admin.css'), :type => "text/css", :charset => "utf-8", :rel => "stylesheet"}/
     = css_include_tag('custom.css')    
@@ -17,7 +19,7 @@
     = include_required_js
   %body{:id => params[:controller].match(%r{\w+$}), :class => params[:action]}
     %div#sidebar
-      %h1 Gluttonberg
+      %h1= website_title
       %h2#navTitle Navigation
       %ul#navigation
         = main_nav_entry("Dashboard", "dashboard", url(:gluttonberg_admin_root), {:title => "Dashboard"})

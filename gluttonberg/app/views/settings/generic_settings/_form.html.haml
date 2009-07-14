@@ -2,9 +2,13 @@
   = error_messages_for(@setting)  
   
   = block("Setting") do
-    = text_field(:name, :label => "Setting Name")
-    %br
-    = text_field(:value, :label => "Setting Value")
+    - if @setting.delete_able
+      = text_field(:name, :label => "Setting Name")      
+      %br        
+      = text_field(:value, :label => "Setting Name")
+    - else      
+      = text_field(:value, :label => @setting.name.capitalize)
+    
     %br
       
   = form_controls(slice_url(:generic_settings))
