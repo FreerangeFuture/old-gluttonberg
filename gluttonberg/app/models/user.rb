@@ -4,7 +4,9 @@ module Gluttonberg
   class User
     include DataMapper::Resource
     include Merb::Authentication::Mixins::SaltedUser
-    
+    #include Merb::MailerMixin
+
+
     property :id, Serial
     property :name, String, :length => 1..100
     property :email, String, :length => 1..100
@@ -41,5 +43,20 @@ module Gluttonberg
           found_user
     end  
     
+#     def reset_password
+#           send_mail (UserMailer, :reset_password, {
+#               :from => "no-reply@example.com",
+#               :to => "rauf_eng@hotmail.com",
+#               :subject => "Please activate your account" 
+#              })
+#     end
+    
+    def self.random_password
+      length = 10
+      chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
+      newpass = ""
+      1.upto(length) { |i| newpass << chars[rand(chars.size-1)] }
+      newpass
+    end  
   end
 end

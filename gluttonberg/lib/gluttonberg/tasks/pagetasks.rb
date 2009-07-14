@@ -16,5 +16,13 @@ namespace :slices do
       Gluttonberg::Page.generate_localizations_for_all_pages
     end
     
+    desc "Generate default dialect (en) and locale (au)"
+    task :generate_default_dialect_and_locale => :merb_env do
+      dialect = Gluttonberg::Dialect.create( :code => "en" , :name => "English" , :default => true)
+      locale = Gluttonberg::Locale.new( :slug => "au" , :name => "Australia" , :default => true)      
+      locale.dialect_ids = [dialect.id]
+      locale.save!
+    end
+    
   end
 end

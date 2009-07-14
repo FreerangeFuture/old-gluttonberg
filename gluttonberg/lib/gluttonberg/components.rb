@@ -29,7 +29,7 @@ module Gluttonberg
     # Returns an array of components that have been given a nav_label —
     # the label implicitly registers them as nav entries. Components without
     # a label won’t turn up.
-    def self.nav_entries
+    def self.nav_entries      
       @@nav_entries ||= @@components.collect do |k, v| 
         url = if v[:admin_url]
           if v[:admin_url].is_a? Symbol

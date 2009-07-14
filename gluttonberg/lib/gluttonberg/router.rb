@@ -13,6 +13,8 @@ module Gluttonberg
       scope.match("/login", :method => :get ).to(:controller => "/exceptions", :action => "unauthenticated").name(:login)
       scope.match("/login", :method => :put ).to(:controller => "sessions", :action => "update").name(:perform_login)
       scope.match("/logout").to(:controller => "sessions", :action => "destroy").name(:logout)
+      scope.match("/forgot_password", :method => :get).to(:controller => "users", :action => "forgot_password").name(:forgot_password)
+      scope.match("/reset_password", :method => :put).to(:controller => "users", :action => "reset").name(:reset_password)
       
       # The admin dashboard
       scope.match("/").to(:controller => "main").name(:admin_root)

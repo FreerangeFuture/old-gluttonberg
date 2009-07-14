@@ -59,6 +59,7 @@ module Gluttonberg
         end
       end
   
+      
       private
       
       def find_user

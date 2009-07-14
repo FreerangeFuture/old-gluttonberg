@@ -1,11 +1,26 @@
 - @page_id = "login"
 - @page_title = "Login"
 
+
+
+
 = form(:action => slice_url(:gluttonberg, :perform_login), :method => :put, :id => "wrapper") do
   %h1 Login
   
+  %div.error{:style=>"margin:40px;"}
+    %h2= session.authentication.error_message if message[:notice].blank?
+    %h2= message[:notice]
+      
   = text_field(:name => "email", :value => params[:email], :label => "E-mail", :class => "large")
   %br
   = password_field(:name => "password", :label => "Password", :class => "medium")
 
   = submit("Login", :class => "buttonGrey")
+  %br
+  %br
+  %br
+  %br
+  %br  
+  %br
+  = link_to("Forgot your password?", url(:gluttonberg_forgot_password))
+

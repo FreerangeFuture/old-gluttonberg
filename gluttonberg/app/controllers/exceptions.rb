@@ -1,6 +1,24 @@
+class Exceptions  < Merb::Controller
+    #handle NotFound exceptions (404)
+    def not_found
+      render :layout => "bare"
+    end
+
+    # handle NotAcceptable exceptions (406)
+    def not_acceptable
+      render :layout => "bare"
+    end
+    def internal_server_error
+      render :layout => "bare"
+    end  
+  end
 module Gluttonberg
-  # the mixin to provide the exceptions controller action for Unauthenticated
+  
+
+  # the mixin to provide the exceptions controller action for Unauthenticated  
   module ExceptionsMixin
+    
+    
     def unauthenticated
       provides :xml, :js, :json, :yaml
 
@@ -13,7 +31,7 @@ module Gluttonberg
       end
     end # unauthenticated
   end
-
+end  
   Merb::Authentication.customize_default do
   
     Exceptions.class_eval do
@@ -32,4 +50,4 @@ module Gluttonberg
     end# Exceptions.class_eval
   
   end # Customize default
-end
+#end
