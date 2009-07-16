@@ -6,9 +6,14 @@
       = text_field(:name, :label => "Setting Name")      
       %br        
       = text_area(:value, :label => "Setting Value" , :class => "large tall")
+      %br        
+      = text_area(:help, :label => "Help" , :class => "large tall")    
     - else      
-      = text_area(:value, :label => @setting.name.capitalize, :class => "large tall")
+      = text_area(:value, :label => @setting.name.capitalize, :class => "large tall")      
     
+    %small= @setting.help
+    = check_box(:enabled)
+    = label( :for => "enabled", :class => "checkbox" , :title=> "Enabled" )
     %br
       
   = form_controls(slice_url(:generic_settings))

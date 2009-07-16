@@ -22,6 +22,35 @@ module Gluttonberg
         path = path_or_page.is_a?(String) ? path_or_page : path_or_page.path
         ::Gluttonberg::Router.localized_url(path, params)
       end
+      
+      # Returns the code for google analytics
+      def google_analytics
+        code = Merb::Slices::config[:gluttonberg][:google_analytics]
+        output = ""
+        unless code.blank?
+          #output = "<script src=\"http://www.google-analytics.com/urchin.js\" type=\"text/javascript\"></script>"
+          #output +=  "<script type=\"text/javascript\">"
+          #output += "_uacct = \"#{code}\";"
+          #output += "urchinTracker();"
+          #output += "</script>"
+          
+          output += "<script type='text/javascript'>\n"
+          output += "//<![CDATA[\n"
+          output += "var gaJsHost = ((\"https:\" == document.location.protocol) ? \"https://ssl.\" : \"http://www.\");\n"
+          output += "document.write(unescape(\"%3Cscript src='\" + gaJsHost + \"google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E\"));\n"
+          output += "//]]>\n"
+          output += "</script>\n"
+          output += "<script type='text/javascript'>\n"
+          output += "//<![CDATA[\n"
+          output += "try {\n"
+          output += "var pageTracker = _gat._getTracker(\"#{code}\");\n"
+          output += "pageTracker._trackPageview();\n"
+          output += "} catch(err) {}\n"
+          output += "//]]>\n"
+          output += "</script>\n"
+        end  
+        output
+      end  
     end # Public
   end # Helpers
 end # Gluttonberg

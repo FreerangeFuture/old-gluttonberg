@@ -22,7 +22,7 @@ end
 Merb::BootLoader.after_app_loads do
   Gluttonberg::Components.register(:thing, :label => "Thing")
   begin
-    settings = Gluttonberg::Setting.all(:category => :meta_data)
+    settings = Gluttonberg::Setting.all(:enabled => true)
     settings.each do |setting|
       Merb::Slices::config[:gluttonberg][setting.name.to_sym] = setting.value
     end
