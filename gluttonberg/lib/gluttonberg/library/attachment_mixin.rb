@@ -87,7 +87,11 @@ module Gluttonberg
           unless new_file.blank?
             Merb.logger.info("\nFILENAME: #{new_file[:filename]} \n\n")
             
-            # Forgive me this naive sanitisation, I'm still a regex n00b
+            #temp = new_file[:filename].split(".")
+            #ext = temp.length > 1 ? ".#{temp.last}" : ""
+            #clean_filename = "asset#{ext}"
+
+            # Forgive me this naive sanitisation, I'm still a regex n00b            
             clean_filename = new_file[:filename].split(%r{[\\|/]}).last
             clean_filename = clean_filename.gsub(" ", "_").gsub(/[^A-Za-z0-9\-_.]/, "").downcase
 

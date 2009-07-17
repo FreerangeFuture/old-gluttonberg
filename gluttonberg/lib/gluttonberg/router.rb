@@ -7,8 +7,11 @@ module Gluttonberg
   # which it injects into the params. In the case where it finds a page that
   # is defined as a rewrite, it will do that. A rewrite that is.
   module Router
+    
+    
     # Set up the many and various routes for Gluttonberg
     def self.setup(scope)
+      
       # Login/Logout
       scope.match("/login", :method => :get ).to(:controller => "/exceptions", :action => "unauthenticated").name(:login)
       scope.match("/login", :method => :put ).to(:controller => "sessions", :action => "update").name(:perform_login)
@@ -228,7 +231,8 @@ module Gluttonberg
     
     # Merb’s router extensions are used to add declarations that can be used 
     # inside the router configuration.
-    Merb::Router.extensions do
+    Merb::Router.extensions do      
+      
       # This declaration sets up the routes that allow Gluttoberg to handle 
       # requests from the public side of an app. Most of this logic is just
       # figuring out what the components of the URL should look like — should
@@ -271,7 +275,9 @@ module Gluttonberg
         ).name(:public_page)
         # Filthy hack to match against the root, since the URL won't 
         # regenerate with optional parameters — :full_path
-        match(path).defer_to({:controller => controller, :action => "show"}, &Gluttonberg::Router::PUBLIC_DEFER_PROC).name(:public_root)
+        match(path).defer_to({:controller => controller, :action => "show"}, &Gluttonberg::Router::PUBLIC_DEFER_PROC).name(:public_root)      
+        controller = Gluttonberg.standalone? ? "library/public_assets" : "gluttonberg/library/public_assets"
+        match("/asset/:hash/:id").to(:controller => controller, :action => "show").name(:public_asset)
       end
     end
   end

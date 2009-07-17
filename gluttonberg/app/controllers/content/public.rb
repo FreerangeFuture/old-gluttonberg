@@ -12,6 +12,7 @@ module Gluttonberg
           render(:template => page_template, :layout => page_layout)
         end
       end
+      
     end
   end
 end

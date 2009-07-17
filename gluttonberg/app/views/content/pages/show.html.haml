@@ -3,6 +3,7 @@
   = back_link("Pages", slice_url(:pages))
   = nav_link('Delete', slice_url(:delete_page, @page))
   = nav_link('Edit settings', slice_url(:edit_page, @page))
+  = nav_link('Edit content', slice_url(:edit_page_localization, :page_id => @page, :id => @default_localization.id))
   
 %div.pageBlock
   %h2 Settings
@@ -17,13 +18,6 @@
     %dd= @page.layout || "None set"
     %dt Description
     %dd= @page.description ? @page.description[:label] : "None set"
-
-- if @page.description
-  %div#pageContent.pageBlock
-    %h2 Content
-    %ul
-      - @page.description.sections.each do |name, section|
-        %li= "#{section[:label]} <span>(#{section[:type].to_s.gsub!("_", " ").capitalize})</span>"
 
 %div.pageBlock
   %h2 Localizations

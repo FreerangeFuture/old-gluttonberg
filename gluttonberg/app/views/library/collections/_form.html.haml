@@ -1,3 +1,9 @@
+= sub_nav do
+  = back_link("Library", slice_url(:library))
+
+%br
+%br
+
 = form_for(@collection, :action => action) do
   = error_messages_for(@collection)
   = block do

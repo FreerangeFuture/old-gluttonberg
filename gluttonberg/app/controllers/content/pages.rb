@@ -13,6 +13,7 @@ module Gluttonberg
       end
 
       def show
+        @default_localization = @page.localizations.first(:dialect_id => Dialect.first_default.id , :locale_id => Locale.first_default.id)
         display @page
       end
 

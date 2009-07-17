@@ -1,5 +1,6 @@
 - @page_title = "Users"
 = sub_nav do
+  = back_link("Settings", slice_url(:settings))
   = nav_link("New", slice_url(:new_user))
   
 - if @users.empty?

@@ -1,6 +1,9 @@
 /- require_js 'slug_management'
 %script{:src => gluttonberg_public_path_for(:javascript, "slug_management.js"), :type => "text/javascript", :charset => "utf-8"}
 
+= sub_nav do
+  = back_link("Pages", slice_url(:pages))
+
 = form_for(@page, :action => action) do  
   = error_messages_for(@page)
   

@@ -1,3 +1,7 @@
+= sub_nav do
+  = back_link("Settings", slice_url(:settings))
+  = back_link("Locales", slice_url(:locales))
+  
 = form_for(@locale, :action => action) do
   = error_messages_for(@locale)  
   

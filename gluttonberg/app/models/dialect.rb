@@ -16,5 +16,10 @@ module Gluttonberg
     def name_and_code
       "#{name} (#{code})"
     end
+    
+    def  self.first_default(opts={})
+      opts[:default] = true
+      first(opts)
+    end  
   end
 end

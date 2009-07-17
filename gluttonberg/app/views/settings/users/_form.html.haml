@@ -1,3 +1,7 @@
+= sub_nav do
+  = back_link("Settings", slice_url(:settings))
+  = back_link("Users", slice_url(:users))
+
 = form_for(@user, :action => action) do
   = error_messages_for(@user)
   

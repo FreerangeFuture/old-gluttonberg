@@ -28,12 +28,6 @@ module Gluttonberg
         code = Merb::Slices::config[:gluttonberg][:google_analytics]
         output = ""
         unless code.blank?
-          #output = "<script src=\"http://www.google-analytics.com/urchin.js\" type=\"text/javascript\"></script>"
-          #output +=  "<script type=\"text/javascript\">"
-          #output += "_uacct = \"#{code}\";"
-          #output += "urchinTracker();"
-          #output += "</script>"
-          
           output += "<script type='text/javascript'>\n"
           output += "//<![CDATA[\n"
           output += "var gaJsHost = ((\"https:\" == document.location.protocol) ? \"https://ssl.\" : \"http://www.\");\n"

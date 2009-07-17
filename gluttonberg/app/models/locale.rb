@@ -31,5 +31,11 @@ module Gluttonberg
     def clear_all_dialects
       self.gluttonberg_dialect_gluttonberg_locales.all.destroy! unless self.new_record?
     end
+    
+    def  self.first_default(opts={})
+      opts[:default] = true
+      first(opts)
+    end  
+    
   end
 end

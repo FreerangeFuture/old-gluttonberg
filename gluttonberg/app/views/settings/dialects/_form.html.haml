@@ -1,3 +1,7 @@
+= sub_nav do
+  = back_link("Settings", slice_url(:settings))
+  = back_link("Dialects", slice_url(:dialects))
+
 = form_for(@dialect, :action => action) do
   = error_messages_for(@dialect)
   = block("Dialect") do

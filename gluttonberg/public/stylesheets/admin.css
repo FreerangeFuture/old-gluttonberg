@@ -483,7 +483,7 @@ ul.assetList {
     font-weight: bold;
     color: #333333;
     padding: 0.2em 0;
-    width: 5.5em;
+    width: 8.5em;
     float: left;
     clear: left; }
   #assets.show #wrapper dd {
@@ -520,12 +520,13 @@ ul.assetList {
   margin-bottom: 1.5em; }
 #assets.show #description {
   margin-bottom: 1.5em; }
-#assets.show #public-path {
-  margin-left: 340px;
+#assets.show .public-path {
   width: 22em;
+  /*margin-left: 340px;  
   clear: both;
-  float: left; }
-#assets.show #public-path-note {
+  float: left; */
+  }
+#assets.show .public-path-note {
   font-size: 0.9em;
   color: #333333;
   padding-bottom: 1em;
