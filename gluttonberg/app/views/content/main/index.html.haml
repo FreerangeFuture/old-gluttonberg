@@ -1,3 +1,5 @@
 - @page_title = "Content"
 %ul#iconNav
   %li= link_to("Pages", slice_url(:pages), :id => "pagesNav")
+  - for entry in Gluttonberg::Components.nav_entries
+    %li= link_to(entry[0], url(entry[1]), :id => "pagesNav")    

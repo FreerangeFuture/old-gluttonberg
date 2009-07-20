@@ -42,18 +42,7 @@ module Gluttonberg
       # Returns a form for selecting the localized version of a record you want 
       # to edit.
       def page_localization_picker(page_localizations)
-        # Collect the locale/dialect pairs        
-        localizations = []        
-        page_localizations.each do |localization|
-            localizations << ["#{localization.id}", "#{localization.locale.slug}/#{localization.dialect.code}"]
-        end
-        url = slice_url(:edit_page_localization, :page_id => @page, :id => localization)
-        # Output the form for picking the locale
-        form(:action => url, :method => :get, :id => "select-localization") do
-          output = ""
-          output << select(:name => :localization, :collection => localizations, :label => "Select localization", :selected => params[:localization])
-          output << button("Edit", :class => "buttonGrey")
-        end
+        
       end
             
 

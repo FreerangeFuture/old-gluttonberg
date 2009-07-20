@@ -20,7 +20,7 @@ Merb::BootLoader.before_app_loads do
 end
 
 Merb::BootLoader.after_app_loads do
-  Gluttonberg::Components.register(:thing, :label => "Thing")
+  #Gluttonberg::Components.register(:thing, :label => "Thing")
   begin
     settings = Gluttonberg::Setting.all(:enabled => true)
     settings.each do |setting|
