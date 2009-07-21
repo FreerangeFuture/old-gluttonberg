@@ -5,7 +5,6 @@
 */public/assets/*/*
 gluttonberg/config/page_descriptions.rb
 gluttonberg/public/stylesheets/*.css
-!gluttonberg/public/stylesheets/ui.all.css
 !gluttonberg/public/stylesheets/admin.css
 */*.gemspec
 */spec/log/*
