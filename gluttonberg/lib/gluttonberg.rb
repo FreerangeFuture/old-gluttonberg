@@ -126,7 +126,7 @@ if defined?(Merb::Plugins)
   dependency 'dm-timestamps',   datamapper_version
   dependency 'dm-types',        datamapper_version
   dependency 'merb-auth-core',  merb_version
-  dependency 'merb-parts',      merb_parts_versionmain_nav_entry
+  dependency 'merb-parts',      merb_parts_version
   dependency 'merb-auth-more',  merb_version do
     require 'merb-auth-more/mixins/redirect_back'
   end

@@ -12,8 +12,7 @@ module Gluttonberg
       new_pass = User.random_password
       @user.password = @user.password_confirmation = new_pass
       @user.save!
-      body = "here is new password \n #{new_pass}"
-      
+      body = "here is new password \n #{new_pass}"      
       puts "=================================="+new_pass
       m = Merb::Mailer.new( :to => @user.email,
                      :from => "rauf_eng@hotmail.com",
