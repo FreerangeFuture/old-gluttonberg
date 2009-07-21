@@ -1,0 +1,59 @@
+/*
+Sass::SyntaxError: Undefined constant: "!login_grey".
+on line 67 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/layout.sass
+
+63:     :background-image url(../images/sidebar/settings.png)
+64:     
+65:   p
+66:     :background left top no-repeat url(../images/sidebar/icon_logged_in.gif)
+67:     :color= !login_grey
+68:     :padding 0 0 0 30px
+69:     :margin 10px 20px 0 20px
+70:     :width 150px
+71:     
+72:     strong, a
+73:       :color white !important
+
+
+Backtrace:
+/Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/layout.sass:67
+/opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:211:in `get_constant'
+/opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:194:in `operationalize'
+/opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:184:in `operationalize'
+/opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:47:in `parse'
+/opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/engine.rb:339:in `parse_attribute'
+/opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/engine.rb:292:in `parse_line'
+/opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/engine.rb:202:in `build_tree'
+/opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/engine.rb:252:in `build_tree'
+/opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/engine.rb:116:in `render_to_tree'
+/opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/engine.rb:88:in `render'
+/opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/plugin.rb:65:in `update_stylesheets'
+/opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/plugin.rb:53:in `each'
+/opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/plugin.rb:53:in `update_stylesheets'
+/opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/plugin/merb.rb:31:in `call'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.9/lib/merb-core/rack/middleware/static.rb:28:in `call'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.9/lib/merb-core/rack/handler/mongrel.rb:82:in `process'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `process_client'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `process_client'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `initialize'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `new'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.9/lib/merb-core/rack/adapter/mongrel.rb:38:in `start_server'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.9/lib/merb-core/rack/adapter/abstract.rb:295:in `start_at_port'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.9/lib/merb-core/rack/adapter/abstract.rb:128:in `start'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.9/lib/merb-core/server.rb:174:in `bootup'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.9/lib/merb-core/server.rb:42:in `start'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.9/lib/merb-core.rb:170:in `start'
+/opt/local/lib/ruby/gems/1.8/gems/merb-slices-1.0.9/bin/slice:79
+/opt/local/bin/slice:19:in `load'
+/opt/local/bin/slice:19
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Sass::SyntaxError: Undefined constant: \"!login_grey\".\A on line 67 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/layout.sass\A \A 63:     :background-image url(../images/sidebar/settings.png)\A 64:     \A 65:   p\A 66:     :background left top no-repeat url(../images/sidebar/icon_logged_in.gif)\A 67:     :color= !login_grey\A 68:     :padding 0 0 0 30px\A 69:     :margin 10px 20px 0 20px\A 70:     :width 150px\A 71:     \A 72:     strong, a\A 73:       :color white !important\A "; }

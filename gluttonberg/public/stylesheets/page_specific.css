@@ -1,0 +1,59 @@
+/*
+Sass::SyntaxError: Undefined constant: "!error_bkg".
+on line 7 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/page_specific.sass
+
+3:   :margin-left 20px
+4:   
+5:   form
+6:     :background 15px 25px no-repeat url(../images/form/warning.gif)
+7:     :background-color= !error_bkg
+8:     :border 4px solid #807F65 
+9:     :margin 8em auto 0 auto
+10:     :padding-left 90px
+11:     :width 25em
+12:     :-moz-border-radius 4px
+13:     :-webkit-border-radius 4px
+
+
+Backtrace:
+/Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/page_specific.sass:7
+/opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:211:in `get_constant'
+/opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:194:in `operationalize'
+/opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:184:in `operationalize'
+/opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:47:in `parse'
+/opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/engine.rb:339:in `parse_attribute'
+/opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/engine.rb:292:in `parse_line'
+/opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/engine.rb:202:in `build_tree'
+/opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/engine.rb:252:in `build_tree'
+/opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/engine.rb:116:in `render_to_tree'
+/opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/engine.rb:88:in `render'
+/opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/plugin.rb:65:in `update_stylesheets'
+/opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/plugin.rb:53:in `each'
+/opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/plugin.rb:53:in `update_stylesheets'
+/opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/plugin/merb.rb:31:in `call'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.9/lib/merb-core/rack/middleware/static.rb:28:in `call'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.9/lib/merb-core/rack/handler/mongrel.rb:82:in `process'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `process_client'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `process_client'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `initialize'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `new'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:285:in `run'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
+/opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.9/lib/merb-core/rack/adapter/mongrel.rb:38:in `start_server'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.9/lib/merb-core/rack/adapter/abstract.rb:295:in `start_at_port'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.9/lib/merb-core/rack/adapter/abstract.rb:128:in `start'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.9/lib/merb-core/server.rb:174:in `bootup'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.9/lib/merb-core/server.rb:42:in `start'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.9/lib/merb-core.rb:170:in `start'
+/opt/local/lib/ruby/gems/1.8/gems/merb-slices-1.0.9/bin/slice:79
+/opt/local/bin/slice:19:in `load'
+/opt/local/bin/slice:19
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Sass::SyntaxError: Undefined constant: \"!error_bkg\".\A on line 7 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/page_specific.sass\A \A 3:   :margin-left 20px\A 4:   \A 5:   form\A 6:     :background 15px 25px no-repeat url(../images/form/warning.gif)\A 7:     :background-color= !error_bkg\A 8:     :border 4px solid #807F65 \A 9:     :margin 8em auto 0 auto\A 10:     :padding-left 90px\A 11:     :width 25em\A 12:     :-moz-border-radius 4px\A 13:     :-webkit-border-radius 4px\A "; }

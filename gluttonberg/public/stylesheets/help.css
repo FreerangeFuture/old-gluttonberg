@@ -1,0 +1,39 @@
+#contextualHelp {
+  margin: -2.25em 15px 0 0;
+  float: right; }
+  #contextualHelp a {
+    background: left center no-repeat url(../images/help/icon.gif);
+    color: white !important;
+    text-decoration: none;
+    padding: 0.4em 0 0.4em 22px;
+    display: block; }
+
+#helpDialog .display {
+  padding: 1.5em 4% 0 4%;
+  width: 92%; }
+#helpDialog #closeHelp {
+  margin: 0 15px 0 0;
+  float: right; }
+#helpDialog p {
+  margin-bottom: 1.5em;
+  line-height: 1.166667em; }
+#helpDialog h2 {
+  font-size: 1.166667em;
+  line-height: 1em;
+  font-weight: bold;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  color: #565644;
+  background: #E6E5B7;
+  padding-top: 0.25em;
+  padding-bottom: 0.25em; }
+#helpDialog abbr {
+  border-bottom: none;
+  text-transform: uppercase;
+  font-size: 0.8em;
+  letter-spacing: 0.05em; }
+#helpDialog ul {
+  line-height: 1em; }
+#helpDialog li {
+  margin-left: 20px;
+  list-style-type: circle; }
