@@ -2,4 +2,4 @@
 %ul#iconNav
   %li= link_to("Pages", slice_url(:pages), :id => "pagesNav" , :title => "Pages")
   - for entry in Gluttonberg::Components.nav_entries
-    %li= link_to(entry[0], url(entry[1]), :id => "pagesNav" , :title => entry[0])    
+    %li= link_to(entry[0], url(entry[1]), :id => Extlib::Inflection.underscore(entry[0].to_s).gsub(/\s/, '_') + "Nav" , :title => entry[0])    
