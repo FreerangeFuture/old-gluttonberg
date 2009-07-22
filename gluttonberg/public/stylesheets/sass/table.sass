@@ -31,10 +31,16 @@ th.controls
   :letter-spacing -1000em
   :text-indent -1000em
 
-td.controls a
-  :margin 0 0.5em 0 0
-  :float left
-  :color #357396
+td.controls
+  a
+    :margin 0 0.5em 0 0
+    :float left
+    :color = !text_link_color
+    
+  a:hover
+    :color = !text_link_hover
+  
+
 
 tr.insert_after td
   :border-bottom 2px solid #000000
