@@ -1,4 +1,4 @@
-%tr{:id => drag_tree_row_id(page), :class => drag_tree_row_class(page)}
+%tr{:id => drag_tree_row_id(page), :class => drag_tree_row_class(page) + "#{row % 2 == 0? " even" : ""}"}
   %td
     %span{:class => "#{drag_tree_drag_point_class} #{page.home ? "home" : "page"}"}
       = page.home ? "#{page.name} (Home page)" : page.name
@@ -9,3 +9,4 @@
       %li= link_to 'Details', slice_url(:page, page)
       %li= link_to 'Settings', slice_url(:edit_page, page)
       %li= link_to 'Delete', slice_url(:delete_page, page)
+      

@@ -14,10 +14,11 @@ module Merb
       
       # Writes out a row for each page and then for each page's children, 
       # iterating down through the heirarchy.
-      def page_table_rows(pages, output = "", inset = 0)
+      def page_table_rows(pages, output = "", inset = 0 , row = 0)
         pages.each do |page|
-          output << partial("content/pages/row", :page => page, :inset => inset)
-          page_table_rows(page.children, output, inset + 1)
+          row += 1 
+          output << partial("content/pages/row", :page => page, :inset => inset , :row => row)
+          page_table_rows(page.children, output, inset + 1 , row)
         end
         output
       end

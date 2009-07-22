@@ -13,8 +13,10 @@
         %th Value
         %th.controls Controls
     %tbody
+      - i = 0
       - for setting in @settings
-        %tr
+        - i += 1
+        %tr{ :class => "#{i % 2 == 0? "even" : ""}"}
           %td= setting.name
           %td= setting.value
           %td.controls

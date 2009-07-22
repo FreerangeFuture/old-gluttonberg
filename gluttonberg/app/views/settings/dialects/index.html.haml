@@ -12,8 +12,10 @@
         %th Dialect
         %th.controls Controls
     %tbody
+      - i = 0
       - for dialect in @dialects
-        %tr
+        - i += 1
+        %tr{ :class => "#{i % 2 == 0? "even" : ""}"}
           %td= "#{dialect.name} (#{dialect.code})"
           %td.controls
             %ul

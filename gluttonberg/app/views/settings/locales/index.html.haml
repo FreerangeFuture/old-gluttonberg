@@ -13,8 +13,10 @@
         %th Dialects
         %th.controls Controls
     %tbody
+      - i = 0
       - for locale in @locales
-        %tr
+        - i += 1
+        %tr{ :class => "#{i % 2 == 0? "even" : ""}"}
           %td= locale.name
           %td= locale.dialects.collect {|d| d.name_and_code}.join(", ")
           %td.controls

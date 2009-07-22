@@ -12,8 +12,10 @@
         %th Name
         %th.controls Controls
     %tbody
+      - i = 0
       - for user in @users
-        %tr
+        - i += 1
+        %tr{ :class => "#{i % 2 == 0? "even" : ""}"}
           %td= user.name
           %td.controls
             %ul
