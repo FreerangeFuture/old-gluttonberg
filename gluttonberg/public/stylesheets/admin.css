@@ -299,6 +299,10 @@ p.controls {
   border-top: 1px solid #cccccc;
   padding: 1em 0 0 0;
   margin: 0.5em 0 0 0; }
+  p.controls a {
+    color: #408eb3; }
+  p.controls a:hover {
+    color: #c26b31; }
   p.controls input {
     background: #cccccc left top repeat-x url(../images/button_bkg_grey.gif);
     border-width: 2px;
@@ -323,9 +327,9 @@ div.error {
   min-height: 45px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px; }
-  div.error h2, div.error ul {
+  div.error h2, div.error ul, div.error p {
     margin-left: 110px; }
-  div.error h2 {
+  div.error h2, div.error p {
     color: #666666; }
   div.error li {
     font-size: 1.2em;
@@ -388,7 +392,9 @@ th.controls {
 td.controls a {
   margin: 0 0.5em 0 0;
   float: left;
-  color: #357396; }
+  color: #408eb3; }
+td.controls a:hover {
+  color: #c26b31; }
 
 tr.insert_after td {
   border-bottom: 2px solid #000000;
