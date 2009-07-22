@@ -13,4 +13,6 @@
     = partial(:browser_root)
     
   %div.controls
+    /= link_to("New Asset" , slice_url(:new_browser))
+    /%button#new_asset.buttonGrey New Asset
     %button#cancel.buttonGrey Cancel

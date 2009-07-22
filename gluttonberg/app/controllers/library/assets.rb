@@ -3,7 +3,7 @@ module Gluttonberg
     class Assets < Gluttonberg::Application
       include Gluttonberg::AdminController
       
-      before :find_asset, :exclude => [:index, :category, :new, :create, :browser]
+      before :find_asset, :exclude => [:index, :category, :new, :create, :browser, :new_browser]
 
       def index
        redirect slice_url(:asset_category, :category => 'all')
@@ -52,6 +52,16 @@ module Gluttonberg
         @asset = Asset.new
         prepare_to_edit
         render
+      end
+      
+      def new_browser
+        @asset = Asset.new
+        prepare_to_edit
+        if params["no_frame"]
+          partial(:new_browser)
+        else
+          render :layout => false
+        end
       end
       
       def edit

@@ -36,6 +36,7 @@ module Gluttonberg
         s.match("/library").to(:controller => "library/main").name(:library)
         s.match("/library") do |a|
           a.match("/assets").to(:controller => "library/assets") do |as|
+            as.match("/new_browser").to(:action => "new_browser").name(:new_browser)
             as.match("/browser").to(:action => "browser").name(:asset_browser)
             as.match("/browse/:category(/by-:order)(/:page)(.:format)", :category => /[a-zA-Z]/, :order => /[a-zA-Z]/, :page => /\d+/).
               to(:action => "category").name(:asset_category)

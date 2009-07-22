@@ -1,2 +1,7 @@
 - @page_title = "Add asset"
+= sub_nav do
+  = back_link("Library", slice_url(:library))
+
+%br
+%br
 = partial(:form, :action => slice_url(:assets))

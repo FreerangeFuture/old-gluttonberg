@@ -6,6 +6,7 @@ module Gluttonberg
     @@components  = {}
     @@routes      = {}
     @@nav_entries = nil
+    @@left_nav_entries = []
     @@registered  = nil
     Component     = Struct.new(:name, :label)
     
@@ -20,6 +21,7 @@ module Gluttonberg
       @@components[name] = opts
       @@routes[name] = routes if block_given?
     end
+    
     
     # Returns a hash of the registered components, keyed to their label.
     def self.registered
@@ -41,5 +43,19 @@ module Gluttonberg
         [v[:label], k, url]
       end
     end
+    
+   
+   def self.register_for_left_nav(name , url)
+      @@left_nav_entries << [name , url]
+    end 
+    
+   # Returns an array of components that have been given a nav_label —
+    # the label implicitly registers them as nav entries. Components without
+    # a label won’t turn up.
+    def self.left_nav_entries      
+      @@left_nav_entries 
+    end
+
+    
   end
 end

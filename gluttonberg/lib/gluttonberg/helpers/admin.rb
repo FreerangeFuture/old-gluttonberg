@@ -227,13 +227,13 @@ JAVASCRIPT_CODE
       end
 
       # Writes out a link styled like a button. To be used in the sub nav only
-      def nav_link(*args)
-        tag(:li, link_to(*args), :class => "button")
+      def nav_link(*args)             
+        tag(:li, link_to(args[0] , args[1] , :title => args[0]), :class => "button")
       end
 
       # Writes out the back control for the sub nav.
-      def back_link(name, url)
-        tag(:li, link_to(name, url), :id => "backLink")
+      def back_link(name, url)        
+        tag(:li, link_to(name, url , :title => name), :id => "backLink")
       end
 
       # Takes text and url and checks to see if the path specified matches the 
@@ -258,18 +258,8 @@ JAVASCRIPT_CODE
            hidden_field(:is_super_admin , :value=>false)
          end 
       end
-      
-      # 
-      def version_listing(versions , title_attribute , link_prefix)
-        output = "<div class='historycontrols'> <ul>"
-        versions.each do |version|
-          link = link_prefix + "/version/#{version.vnumber}"
-          snippet = "Updated #{version.updated_at.formatted(:long)}   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  #{version.send(title_attribute)}"
-          output += "<li><a href='#{link}'> #{snippet}  </a> </li>"
-        end 
-        output += "</ul> </div>"
-        output
-      end  
+     
+
       
       def website_title
         title = Merb::Slices::config[:gluttonberg][:title]

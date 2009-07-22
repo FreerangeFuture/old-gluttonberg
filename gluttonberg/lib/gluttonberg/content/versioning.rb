@@ -117,7 +117,8 @@ module Gluttonberg
           # find all records of model including its versions using given options        
           def all_with_version(opts = {})
             version_opts = extract_version_conditions(opts)
-            matches = all(prefix_versioned_fields(opts))
+            matches = all(opts)
+            #matches = all(prefix_versioned_fields(opts))
             matches.each do |match|
               version_opts[:vnumber] = match.vnumber              
               match.load_version(version_opts, false) 
