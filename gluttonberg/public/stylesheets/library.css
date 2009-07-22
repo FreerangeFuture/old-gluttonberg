@@ -1,22 +1,22 @@
 /*
 Sass::SyntaxError: Undefined constant: "!light_aqua".
-on line 175 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/library.sass
+on line 182 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/library.sass
 
-171:   strong, a
-172:     :float left
-173: 
-174:   strong
-175:     :background-color= !light_aqua
-176:     :border 1px solid #999999
-177:     :whitespace nowrap
-178:     :padding 0.35em 0.8em
-179:     :margin 0 0.5em 0 0
-180:     :width 17em
-181:     :overflow hidden
+178:   strong, a
+179:     :float left
+180: 
+181:   strong
+182:     :background-color= !light_aqua
+183:     :border 1px solid #999999
+184:     :whitespace nowrap
+185:     :padding 0.35em 0.8em
+186:     :margin 0 0.5em 0 0
+187:     :width 17em
+188:     :overflow hidden
 
 
 Backtrace:
-/Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/library.sass:175
+/Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/library.sass:182
 /opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:211:in `get_constant'
 /opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:194:in `operationalize'
 /opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:184:in `operationalize'
@@ -56,4 +56,4 @@ Backtrace:
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Sass::SyntaxError: Undefined constant: \"!light_aqua\".\A on line 175 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/library.sass\A \A 171:   strong, a\A 172:     :float left\A 173: \A 174:   strong\A 175:     :background-color= !light_aqua\A 176:     :border 1px solid #999999\A 177:     :whitespace nowrap\A 178:     :padding 0.35em 0.8em\A 179:     :margin 0 0.5em 0 0\A 180:     :width 17em\A 181:     :overflow hidden\A "; }
+  content: "Sass::SyntaxError: Undefined constant: \"!light_aqua\".\A on line 182 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/library.sass\A \A 178:   strong, a\A 179:     :float left\A 180: \A 181:   strong\A 182:     :background-color= !light_aqua\A 183:     :border 1px solid #999999\A 184:     :whitespace nowrap\A 185:     :padding 0.35em 0.8em\A 186:     :margin 0 0.5em 0 0\A 187:     :width 17em\A 188:     :overflow hidden\A "; }

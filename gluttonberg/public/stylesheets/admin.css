@@ -55,7 +55,7 @@ body {
     border-bottom: 1px solid #333333;
     padding: 10px; }
     #sidebar ul a {
-      background: left center no-repeat url(../images/sidebar/icon_content.gif);
+      background: left center no-repeat url(../images/sidebar/icon_dashboard.gif);
       color: white !important;
       text-decoration: none !important;
       font-weight: bold;
@@ -114,9 +114,6 @@ body {
     height: 22px;
     padding: 8px 15px;
     margin-bottom: 50px; }
-
-.show#assets #wrapper h2#pageTitle {
-  margin: 0; }
 
 /* Sub-navigation */
 #subnav {
@@ -380,7 +377,7 @@ td {
   padding: 5px 15px; }
 
 tr.even td {
-  background-color: #efeff1; }
+  background-color: #fbfbfb; }
 
 table .controls {
   border-right-width: 0; }
@@ -411,6 +408,10 @@ tr.insert_before td {
 .treeTable .ui-draggable-dragging {
   color: #000;
   z-index: 1; }
+
+.show#assets #wrapper h2#pageTitle {
+  margin: 0;
+  font-weight: normal; }
 
 /* Asset Library */
 .assetList {
@@ -784,8 +785,8 @@ p.newLink {
     color: #333333;
     padding: 0.3em 0.8em; }
   #sorter .current {
-    border-color: #80B8B8;
-    background: #DCE6E6; }
+    border-color: #7eb2bc;
+    background: #c3eded; }
   #sorter .first {
     margin-left: 6em; }
   #sorter #sortAdded {
