@@ -10,19 +10,25 @@
 
 .buttonAqua
   :background
-    :color= !mid_aqua
-    :image url(../images/button_bkg_aqua.gif)
+    :color = !dark_buttons_background
+    :image url('../images/button_bkg_aqua.gif')
     :repeat repeat-x
-  :border 2px solid white
-  :color white !important
+  :border = !dark_buttons_border 2px solid
+  :color = !dark_buttons_text !important
+
+
 
 .buttonGrey
-  :background #cccccc left top repeat-x url(../images/button_bkg_grey.gif)
+  :background 
+    :color = !light_buttons_background
+    :position left top 
+    :repeat repeat-x 
+    :image url(../images/button_bkg_grey.gif)
   :border 
     :width 2px
     :style solid
-    :color= !mid_aqua
-  :color= !mid_aqua 
+    :color = !light_buttons_border
+  :color= !light_buttons_text
 
 .clear-asset
   :margin-left 0.5em

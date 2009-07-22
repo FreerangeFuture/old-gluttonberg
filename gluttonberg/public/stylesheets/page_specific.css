@@ -1,13 +1,13 @@
 /*
-Sass::SyntaxError: Undefined constant: "!error_bkg".
+Sass::SyntaxError: Undefined constant: "!error_background".
 on line 7 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/page_specific.sass
 
 3:   :margin-left 20px
 4:   
 5:   form
-6:     :background 15px 25px no-repeat url(../images/form/warning.gif)
-7:     :background-color= !error_bkg
-8:     :border 4px solid #807F65 
+6:     :background 15px 25px no-repeat url('../images/form/warning.gif')
+7:     :background-color= !error_background
+8:     :border = !error_border 4px solid
 9:     :margin 8em auto 0 auto
 10:     :padding-left 90px
 11:     :width 25em
@@ -56,4 +56,4 @@ Backtrace:
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Sass::SyntaxError: Undefined constant: \"!error_bkg\".\A on line 7 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/page_specific.sass\A \A 3:   :margin-left 20px\A 4:   \A 5:   form\A 6:     :background 15px 25px no-repeat url(../images/form/warning.gif)\A 7:     :background-color= !error_bkg\A 8:     :border 4px solid #807F65 \A 9:     :margin 8em auto 0 auto\A 10:     :padding-left 90px\A 11:     :width 25em\A 12:     :-moz-border-radius 4px\A 13:     :-webkit-border-radius 4px\A "; }
+  content: "Sass::SyntaxError: Undefined constant: \"!error_background\".\A on line 7 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/page_specific.sass\A \A 3:   :margin-left 20px\A 4:   \A 5:   form\A 6:     :background 15px 25px no-repeat url('../images/form/warning.gif')\A 7:     :background-color= !error_background\A 8:     :border = !error_border 4px solid\A 9:     :margin 8em auto 0 auto\A 10:     :padding-left 90px\A 11:     :width 25em\A 12:     :-moz-border-radius 4px\A 13:     :-webkit-border-radius 4px\A "; }

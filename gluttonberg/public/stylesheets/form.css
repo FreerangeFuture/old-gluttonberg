@@ -1,18 +1,18 @@
 /*
-Sass::SyntaxError: Undefined constant: "!mid_grey".
+Sass::SyntaxError: Undefined constant: "!legend_colour".
 on line 10 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/form.sass
 
 6:   :border 0
 7: 
 8: legend
 9:   :font-size 1.2em
-10:   :color = !mid_grey
+10:   :color = !legend_colour
 11:   :padding 0 0 0.35em 7px
 12:   
 13: div.fieldset,
 14: ol.fieldset
-15:   :background = !pale_aqua
-16:   :border 1px solid #D2D7D7
+15:   :background = !fieldset_background
+16:   :border = !fieldset_border 1px solid
 
 
 Backtrace:
@@ -56,4 +56,4 @@ Backtrace:
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Sass::SyntaxError: Undefined constant: \"!mid_grey\".\A on line 10 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/form.sass\A \A 6:   :border 0\A 7: \A 8: legend\A 9:   :font-size 1.2em\A 10:   :color = !mid_grey\A 11:   :padding 0 0 0.35em 7px\A 12:   \A 13: div.fieldset,\A 14: ol.fieldset\A 15:   :background = !pale_aqua\A 16:   :border 1px solid #D2D7D7\A "; }
+  content: "Sass::SyntaxError: Undefined constant: \"!legend_colour\".\A on line 10 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/form.sass\A \A 6:   :border 0\A 7: \A 8: legend\A 9:   :font-size 1.2em\A 10:   :color = !legend_colour\A 11:   :padding 0 0 0.35em 7px\A 12:   \A 13: div.fieldset,\A 14: ol.fieldset\A 15:   :background = !fieldset_background\A 16:   :border = !fieldset_border 1px solid\A "; }

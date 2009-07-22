@@ -1,22 +1,22 @@
 /*
-Sass::SyntaxError: Undefined constant: "!login_grey".
-on line 67 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/layout.sass
+Sass::SyntaxError: Undefined constant: "!page_heading_background".
+on line 9 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/layout.sass
 
-63:     :background-image url(../images/sidebar/settings.png)
-64:     
-65:   p
-66:     :background left top no-repeat url(../images/sidebar/icon_logged_in.gif)
-67:     :color= !login_grey
-68:     :padding 0 0 0 30px
-69:     :margin 10px 20px 0 20px
-70:     :width 150px
-71:     
-72:     strong, a
-73:       :color white !important
+5:       :size 1.2em  
+6:   
+7:   h2#pageTitle
+8:     :background
+9:       :color = !page_heading_background
+10:       :position left bottom
+11:       :repeat repeat-x
+12:       :image url('../images/pagetitle_bkg.gif')
+13:     :color = !page_heading_colour
+14:     :font-size 1.6em
+15:     :height 22px
 
 
 Backtrace:
-/Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/layout.sass:67
+/Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/layout.sass:9
 /opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:211:in `get_constant'
 /opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:194:in `operationalize'
 /opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:184:in `operationalize'
@@ -56,4 +56,4 @@ Backtrace:
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Sass::SyntaxError: Undefined constant: \"!login_grey\".\A on line 67 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/layout.sass\A \A 63:     :background-image url(../images/sidebar/settings.png)\A 64:     \A 65:   p\A 66:     :background left top no-repeat url(../images/sidebar/icon_logged_in.gif)\A 67:     :color= !login_grey\A 68:     :padding 0 0 0 30px\A 69:     :margin 10px 20px 0 20px\A 70:     :width 150px\A 71:     \A 72:     strong, a\A 73:       :color white !important\A "; }
+  content: "Sass::SyntaxError: Undefined constant: \"!page_heading_background\".\A on line 9 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/layout.sass\A \A 5:       :size 1.2em  \A 6:   \A 7:   h2#pageTitle\A 8:     :background\A 9:       :color = !page_heading_background\A 10:       :position left bottom\A 11:       :repeat repeat-x\A 12:       :image url('../images/pagetitle_bkg.gif')\A 13:     :color = !page_heading_colour\A 14:     :font-size 1.6em\A 15:     :height 22px\A "; }

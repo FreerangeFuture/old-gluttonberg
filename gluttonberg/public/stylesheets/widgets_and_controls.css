@@ -1,18 +1,18 @@
 /*
-Sass::SyntaxError: Undefined constant: "!mid_aqua".
+Sass::SyntaxError: Undefined constant: "!dark_buttons_background".
 on line 13 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/widgets_and_controls.sass
 
 9:   :float left
 10: 
 11: .buttonAqua
 12:   :background
-13:     :color= !mid_aqua
-14:     :image url(../images/button_bkg_aqua.gif)
+13:     :color = !dark_buttons_background
+14:     :image url('../images/button_bkg_aqua.gif')
 15:     :repeat repeat-x
-16:   :border 2px solid white
-17:   :color white !important
+16:   :border = !dark_buttons_border 2px solid
+17:   :color = !dark_buttons_text !important
 18: 
-19: .buttonGrey
+19: 
 
 
 Backtrace:
@@ -56,4 +56,4 @@ Backtrace:
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Sass::SyntaxError: Undefined constant: \"!mid_aqua\".\A on line 13 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/widgets_and_controls.sass\A \A 9:   :float left\A 10: \A 11: .buttonAqua\A 12:   :background\A 13:     :color= !mid_aqua\A 14:     :image url(../images/button_bkg_aqua.gif)\A 15:     :repeat repeat-x\A 16:   :border 2px solid white\A 17:   :color white !important\A 18: \A 19: .buttonGrey\A "; }
+  content: "Sass::SyntaxError: Undefined constant: \"!dark_buttons_background\".\A on line 13 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/widgets_and_controls.sass\A \A 9:   :float left\A 10: \A 11: .buttonAqua\A 12:   :background\A 13:     :color = !dark_buttons_background\A 14:     :image url('../images/button_bkg_aqua.gif')\A 15:     :repeat repeat-x\A 16:   :border = !dark_buttons_border 2px solid\A 17:   :color = !dark_buttons_text !important\A 18: \A 19: \A "; }

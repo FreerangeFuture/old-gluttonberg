@@ -1,21 +1,51 @@
-/ Base colours
+/* Base colours
 !mid_aqua = #244E66
-!light_aqua = #D4EAF7
-!pale_aqua = #E5F7FF
-!mid_grey = #1B1B1B
 !dark_grey = #161616
-!login_grey = #8B8B8B
-!table_heading_grey = #616161
-!error_bkg = #FFFFCC
 
+!page_background_colour = #1B1B1B
+!page_heading_background = #244E66
+!page_heading_colour = #FFFFFF
+!page_wrapper_background = transparent
+!subnavigation_border = #2B3134
+!backlinks_text = #244E66
 
+/* DARK BUTTONS (Default: Blue) -------
+!dark_buttons_border = #082536
+!dark_buttons_background = #244E66
+!dark_buttons_text = #FFFFFF
+
+/* LIGHT BUTTONS (Default: Grey) ------
+!light_buttons_border = #244E66
+!light_buttons_background = #CCCCCC
+!light_buttons_text = #244E66
+
+/* ERROR COLOURS ----------------------
+!error_background = #FFFFCC
+!error_border = #807F65
+
+/* SIDEBAR BASE -----------------------
+!sidebar_border_colour = #333333
+!sidebar_text_colour = #FFFFFF
+!sidebar_login_colour = #8B8B8B
+
+/* SHARED HYPERLINK COLOURS -----------
 !text_link_color = #408EB3
 !text_link_hover = #C26B31
 
+/* ASSET LIBRARY ---------------------
 !current_box_background = #C3EDED
 !current_box_border = #7EB2BC
+!asset_browser_link = #D4EAF7
 
+/* TABLE COLOURS ----------------------
+!table_heading_grey = #616161
 !table_zebra_stripe = #FBFBFB
+
+/* FORM COLOURS -----------------------
+!fieldset_background = #E5F7FF
+!fieldset_border = #D2D7D7
+!legend_colour = #1B1B1B
+!input_border = #999999
 
 
 /* Reset base styles - Assume nothing
@@ -39,13 +69,15 @@ em
   :font-style italic
   
 body
-  :background-color= !mid_grey
+  :background-color= !page_background_colour
   :margin 20px 20px 20px 220px
   :font
     :family "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif
     :size 82%
-    
-/ Import everything else
+
+
+
+/* Import everything else
 @import layout.sass
 @import form.sass
 @import table.sass

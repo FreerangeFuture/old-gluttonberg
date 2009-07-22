@@ -7,13 +7,13 @@ fieldset
 
 legend
   :font-size 1.2em
-  :color = !mid_grey
+  :color = !legend_colour
   :padding 0 0 0.35em 7px
   
 div.fieldset,
 ol.fieldset
-  :background = !pale_aqua
-  :border 1px solid #D2D7D7
+  :background = !fieldset_background
+  :border = !fieldset_border 1px solid
   :padding 1.5em 0 0.5em 0
   :margin 0 0 1.5em 0
   :width 99.9%
@@ -63,8 +63,8 @@ input.radio
 input.text,
 input.password,
 textarea
-  :background white left top no-repeat url(../images/form/input_bkg.gif)
-  :border 1px solid #999999
+  :background white left top no-repeat url('../images/form/input_bkg.gif')
+  :border = !input_border 1px solid
   :padding 0.2em 0.5em
   
 input.tiny
@@ -97,6 +97,8 @@ textarea.tall
 select
   :margin-top 0.3em
 
+
+
 /* Form controls — save/cancel
 p.controls
   :border-top 1px solid #cccccc
@@ -110,7 +112,7 @@ p.controls
     :color = !text_link_hover
 
   input
-    :background #cccccc left top repeat-x url(../images/button_bkg_grey.gif)
+    :background #cccccc left top repeat-x url('../images/button_bkg_grey.gif')
     :border 
       :width 2px
       :style solid
@@ -125,12 +127,14 @@ p.controls
     
   strong
     :font-size 1.2em
-    
+
+
+
 /* Error display
 div.error
-  :background 25px 10px no-repeat url(../images/form/warning.gif)
-  :background-color= !error_bkg
-  :border 2px solid #CDCCA3
+  :background 25px 10px no-repeat url('../images/form/warning.gif')
+  :background-color= !error_background
+  :border !error_border 2px solid
   :padding 15px 0
   :margin 0 0 1.5em 0
   :min-height 45px
@@ -148,6 +152,8 @@ div.error
     :padding 0.3em 0 0 0
     :display block
 
+
+
 /* Inline help
 form p.help
   :color #333333
@@ -155,7 +161,9 @@ form p.help
   :width 25em
   :float left
   :clear both
-  
+
+
+
 /* Localization selector
 #select-localization
   :border-bottom 1px solid #cccccc

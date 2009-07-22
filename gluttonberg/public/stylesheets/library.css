@@ -1,22 +1,22 @@
 /*
-Sass::SyntaxError: Undefined constant: "!light_aqua".
-on line 182 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/library.sass
+Sass::SyntaxError: Undefined constant: "!asset_browser_link".
+on line 180 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/library.sass
 
-178:   strong, a
-179:     :float left
-180: 
-181:   strong
-182:     :background-color= !light_aqua
-183:     :border 1px solid #999999
-184:     :whitespace nowrap
-185:     :padding 0.35em 0.8em
-186:     :margin 0 0.5em 0 0
-187:     :width 17em
-188:     :overflow hidden
+176:   strong, a
+177:     :float left
+178: 
+179:   strong
+180:     :background-color = !asset_browser_link
+181:     :border 1px solid #999999
+182:     :whitespace nowrap
+183:     :padding 0.35em 0.8em
+184:     :margin 0 0.5em 0 0
+185:     :width 17em
+186:     :overflow hidden
 
 
 Backtrace:
-/Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/library.sass:182
+/Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/library.sass:180
 /opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:211:in `get_constant'
 /opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:194:in `operationalize'
 /opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:184:in `operationalize'
@@ -56,4 +56,4 @@ Backtrace:
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Sass::SyntaxError: Undefined constant: \"!light_aqua\".\A on line 182 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/library.sass\A \A 178:   strong, a\A 179:     :float left\A 180: \A 181:   strong\A 182:     :background-color= !light_aqua\A 183:     :border 1px solid #999999\A 184:     :whitespace nowrap\A 185:     :padding 0.35em 0.8em\A 186:     :margin 0 0.5em 0 0\A 187:     :width 17em\A 188:     :overflow hidden\A "; }
+  content: "Sass::SyntaxError: Undefined constant: \"!asset_browser_link\".\A on line 180 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/library.sass\A \A 176:   strong, a\A 177:     :float left\A 178: \A 179:   strong\A 180:     :background-color = !asset_browser_link\A 181:     :border 1px solid #999999\A 182:     :whitespace nowrap\A 183:     :padding 0.35em 0.8em\A 184:     :margin 0 0.5em 0 0\A 185:     :width 17em\A 186:     :overflow hidden\A "; }
