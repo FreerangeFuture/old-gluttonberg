@@ -33,7 +33,7 @@
         = main_nav_entry("Content", "content", url(:gluttonberg_content), {:title => "Content"})
         = main_nav_entry("Library", "library", url(:gluttonberg_library), {:title => "Library"})  
         - for entry in Gluttonberg::Components.left_nav_entries
-          = main_nav_entry(entry[0], entry[0], entry[1], {:title => entry[0]})
+          = main_nav_entry(entry[0], entry[0], entry[1], {:title => entry[0] , :id => Extlib::Inflection.underscore(entry[0].to_s).gsub(/\s/, '_') + "Nav"})
         = main_nav_entry("Settings", "settings", url(:gluttonberg_settings), {:title => "Settings"})
       - if session.user
         %p
