@@ -102,6 +102,7 @@ body {
     background-image: url(../images/pagetitle_bkg.gif);
     color: white;
     font-size: 1.6em;
+    height: 22px;
     padding: 8px 15px; }
   #wrapper h1#loginTitle {
     background-color: #244e66;
@@ -110,8 +111,12 @@ body {
     background-image: url(../images/pagetitle_bkg.gif);
     color: white;
     font-size: 1.6em;
+    height: 22px;
     padding: 8px 15px;
     margin-bottom: 50px; }
+
+.show#assets #wrapper h2#pageTitle {
+  margin: 0; }
 
 /* Sub-navigation */
 #subnav {
@@ -119,6 +124,7 @@ body {
   border-top: 1px solid #2B3134;
   border-bottom: 1px solid #2B3134;
   padding: 4px 0;
+  height: 23px;
   width: 100%;
   float: left; }
   #subnav li {
@@ -144,9 +150,12 @@ body {
       background-color: #244e66;
       background-image: url(../images/button_bkg_aqua.gif);
       background-repeat: repeat-x;
-      border: 1px solid white;
+      border: 1px solid #082536;
       margin: 1px 8px 0 0;
       -webkit-border-radius: 3px; }
+
+#assets.show #wrapper #subnav li {
+  padding: 0 !important; }
 
 /* Tab Bar */
 #tabBar {
@@ -346,13 +355,13 @@ form p.help {
 
 table {
   width: 100%;
-  clear: both; }
+  clear: both;
+  border-bottom: 1px solid #dddddd; }
 
 thead th {
   background: #eaeaea left top repeat-x url(../images/table_head_bkg.gif);
-  border-top: 1px solid white;
+  border-top: 1px solid #B3B3B3;
   border-bottom: 1px solid #999999;
-  border-right: 1px solid #999999;
   font-weight: bold;
   font-size: 0.9em;
   padding: 0.4em 15px 0.5em 15px;
@@ -364,12 +373,10 @@ tbody th {
   color: #999999; }
 
 td {
-  border-bottom: 1px solid #dddddd;
-  border-right: 1px solid #cccccc;
   padding: 5px 15px; }
 
 tr.even td {
-  background-color: #F3EFE5; }
+  background-color: #efeff1; }
 
 table .controls {
   border-right-width: 0; }
@@ -380,7 +387,8 @@ th.controls {
 
 td.controls a {
   margin: 0 0.5em 0 0;
-  float: left; }
+  float: left;
+  color: #357396; }
 
 tr.insert_after td {
   border-bottom: 2px solid #000000;
@@ -458,8 +466,6 @@ ul.assetList {
   ul.assetList a.browseUncategorised {
     background-image: url(../images/library/browse_uncategorised_medium.gif); }
 
-
-
 /* Assets */
 #assets.show #subnav {
   margin-bottom: 30px; }
@@ -483,7 +489,7 @@ ul.assetList {
     font-weight: bold;
     color: #333333;
     padding: 0.2em 0;
-    width: 8.5em;
+    width: 5.5em;
     float: left;
     clear: left; }
   #assets.show #wrapper dd {
@@ -520,13 +526,12 @@ ul.assetList {
   margin-bottom: 1.5em; }
 #assets.show #description {
   margin-bottom: 1.5em; }
-#assets.show .public-path {
+#assets.show #public-path {
+  margin-left: 340px;
   width: 22em;
-  /*margin-left: 340px;  
   clear: both;
-  float: left; */
-  }
-#assets.show .public-path-note {
+  float: left; }
+#assets.show #public-path-note {
   font-size: 0.9em;
   color: #333333;
   padding-bottom: 1em;
@@ -1007,4 +1012,4 @@ table .home {
 #iconNav #localesNav {
   background-image: url(../images/settings/locales.gif); }
 #iconNav #metadataNav {
-  background-image: url(../images/settings/meta_data.jpg); }
+  background-image: url(../images/settings/metadata.gif); }

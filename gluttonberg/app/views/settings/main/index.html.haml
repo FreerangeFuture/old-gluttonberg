@@ -1,7 +1,0 @@
-- @page_title = "Settings"
-%ul#iconNav
-  %li= link_to("Users", slice_url(:users), :id => "usersNav")
-  - if Gluttonberg.localized?
-    %li= link_to("Dialects", slice_url(:dialects), :id => "dialectsNav" , :title => "Dialects") 
-    %li= link_to("Locales", slice_url(:locales), :id => "localesNav" , :title => "Locales")
-  %li= link_to("Meta Data", slice_url(:generic_settings), :id => "metadataNav"  , :title => "Meta Data")
