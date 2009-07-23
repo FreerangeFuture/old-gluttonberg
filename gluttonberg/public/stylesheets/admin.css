@@ -98,7 +98,7 @@ body {
     #sidebar ul a {
       background-position: left center;
       background-repeat: no-repeat;
-      background-image: url('../images/sidebar/icon_dashboard.gif');
+      background-image: url('../images/sidebar/icon_dashboard.png');
       color: #ffffff !important;
       text-decoration: none !important;
       font-weight: bold;
@@ -1042,6 +1042,11 @@ table .home {
   .meta dd {
     margin-right: 1.5em;
     float: left; }
+
+/* GENERIC SETTINGS PAGE ============================================ */
+#generic_settings small {
+  font-size: 0.9em;
+  margin: 15px; }
 
 /* CONTENTS PAGE ==================================================== */
 /* Contents list ---------------------------------------------------- */

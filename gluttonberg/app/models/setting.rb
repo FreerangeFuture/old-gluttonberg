@@ -22,8 +22,8 @@ module Gluttonberg
     def self.generate_common_settings
       settings = {
         :title => [:meta_data , 0, "Website Title"], 
-        :description => [:meta_data, 2 , "Description of the website that will appear in search engine's result list"], 
-        :keywords => [:meta_data, 1, "Comma seprated keywords that are use in meta keyword tag"],
+        :description => [:meta_data, 2 , "The Description will appear in search engine's result list."], 
+        :keywords => [:meta_data, 1, "Please separate keywords with a comma."],
         :google_analytics => [:google_analytics, 3, "Google Analytics ID"]
       }
       self.generate_settings(settings)
