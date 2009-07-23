@@ -277,6 +277,9 @@ JAVASCRIPT_CODE
       def asset_url(asset)
         "http://#{request.host}/asset/#{@asset.asset_hash[0..3]}/#{@asset.id}"
       end  
+      
+      
+      
     end # Admin
   end # Helpers
 end # Gluttonberg
