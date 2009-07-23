@@ -1,22 +1,22 @@
 /*
 Sass::SyntaxError: Undefined constant: "!legend_colour".
-on line 10 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/form.sass
+on line 11 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/form.sass
 
-6:   :border 0
-7: 
-8: legend
-9:   :font-size 1.2em
-10:   :color = !legend_colour
-11:   :padding 0 0 0.35em 7px
-12:   
-13: div.fieldset,
-14: ol.fieldset
-15:   :background = !fieldset_background
-16:   :border = !fieldset_border 1px solid
+7:   :border 0
+8: 
+9: legend
+10:   :font-size 1.2em
+11:   :color = !legend_colour
+12:   :padding 0 0 0.35em 7px
+13:   
+14: div.fieldset,
+15: ol.fieldset
+16:   :background = !fieldset_background
+17:   :border = !fieldset_border 1px solid
 
 
 Backtrace:
-/Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/form.sass:10
+/Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/form.sass:11
 /opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:211:in `get_constant'
 /opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:194:in `operationalize'
 /opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:184:in `operationalize'
@@ -56,4 +56,4 @@ Backtrace:
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Sass::SyntaxError: Undefined constant: \"!legend_colour\".\A on line 10 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/form.sass\A \A 6:   :border 0\A 7: \A 8: legend\A 9:   :font-size 1.2em\A 10:   :color = !legend_colour\A 11:   :padding 0 0 0.35em 7px\A 12:   \A 13: div.fieldset,\A 14: ol.fieldset\A 15:   :background = !fieldset_background\A 16:   :border = !fieldset_border 1px solid\A "; }
+  content: "Sass::SyntaxError: Undefined constant: \"!legend_colour\".\A on line 11 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/form.sass\A \A 7:   :border 0\A 8: \A 9: legend\A 10:   :font-size 1.2em\A 11:   :color = !legend_colour\A 12:   :padding 0 0 0.35em 7px\A 13:   \A 14: div.fieldset,\A 15: ol.fieldset\A 16:   :background = !fieldset_background\A 17:   :border = !fieldset_border 1px solid\A "; }
