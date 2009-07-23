@@ -1,25 +1,25 @@
 /*
-Sass::SyntaxError: Undefined constant: "!table_heading_grey".
-on line 14 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/table.sass
+Sass::SyntaxError: Undefined constant: "!table_bottom_border".
+on line 4 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/table.sass
 
-10:   :font
-11:     :weight bold
-12:     :size 0.9em
-13:   :padding 0.4em 15px 0.5em 15px
-14:   :color= !table_heading_grey
-15:   
-16: tbody th
-17:   :background #F2F2F2
-18:   :font-size 1.2em
-19:   :color #999999
-20:   
+1: table
+2:   :width 100%
+3:   :clear both
+4:   :border-bottom = !table_bottom_border 1px solid
+5: 
+6: thead th
+7:   :background
+8:     :color = !table_heading_background 
+9:     :position left top 
+10:     :repeat repeat-x 
 
 
 Backtrace:
-/Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/table.sass:14
+/Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/table.sass:4
 /opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:211:in `get_constant'
 /opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:194:in `operationalize'
-/opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:184:in `operationalize'
+/opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:199:in `operationalize'
+/opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:204:in `operationalize'
 /opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:47:in `parse'
 /opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/engine.rb:339:in `parse_attribute'
 /opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/engine.rb:292:in `parse_line'
@@ -56,4 +56,4 @@ Backtrace:
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Sass::SyntaxError: Undefined constant: \"!table_heading_grey\".\A on line 14 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/table.sass\A \A 10:   :font\A 11:     :weight bold\A 12:     :size 0.9em\A 13:   :padding 0.4em 15px 0.5em 15px\A 14:   :color= !table_heading_grey\A 15:   \A 16: tbody th\A 17:   :background #F2F2F2\A 18:   :font-size 1.2em\A 19:   :color #999999\A 20:   \A "; }
+  content: "Sass::SyntaxError: Undefined constant: \"!table_bottom_border\".\A on line 4 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/table.sass\A \A 1: table\A 2:   :width 100%\A 3:   :clear both\A 4:   :border-bottom = !table_bottom_border 1px solid\A 5: \A 6: thead th\A 7:   :background\A 8:     :color = !table_heading_background \A 9:     :position left top \A 10:     :repeat repeat-x \A "; }

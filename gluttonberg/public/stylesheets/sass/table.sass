@@ -1,12 +1,17 @@
 table
   :width 100%
   :clear both
-  :border-bottom 1px solid #dddddd
+  :border-bottom = !table_bottom_border 1px solid
 
 thead th
-  :background #eaeaea left top repeat-x url(../images/table_head_bkg.gif)
-  :border-top 1px solid #B3B3B3
-  :border-bottom 1px solid #999999
+  :background
+    :color = !table_heading_background 
+    :position left top 
+    :repeat repeat-x 
+    :image url('../images/table_head_bkg.gif')
+  :border
+    :top = !table_heading_border 1px solid
+    :bottom = !table_heading_border 1px solid
   :font
     :weight bold
     :size 0.9em

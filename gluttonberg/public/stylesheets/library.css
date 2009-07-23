@@ -1,22 +1,22 @@
 /*
 Sass::SyntaxError: Undefined constant: "!asset_browser_link".
-on line 180 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/library.sass
+on line 172 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/library.sass
 
-176:   strong, a
-177:     :float left
-178: 
-179:   strong
-180:     :background-color = !asset_browser_link
-181:     :border 1px solid #999999
-182:     :whitespace nowrap
-183:     :padding 0.35em 0.8em
-184:     :margin 0 0.5em 0 0
-185:     :width 17em
-186:     :overflow hidden
+168:   strong, a
+169:     :float left
+170: 
+171:   strong
+172:     :background-color = !asset_browser_link
+173:     :border 1px solid #999999
+174:     :whitespace nowrap
+175:     :padding 0.35em 0.8em
+176:     :margin 0 0.5em 0 0
+177:     :width 17em
+178:     :overflow hidden
 
 
 Backtrace:
-/Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/library.sass:180
+/Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/library.sass:172
 /opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:211:in `get_constant'
 /opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:194:in `operationalize'
 /opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:184:in `operationalize'
@@ -56,4 +56,4 @@ Backtrace:
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Sass::SyntaxError: Undefined constant: \"!asset_browser_link\".\A on line 180 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/library.sass\A \A 176:   strong, a\A 177:     :float left\A 178: \A 179:   strong\A 180:     :background-color = !asset_browser_link\A 181:     :border 1px solid #999999\A 182:     :whitespace nowrap\A 183:     :padding 0.35em 0.8em\A 184:     :margin 0 0.5em 0 0\A 185:     :width 17em\A 186:     :overflow hidden\A "; }
+  content: "Sass::SyntaxError: Undefined constant: \"!asset_browser_link\".\A on line 172 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/library.sass\A \A 168:   strong, a\A 169:     :float left\A 170: \A 171:   strong\A 172:     :background-color = !asset_browser_link\A 173:     :border 1px solid #999999\A 174:     :whitespace nowrap\A 175:     :padding 0.35em 0.8em\A 176:     :margin 0 0.5em 0 0\A 177:     :width 17em\A 178:     :overflow hidden\A "; }

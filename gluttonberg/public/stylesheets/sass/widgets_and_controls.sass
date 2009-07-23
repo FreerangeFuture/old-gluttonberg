@@ -1,4 +1,5 @@
-/* Buttons
+/* BUTTONS ==========================================================
+
 .buttonAqua,
 .buttonGrey
   :text-decoration none !important
@@ -8,6 +9,8 @@
   :-webkit-border-radius 3px
   :float left
 
+
+/* Dark Buttons -----------------------------------------------------
 .buttonAqua
   :background
     :color = !dark_buttons_background
@@ -17,18 +20,15 @@
   :color = !dark_buttons_text !important
 
 
-
+/* Light Buttons ----------------------------------------------------
 .buttonGrey
-  :background 
+  :background
     :color = !light_buttons_background
     :position left top 
     :repeat repeat-x 
-    :image url(../images/button_bkg_grey.gif)
-  :border 
-    :width 2px
-    :style solid
-    :color = !light_buttons_border
-  :color= !light_buttons_text
+    :image url('../images/button_bkg_grey.gif')
+  :border = !light_buttons_border 2px solid
+  :color = !light_buttons_text
 
 .clear-asset
   :margin-left 0.5em
@@ -41,11 +41,14 @@ p.empty
   :width 100%
   :float left
 
-/* Widgets
+
+
+
+/* WIDGETS ==========================================================
 p.newLink
   :padding 1em
   
-  /* Plus and Minus controls
+  /* Plus and Minus controls ----------------------------------------
   ul.plusAndMinus
     :margin 0.2em 0 0 1em
     :float left
@@ -62,18 +65,23 @@ p.newLink
       :list-style-type none
 
     a
-      :background left top no-repeat url(../images/form/plus_and_minus.gif)
+      :background left top no-repeat url('../images/form/plus_and_minus.gif')
       :letter-spacing -1000em
       :text-indent -1000em
 
     .minus
       :background-position right top
       :margin-left 4px !important
-      
-/* Overlay & Dialog
+
+
+
+
+/* OVERLAYS AND DIALOGS =============================================
+
+/* Assets Dialog ----------------------------------------------------
 #assetsDialogOverlay,
 #overlay
-  :background url(../images/library/dialog_overlay.png)
+  :background url('../images/library/dialog_overlay.png')
   :width 100%
   :height 100%
   :position absolute
@@ -81,6 +89,7 @@ p.newLink
   :top 0
   :z-index 20
 
+/* Inline Help Dialog -----------------------------------------------
 #helpDialog,
 #assetsDialog
   :border 4px solid #807F65
@@ -113,7 +122,6 @@ p.newLink
     :position absolute
     :left 0
     :bottom 0
-    
     li
       :list-style-type none
     
@@ -122,16 +130,18 @@ p.newLink
     :float left
     :clear both
     :overflow auto
-
     .assetList
       :left 2%
       :right 2%
-    :width 96%
+      :width 96%
   
     ul.assetList
       :overflow hidden
 
-/* Sorter
+
+
+
+/* SORTER ===========================================================
 #sorterLabel
   :font-weight bold
   :color #666666
@@ -168,7 +178,10 @@ p.newLink
     :margin-left 5em
     :padding-left 15px
 
-/* Paginator
+
+
+
+/* PAGINATION =======================================================
 #paginator
   :border-top 1px solid #cccccc
   :width 100%
@@ -189,9 +202,8 @@ p.newLink
   #previous,
   #next
     :float right
-
     a
-      :background left top no-repeat url(../images/paginator.gif)
+      :background left top no-repeat url('../images/paginator.gif')
       :width 20px
       :height 19px
       :text-indent -1000em
@@ -200,7 +212,6 @@ p.newLink
 
   #previous
     :margin-right 36px
-
     &.disabled a
       :background-position left bottom !important
 
@@ -208,9 +219,7 @@ p.newLink
     :position absolute
     :right 15px
     :top 0
-
     a
       :background-position right top !important
-
     &.disabled a
       :background-position right bottom !important
