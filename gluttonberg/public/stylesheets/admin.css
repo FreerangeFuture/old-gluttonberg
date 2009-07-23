@@ -273,6 +273,9 @@ label.inline {
 input.inline {
   clear: none; }
 
+.mceEditor {
+  float: left; }
+
 input.text,
 input.password,
 input.checkbox,
@@ -977,43 +980,52 @@ table .home {
   clear: both; }
 
 /* Page show -------------------------------------------------------- */
-.pageBlock {
+#page_localizations .pageBlock {
+  border-bottom: 1px solid #CCCCCC;
+  padding: 40px 3% 5px 3%;
+  width: 94%;
+  float: none;
+  margin-bottom: 25px; }
+  #page_localizations .pageBlock h2 {
+    font-weight: bold; }
+
+#pages .pageBlock {
   border-bottom: 1px solid #CCCCCC;
   padding: 2em 3%;
   width: 94%;
   float: left; }
-  .pageBlock span {
+  #pages .pageBlock span {
     font-size: 0.88em;
     color: #333333; }
-  .pageBlock h2 {
+  #pages .pageBlock h2 {
     font-weight: bold;
     width: 8.5em;
     float: left; }
-  .pageBlock dt, .pageBlock strong {
+  #pages .pageBlock dt, #pages .pageBlock strong {
     color: #244e66; }
-  .pageBlock table, .pageBlock ul, .pageBlock dl {
+  #pages .pageBlock table, #pages .pageBlock ul, #pages .pageBlock dl {
     float: left;
     clear: none; }
-  .pageBlock table {
+  #pages .pageBlock table {
     width: 35em; }
-  .pageBlock table .controls a {
+  #pages .pageBlock table .controls a {
     margin: 0;
     float: right; }
-  .pageBlock thead {
+  #pages .pageBlock thead {
     display: none; }
-  .pageBlock td {
+  #pages .pageBlock td {
     border-right: 0;
     padding-left: 0; }
-  .pageBlock dl {
+  #pages .pageBlock dl {
     width: 30em; }
-  .pageBlock dd, .pageBlock dt {
+  #pages .pageBlock dd, #pages .pageBlock dt {
     padding: 0.3em 0; }
-  .pageBlock dt {
+  #pages .pageBlock dt {
     font-weight: bold;
     width: 7em;
     float: left !important;
     clear: left; }
-  .pageBlock dd {
+  #pages .pageBlock dd {
     padding-top: 0.35em;
     clear: right; }
 
