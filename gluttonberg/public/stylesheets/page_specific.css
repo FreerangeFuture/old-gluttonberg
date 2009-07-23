@@ -1,22 +1,22 @@
 /*
 Sass::SyntaxError: Undefined constant: "!error_background".
-on line 7 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/page_specific.sass
+on line 10 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/page_specific.sass
 
-3:   :margin-left 20px
-4:   
-5:   form
-6:     :background 15px 25px no-repeat url('../images/form/warning.gif')
-7:     :background-color= !error_background
-8:     :border = !error_border 4px solid
-9:     :margin 8em auto 0 auto
-10:     :padding-left 90px
-11:     :width 25em
-12:     :-moz-border-radius 4px
-13:     :-webkit-border-radius 4px
+6:   :margin-left 20px
+7:   
+8:   form
+9:     :background 15px 25px no-repeat url('../images/form/warning.gif')
+10:     :background-color= !error_background
+11:     :border = !error_border 4px solid
+12:     :margin 8em auto 0 auto
+13:     :padding-left 90px
+14:     :width 25em
+15:     :-moz-border-radius 4px
+16:     :-webkit-border-radius 4px
 
 
 Backtrace:
-/Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/page_specific.sass:7
+/Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/page_specific.sass:10
 /opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:211:in `get_constant'
 /opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:194:in `operationalize'
 /opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:184:in `operationalize'
@@ -56,4 +56,4 @@ Backtrace:
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Sass::SyntaxError: Undefined constant: \"!error_background\".\A on line 7 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/page_specific.sass\A \A 3:   :margin-left 20px\A 4:   \A 5:   form\A 6:     :background 15px 25px no-repeat url('../images/form/warning.gif')\A 7:     :background-color= !error_background\A 8:     :border = !error_border 4px solid\A 9:     :margin 8em auto 0 auto\A 10:     :padding-left 90px\A 11:     :width 25em\A 12:     :-moz-border-radius 4px\A 13:     :-webkit-border-radius 4px\A "; }
+  content: "Sass::SyntaxError: Undefined constant: \"!error_background\".\A on line 10 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/page_specific.sass\A \A 6:   :margin-left 20px\A 7:   \A 8:   form\A 9:     :background 15px 25px no-repeat url('../images/form/warning.gif')\A 10:     :background-color= !error_background\A 11:     :border = !error_border 4px solid\A 12:     :margin 8em auto 0 auto\A 13:     :padding-left 90px\A 14:     :width 25em\A 15:     :-moz-border-radius 4px\A 16:     :-webkit-border-radius 4px\A "; }

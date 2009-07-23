@@ -16,11 +16,7 @@
   = password_field(:name => "password", :label => "Password", :class => "medium")
 
   = submit("Login", :class => "buttonGrey")
-  %br
-  %br
-  %br
-  %br
-  %br  
-  %br
-  = link_to("Forgot your password?", url(:gluttonberg_forgot_password))
+
+  .forgot-password
+    = link_to("Forgot your password?", url(:gluttonberg_forgot_password))
 
