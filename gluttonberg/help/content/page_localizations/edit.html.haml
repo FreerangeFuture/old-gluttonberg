@@ -1,288 +1,85 @@
 - @page_title = "Edit Page Content (Localization)"
     
-%h2
-  Changing text formatting:
+%p
+  The
+  %strong
+    Edit Localization
+  screen allows you to edit the content of your website for a particular language or region.
   
 %p
-  If you want to modify the way your text will appear&#8212;such as making parts of it bold or italicized&#8212;you can use a basic language called
+  Most people will only have one localization, but if your website has an international audience you may have many.
+  
+
+
+%h2
+  Localization Settings
+  
+%h3
+  Name
+  
+%p
+  If your page will have a different name for a particular language, change it here. For instance, if this is a French Localization, you will want to have the French title.
+  
+%h3
+  Navigation Label
+  
+%p
+  As with the Name, if you need to change Menu information for a particular language it should be changed here. This will change the Menus across your website. The Navigation Label should be a short version of the page's Name.
+  
+  
+%h3
+  Slug
+  
+%p
+  If you would like the website to have a different web address for a particular language it should be changed here.
+  
+%p
+  Generally it is recommended you avoid this however, as it may make it more difficult for visitors to find the page when jumping from one language to another.
+  
+  
+  
+  
+%h2
+  Content
+  
+  
+%p
+  Your Page's content areas will be listed in this section. Depending on the particular page type there may be many different sections here.
+  
+  
+%h3
+  Plain Text Sections
+
+%p
+  Headings will use
+  %strong
+    Plain Text
+  to allow you to edit them. There are no formatting controls on Plain Text sections.
+  
+  
+%h3
+  Rich Text / HTML Sections
+  
+%p
+  Body text areas will allow you to format your text. These sections will have their own formatting buttons at the top to allow you to easily edit text: similar to a Word Processor such as
   %em
-    Textile.
+    Microsoft Word.
     
 %p
-  To apply Textile to your text, you need to add characters (modifiers) to either side of the word or phrase you want to change, i.e.:
-  
-%table{:summary => "Textile Commands"}
-  %tr
-    %th{:width => "33%"}
-      Formatting
-    %th{:width => "33%"}
-      Textile modifiers
-    %th{:width => "33%"}
-      Result
-      
-  %tr
-    %th
-      Bold
-    %td
-      This is *bold* text
-    %td
-      This is <strong>bold</strong> text
-      
-  %tr
-    %th
-      Italic
-    %td
-      This is _italic_ text
-    %td
-      This is <em>italic</em> text
-      
-  %tr
-    %th
-      Underline
-    %td
-      You can +underline+ text too
-    %td
-      You can <u>underline</u> text too
-      
-  %tr
-    %th
-      Strikethrough
-    %td
-      Or -strikethrough- text
-    %td
-      Or <s>strikethrough</s> text
-      
-  %tr
-    %th
-      Superscript
-    %td
-      Text can be ^superscript^
-    %td
-      Text can be <sup>superscript</sup>
-      
-  %tr
-    %th
-      Subscript
-    %td
-      Or it can be ~subscript~
-    %td
-      Or it can be <sub>subscript</sub>
-      
-      
-%h2
-  Headings in Textile
-
-      
-%p
-  Some textile commands, such as headings, don't need to be added around an item, and can just be added at the start.
-  
-%table{:summary => "Textile Commands"}
-  %tr
-    %th{:width => "33%"}
-      Formatting
-    %th{:width => "33%"}
-      Textile modifiers
-    %th{:width => "33%"}
-      Result
-      
-  %tr
-    %th
-      H1 Heading
-    %td
-      h1. This is a "H1" (largest and most important) heading
-    %td
-      %span{:style => "font-size: 1.5em; font-weight: bold;"}
-        This is a "H1" (largest and most important) heading
-      
-  %tr
-    %th
-      H2 Heading
-    %td
-      h2. This is a "H2" (second most important) heading
-    %td
-      %span{:style => "font-size: 1.3em; font-weight: bold;"}
-        This is a "H2" (second most important) heading
-      
-  %tr
-    %th
-      H3 Heading
-    %td
-      h3. This is a "H3" (third most important) heading
-    %td
-      %span{:style => "font-size: 1.1em; font-weight: bold;"}
-        This is a "H3" (third most important) heading
-        
-        
-%h2
-  Numbered and Bulleted Lists
-  
-%table{:summary => "Textile Commands"}
-  %tr
-    %th{:width => "33%"}
-      Formatting
-    %th{:width => "33%"}
-      Textile modifiers
-    %th{:width => "33%"}
-      Result
-  
-  %tr
-    %th
-      Bulleted List
-    %td
-      * Item 1
-      %br
-      * Item 2
-    %td
-      %ul
-        %li
-          Item 1
-        %li
-          Item 2
-  %tr
-    %th
-      Numbered List
-    %td
-      \# Item 1
-      %br
-      \# Item 2
-    %td
-      %ol
-        %li
-          Item 1
-        %li
-          Item 2
-          
-          
-%h2
-  Adding hyperlinks:
-  
-%table{:summary => "Textile Commands"}
-  %tr
-    %th{:width => "33%"}
-      Formatting
-    %th{:width => "33%"}
-      Textile modifiers
-    %th{:width => "33%"}
-      Result
-  %tr
-    %th
-      Hyperlink
-    %td
-      "link name":http://www.google.com
-    %td
-      %a{:href => "http://www.google.com"}
-        link name
-      
-%h2
-  Adding items from your Asset Library
-  
-%p
-  Sometimes you might need to add a picture or a link to another item from your Asset Library.
-  
-%p
-  %strong
+  %strong.note
     NOTE:
-  You will need the
-  %em
-    asset number
-  of the asset you want to use. This asset number can be found in the web address within the Asset Library.
-  
-%table{:summary => "Textile Commands"}
-  %tr
-    %th{:width => "33%"}
-      Formatting
-    %th{:width => "33%"}
-      Textile modifiers
-    %th{:width => "33%"}
-      Result
-      
-  %tr
-    %th
-      Add an item from your Asset Library
-    %td
-      !asset:4!
-    %td
-      = image_tag "help/help-kitty.jpg"
-      
-  %tr
-    %th
-      Add a thumbnail from your Asset Library
-    %td
-      !asset:4/thumb!:asset:4
-    %td
-      = image_tag "help/help-kitty-small.jpg"
-  %tr
-    %th
-      Link to an item in your Asset Library
-    %td
-      "filename":asset:4
-    %td
-      %a{:href => "/images/help/help-kitty.jpg"}
-        filename
-  %tr
-    %th
-      Link to a thumbnail in your Asset Library
-    %td
-      "filename":asset:4/preview
-    %td
-      %a{:href => "/images/help/help-kitty-small.jpg"}
-        filename
-        
-        
-        
-%h2
-  Adding a table
+  If you do not see the formatting controls, please check that your computer allows JavaScript. You may need to check with your Network or System Administrator.
   
 
-
-%table{:summary => "Textile Commands"}
-  %tr
-    %th{:width => "33%"}
-      Formatting
-    %th{:width => "33%"}
-      Textile modifiers
-    %th{:width => "33%"}
-      Result
-      
-  %tr
-    %th
-      Table
-    %td
-      | name | age | sex |
-      %br
-      | joan | 24 | f |
-      %br
-      | archie | 29 | m |
-      %br
-      | bella | 45 | f |
-      %br
-    %td
-      %table{:summary => "Example Table"}
-        %tr
-          %td
-            name
-          %td
-            age
-          %td
-            sex
-        %tr
-          %td
-            joan
-          %td
-            24
-          %td
-            f
-        %tr
-          %td
-            archie
-          %td
-            29
-          %td
-            m
-        %tr
-          %td
-            bella
-          %td
-            45
-          %td
-            f
+%h3
+  Image or File Sections
+  
+%p
+  Depending on the page, you may be able to select a file from your
+  %strong
+    Asset Library
+  to add to your page.
+  
+  
+  
+  
