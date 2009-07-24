@@ -917,6 +917,8 @@ p.newLink {
   font-size: 1.166667em;
   margin-top: 1.5em;
   margin-bottom: 0.75em; }
+#helpDialog strong.note {
+  color: red; }
 #helpDialog abbr {
   border-bottom: none;
   text-transform: uppercase;
