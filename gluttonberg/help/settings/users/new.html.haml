@@ -3,38 +3,60 @@
 %p
   When creating a new user, please be sure to fill in all the fields as below:
 
-
-
+%h2
+  Details
+  
+%h3
+  Name
+  
 %p
-  %strong
-    NAME:
-    %span{:style => "color: red;"}
-      (required)
-  Give the user a name. 
-    
-
+  %strong.note
+    REQUIRED:
+  Give the user a user name, such as their surname.
+  
+%h3
+  E-Mail
+  
 %p
-  %strong
-    E-MAIL:
-    %span{:style => "color: red;"}
-      (required)
+  %strong.note
+    REQUIRED:
   Type in the user's email address. This name will be used when the user logs into the system.
   
-  
+%h3
+  Full admin user
   
 %p
+  The
   %strong
-    PASSWORD:
-    %span{:style => "color: red;"}
-      (required)
-  Enter the user's password.
+    Full Admin User
+  option should only be selected for persons such as Web Development teams.
+   
+   
+%h2
+  Password
   
-
 %p
-  %strong
-    CONFIRM PASSWORD:
-    %span{:style => "color: red;"}
-      (required)
+  %strong.note
+    REQUIRED:
+  Both the
+  %em
+    Password
+  and the
+  %em
+    Confirm Password
+  fields must be entered.
+  
+%h3
+  Password
+  
+%p
+  Enter a password for the user.
+  
+  
+%h3
+  Confirm Password
+  
+%p
   Enter the user's password again. This is to ensure that the password is correct.
   
   
