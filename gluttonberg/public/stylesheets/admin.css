@@ -7,6 +7,7 @@
 /* ASSET LIBRARY -------------------------------- */
 /* TABLE COLOURS -------------------------------- */
 /* FORM COLOURS --------------------------------- */
+/* HELP COLOURS --------------------------------- */
 /* ================================================================== */
 /* Reset base styles - Assume nothing */
 /* ================================================================== */
@@ -896,27 +897,37 @@ p.newLink {
   margin: 0 15px 0 0;
   float: right; }
 #helpDialog p {
+  font-size: 1em;
   margin-bottom: 1.5em;
   line-height: 1.166667em; }
-#helpDialog h2 {
-  font-size: 1.166667em;
-  line-height: 1em;
+#helpDialog h2, #helpDialog h3 {
   font-weight: bold;
+  color: #365c6e; }
+#helpDialog h2 {
+  border-bottom: #365c6e 2px solid;
+  font-size: 1.333333em;
+  line-height: 1.3125em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   margin-top: 1.5em;
   margin-bottom: 0.5em;
-  color: #565644;
-  background: #E6E5B7;
-  padding-top: 0.25em;
-  padding-bottom: 0.25em; }
+  background: #e6ebc1;
+  padding: 15px 3px 3px 3px; }
+#helpDialog h3 {
+  font-size: 1.166667em;
+  margin-top: 1.5em;
+  margin-bottom: 0.75em; }
 #helpDialog abbr {
   border-bottom: none;
   text-transform: uppercase;
   font-size: 0.8em;
   letter-spacing: 0.05em; }
 #helpDialog ul {
-  line-height: 1em; }
+  line-height: 1em;
+  margin-bottom: 10px; }
 #helpDialog li {
   margin-left: 20px;
+  line-height: 1.166667em;
   list-style-type: circle; }
 
 /* DELETION CONFIRMATION ============================================ */

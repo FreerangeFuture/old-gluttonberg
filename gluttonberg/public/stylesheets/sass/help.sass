@@ -29,19 +29,30 @@
     :float right
     
   p
+    :font-size 1em
     :margin-bottom 1.5em
     :line-height 1.166667em
     
-  h2
-    :font-size 1.166667em
-    :line-height 1em
+  h2, h3
     :font-weight bold
+    :color = !help_headings_colour
+    
+    
+  h2
+    :border-bottom = !help_headings_colour 2px solid
+    :font-size 1.333333em
+    :line-height 1.3125em
+    :text-transform uppercase
+    :letter-spacing 0.05em
     :margin-top 1.5em
     :margin-bottom 0.5em
-    :color #565644
-    :background #E6E5B7
-    :padding-top 0.25em
-    :padding-bottom 0.25em
+    :background = !help_headings_background
+    :padding 15px 3px 3px 3px
+    
+  h3
+    :font-size 1.166667em
+    :margin-top 1.5em
+    :margin-bottom 0.75em
     
   abbr
     :border-bottom none
@@ -51,7 +62,9 @@
     
   ul
     :line-height 1em
+    :margin-bottom 10px
     
   li
     :margin-left 20px
+    :line-height 1.166667em
     :list-style-type circle
