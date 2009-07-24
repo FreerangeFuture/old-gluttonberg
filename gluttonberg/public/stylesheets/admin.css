@@ -122,6 +122,8 @@ body {
     background-image: url('../images/sidebar/library.png'); }
   #sidebar #settingsNav a {
     background-image: url('../images/sidebar/settings.png'); }
+  #sidebar #FeedbackNav a {
+    background-image: url('../images/sidebar/feedback.png'); }
   #sidebar p {
     background-position: left top;
     background-repeat: no-repeat;
