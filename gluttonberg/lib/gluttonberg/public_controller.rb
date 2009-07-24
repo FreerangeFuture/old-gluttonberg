@@ -21,6 +21,7 @@ module Gluttonberg
       end
     end
     
+    
     private
     
     # Stores the details for the current locale in a thread local.
@@ -60,5 +61,6 @@ module Gluttonberg
     def self.after(*args)
       @@_after_filters << args
     end
+    
   end
 end

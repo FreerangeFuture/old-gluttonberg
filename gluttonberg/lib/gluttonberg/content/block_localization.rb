@@ -31,7 +31,7 @@ module Gluttonberg
       end
       
       def section_label
-        parent.section[:label]
+        parent.section[:label] unless parent.blank?
       end
     end
   end
