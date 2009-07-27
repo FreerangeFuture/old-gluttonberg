@@ -5,11 +5,11 @@
 
 
 = form(:action => slice_url(:gluttonberg, :perform_login), :method => :put, :id => "wrapper") do
-  %h1#loginTitle Login
+  %h1#loginTitle Login  
   
-  %div.error{:style=>"margin:40px;"}
-    %h2= session.authentication.error_message if message[:notice].blank?
-    %h2= message[:notice]
+  -if request.referer && request.referer.include?("login")    
+    %div.error{:style=>"margin:40px;"}
+      %h2= session.authentication.error_message
       
   = text_field(:name => "email", :value => params[:email], :label => "E-mail", :class => "large")
   %br
