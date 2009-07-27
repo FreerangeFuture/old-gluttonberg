@@ -575,11 +575,12 @@ ul.assetList {
 #assets.show #description {
   margin-bottom: 1.5em; }
 #assets.show #public-path {
-  margin-left: 340px;
+  margin-left: 40px;
   width: 22em;
   clear: both;
   float: left; }
 #assets.show #public-path-note {
+  padding-left: 60px;
   font-size: 0.9em;
   color: #333333;
   padding-bottom: 1em;
