@@ -25,7 +25,7 @@ module Gluttonberg
       dir = template_dir(opts)
       if dir
         Dir.glob(dir / "*").each do |template|
-          return true if template.match(opts[:page])
+          return true if template.match(opts[:page].to_s)
         end
       end
       false
