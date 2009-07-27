@@ -5,9 +5,9 @@ module Gluttonberg
       
       before :find_user, :exclude => [:index, :new, :create]
       
-      def index
-        @users = User.all_for_user(session.user)
-        display @users
+      def index        
+          @users = User.all_for_user(session.user)
+          display @users
       end
   
       def show

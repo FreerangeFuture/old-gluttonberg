@@ -48,8 +48,8 @@
 %dl
   %dt User Friendly Path
   %dd= text_field(:value => asset_url(@asset) , :class => "public-path")  
-  %dt Backend Path
-  %dd= text_field(:value => "http://#{request.host}#{@asset.url}", :class => "public-path")
+  /%dt Backend Path
+  /%dd= text_field(:value => "http://#{request.host}#{@asset.url}", :class => "public-path")
   
 %p.public-path-note 
   This address can be used to link to this asset.
