@@ -31,7 +31,7 @@ if defined?(Merb::Plugins)
   
   module Gluttonberg
     self.description = "A content management system"
-    self.version = "0.0.4"
+    self.version = "0.5.0"
     self.author = "Freerange Future (www.freerangefuture.com)"
     
     # Stub classes loaded hook - runs before LoadClasses BootLoader
