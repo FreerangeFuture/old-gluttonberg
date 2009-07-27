@@ -8,7 +8,7 @@ module Gluttonberg
     @@nav_entries = nil
     @@left_nav_entries = []
     @@registered  = nil
-    Component     = Struct.new(:name, :label)
+    Component     = Struct.new(:name, :label , :only_for_super_admin )
     
     # Registers a controller — or set of controllers — based on the URLs 
     # specified in the routes.
@@ -25,7 +25,7 @@ module Gluttonberg
     
     # Returns a hash of the registered components, keyed to their label.
     def self.registered
-      @@registered ||= @@components.collect {|k, v| Component.new(k.to_s, v[:label])}
+      @@registered ||= @@components.collect {|k, v| Component.new(k.to_s, v[:label] , v[:only_for_super_admin])}
     end
     
     # Returns an array of components that have been given a nav_label —
@@ -40,7 +40,7 @@ module Gluttonberg
             v[:admin_url]
           end
         end        
-        [v[:label], k, url]
+        [v[:label], k, url , v[:only_for_super_admin]]
       end
     end
     
