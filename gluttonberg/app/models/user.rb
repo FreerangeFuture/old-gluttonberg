@@ -42,18 +42,13 @@ module Gluttonberg
         end
           found_user
     end  
-    
-#     def reset_password
-#           send_mail (UserMailer, :reset_password, {
-#               :from => "no-reply@example.com",
-#               :to => "rauf_eng@hotmail.com",
-#               :subject => "Please activate your account" 
-#              })
-#     end
-    
+   
+
     def self.random_password
       length = 10
       chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
+      similar_chars = %w{ i I 1 0 O o 5 S s }
+      chars.delete_if {|x| similar_chars.include? x} 
       newpass = ""
       1.upto(length) { |i| newpass << chars[rand(chars.size-1)] }
       newpass
