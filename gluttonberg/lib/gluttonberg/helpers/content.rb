@@ -65,12 +65,9 @@ module Gluttonberg
         end
       end
       
-      # takes comma seprated ids of the text_area tag and generate javascript code to enable tinymce on it.
-      def enable_tinymce_on(*ids)        
-        content = ""
-        ids.each do |id|          
-          content += "enable_tinyMCE_on(\"#{id}\") \n"
-        end         
+      # generate javascript code to enable tinymce on it. textArea need to have class = mceEditor
+      def enable_tinymce        
+        content = "enable_tinyMCE_on(); \n"        
         tag(:script , content , :charset=>'utf-8', :type=>'text/javascript')        
       end
       

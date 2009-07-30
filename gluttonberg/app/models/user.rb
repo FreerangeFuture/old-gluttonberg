@@ -40,7 +40,7 @@ module Gluttonberg
         else
             found_user = user  if user.id.to_s == id.to_s               
         end
-          found_user
+        found_user
     end  
    
 

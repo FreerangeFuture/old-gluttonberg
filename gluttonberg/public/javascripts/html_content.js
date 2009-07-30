@@ -1,11 +1,13 @@
-function enable_tinyMCE_on(ids)
+function enable_tinyMCE_on()
 {
 tinyMCE.init({
                 // General options
-                mode : "exact",
-                elements : ids,
+                //mode : "exact",
+                //elements : ids,
+                mode : "specific_textareas",
+                editor_selector : "mceEditor",
                 theme : "advanced",
-                plugins : "safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+                plugins : "safari,pagebreak,style,table,advlink,inlinepopups,fullscreen,noneditable,nonbreaking",
 
                 // Theme options
                 theme_advanced_buttons1 : "fullscreen,|,removeformat,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,styleselect,|,bullist,numlist,|,blockquote,|,sub,sup,",

@@ -1,4 +1,4 @@
-= enable_tinymce_on("gluttonberg::asset_description")
+= enable_tinymce
 
 = form_for(@asset, :action => action) do
   = error_messages_for(@asset)
@@ -12,7 +12,7 @@
   = block("Details") do
     = text_field(:name, :label => "Name", :class => "large")
     %br
-    = text_area(:description, :label => "Description", :class => "large short")
+    = text_area(:description, :label => "Description", :class => "large short mceEditor")
 
   = fieldset(:legend => "Collections", :id => "collections") do
     %div.fieldset
