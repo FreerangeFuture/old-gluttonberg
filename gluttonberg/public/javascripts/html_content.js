@@ -19,6 +19,8 @@ tinyMCE.init({
                 theme_advanced_resizing : true,
                
                 content_css : "/stylesheets/user-styles.css",
+                
+                valid_elements : "a[href|target=_blank],strong/b,em/i,p,ol,ul,li,u,strike,blockquote"
         });
         
  }    
