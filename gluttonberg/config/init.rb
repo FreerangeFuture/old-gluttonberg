@@ -21,6 +21,7 @@ end
 
 Merb::BootLoader.after_app_loads do
   #Gluttonberg::Components.register(:thing, :label => "Thing")
+  Merb::Slices::config[:gluttonberg][:email_from] = "noreply@gluttonberg.com"
   begin
     settings = Gluttonberg::Setting.all(:enabled => true)
     settings.each do |setting|
