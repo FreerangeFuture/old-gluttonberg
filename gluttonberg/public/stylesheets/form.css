@@ -1,6 +1,6 @@
 /*
 Sass::SyntaxError: Undefined constant: "!legend_colour".
-on line 11 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/form.sass
+on line 11 of /Users/yuri/Code/source/gluttonberg/gluttonberg/public/stylesheets/sass/form.sass
 
 7:   :border 0
 8: 
@@ -16,7 +16,7 @@ on line 11 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/s
 
 
 Backtrace:
-/Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/form.sass:11
+/Users/yuri/Code/source/gluttonberg/gluttonberg/public/stylesheets/sass/form.sass:11
 /opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:211:in `get_constant'
 /opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:194:in `operationalize'
 /opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/constant.rb:184:in `operationalize'
@@ -31,8 +31,8 @@ Backtrace:
 /opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/plugin.rb:53:in `each'
 /opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/plugin.rb:53:in `update_stylesheets'
 /opt/local/lib/ruby/gems/1.8/gems/haml-2.0.10/lib/sass/plugin/merb.rb:31:in `call'
-/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.9/lib/merb-core/rack/middleware/static.rb:28:in `call'
-/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.9/lib/merb-core/rack/handler/mongrel.rb:82:in `process'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.12/lib/merb-core/rack/middleware/static.rb:28:in `call'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.12/lib/merb-core/rack/handler/mongrel.rb:82:in `process'
 /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:159:in `process_client'
 /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `each'
 /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:158:in `process_client'
@@ -43,17 +43,17 @@ Backtrace:
 /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `initialize'
 /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `new'
 /opt/local/lib/ruby/gems/1.8/gems/mongrel-1.1.5/lib/mongrel.rb:268:in `run'
-/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.9/lib/merb-core/rack/adapter/mongrel.rb:38:in `start_server'
-/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.9/lib/merb-core/rack/adapter/abstract.rb:295:in `start_at_port'
-/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.9/lib/merb-core/rack/adapter/abstract.rb:128:in `start'
-/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.9/lib/merb-core/server.rb:174:in `bootup'
-/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.9/lib/merb-core/server.rb:42:in `start'
-/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.9/lib/merb-core.rb:170:in `start'
-/opt/local/lib/ruby/gems/1.8/gems/merb-slices-1.0.9/bin/slice:79
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.12/lib/merb-core/rack/adapter/mongrel.rb:38:in `start_server'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.12/lib/merb-core/rack/adapter/abstract.rb:298:in `start_at_port'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.12/lib/merb-core/rack/adapter/abstract.rb:128:in `start'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.12/lib/merb-core/server.rb:174:in `bootup'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.12/lib/merb-core/server.rb:42:in `start'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0.12/lib/merb-core.rb:170:in `start'
+/opt/local/lib/ruby/gems/1.8/gems/merb-slices-1.0.12/bin/slice:79
 /opt/local/bin/slice:19:in `load'
 /opt/local/bin/slice:19
 */
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Sass::SyntaxError: Undefined constant: \"!legend_colour\".\A on line 11 of /Users/taryn/Projects/gluttonberg/gluttonberg/public/stylesheets/sass/form.sass\A \A 7:   :border 0\A 8: \A 9: legend\A 10:   :font-size 1.2em\A 11:   :color = !legend_colour\A 12:   :padding 0 0 0.35em 7px\A 13:   \A 14: div.fieldset,\A 15: ol.fieldset\A 16:   :background = !fieldset_background\A 17:   :border = !fieldset_border 1px solid\A "; }
+  content: "Sass::SyntaxError: Undefined constant: \"!legend_colour\".\A on line 11 of /Users/yuri/Code/source/gluttonberg/gluttonberg/public/stylesheets/sass/form.sass\A \A 7:   :border 0\A 8: \A 9: legend\A 10:   :font-size 1.2em\A 11:   :color = !legend_colour\A 12:   :padding 0 0 0.35em 7px\A 13:   \A 14: div.fieldset,\A 15: ol.fieldset\A 16:   :background = !fieldset_background\A 17:   :border = !fieldset_border 1px solid\A "; }

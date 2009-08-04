@@ -22,6 +22,8 @@
     %script{:src => gluttonberg_public_path_for(:javascript, "html_content.js"), :type => "text/javascript", :charset => "utf-8"}
     %script{:src => gluttonberg_public_path_for(:javascript, "application.js"), :type => "text/javascript", :charset => "utf-8"}
     
+    /[if IE 6]
+      %link{:href => gluttonberg_public_path_for(:stylesheet, 'admin-ie6.css'), :type => "text/css", :charset => "utf-8", :rel => "stylesheet"}/
     
     = include_required_js
   %body{:id => params[:controller].match(%r{\w+$}), :class => params[:action]}
