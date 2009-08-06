@@ -169,14 +169,14 @@ module Gluttonberg
           # first assign the default thumbs for the category
           # then spawn a worker to generate thumbs if possible and update
           asset_id_to_process = self.id
-          run_later do
+          #run_later do
             asset = Asset.get(asset_id_to_process)
             if asset
               asset.generate_proper_resolution
               asset.generate_image_thumb
               asset.save!
             end
-          end
+         # end
         end
         
         # Create thumbailed versions of image attachements.
