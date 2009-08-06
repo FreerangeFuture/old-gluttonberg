@@ -73,42 +73,48 @@ module Gluttonberg
     # * Check for redirects
     # * Store the original path in params, since it may be rewritten later
     PUBLIC_DEFER_PROC = lambda do |request, params|
-      params[:full_path] = "" unless params[:full_path]
-      additional_params, conditions = Gluttonberg::Router.localization_details(params)
-      # Stash the locale details in a thread local variable
-      Thread.current[:locale] = {:locale => additional_params[:locale], :dialect => additional_params[:dialect]}
-      page = Gluttonberg::Page.first_with_localization(conditions.merge(:path => params[:full_path]))
-      if page
-        case page.description[:behaviour]
-          when :rewrite
-            Gluttonberg::Router.rewrite(page, params[:full_path], request, params, additional_params)
-          when :redirect
-            destination = page.description.redirect_url(page, params)
-            {:controller => "gluttonberg/redirect", :action => "to", :redirect_url => destination}
-          else
-            {
-              :controller => params[:controller], 
-              :action     => params[:action], 
-              :page       => page, 
-              :format     => params[:format]
-            }.merge!(additional_params)
-        end
+      
+      @asset = Asset.first(:id=>params[:id] , :asset_hash.like => params[:hash] + "%")  unless params[:hash].blank?
+      unless @asset.blank?        
+        #redirect "http://#{request.host}#{@asset.url}"
       else
-        # TODO: The string concatenation here is Sqlite specific, we need to 
-        # handle it differently per adapter.
-        names = PageDescription.names_for(:rewrite)
-        component_conditions = conditions.merge(
-          "page.description_name" => names,
-          :conditions             => ["? LIKE (path || '%')", params[:full_path]], 
-          :order                  => [:path.asc]
-        )
-        page = Gluttonberg::Page.first_with_localization(component_conditions)
+        params[:full_path] = "" unless params[:full_path]
+        additional_params, conditions = Gluttonberg::Router.localization_details(params)
+        # Stash the locale details in a thread local variable
+        Thread.current[:locale] = {:locale => additional_params[:locale], :dialect => additional_params[:dialect]}
+        page = Gluttonberg::Page.first_with_localization(conditions.merge(:path => params[:full_path]))
         if page
-          Gluttonberg::Router.rewrite(page, params[:full_path], request, params, additional_params)
+          case page.description[:behaviour]
+            when :rewrite
+              Gluttonberg::Router.rewrite(page, params[:full_path], request, params, additional_params)
+            when :redirect
+              destination = page.description.redirect_url(page, params)
+              {:controller => "gluttonberg/redirect", :action => "to", :redirect_url => destination}
+            else
+              {
+                :controller => params[:controller], 
+                :action     => params[:action], 
+                :page       => page, 
+                :format     => params[:format]
+              }.merge!(additional_params)
+          end
         else
-          raise Merb::ControllerExceptions::NotFound
+          # TODO: The string concatenation here is Sqlite specific, we need to 
+          # handle it differently per adapter.
+          names = PageDescription.names_for(:rewrite)
+          component_conditions = conditions.merge(
+            "page.description_name" => names,
+            :conditions             => ["? LIKE (path || '%')", params[:full_path]], 
+            :order                  => [:path.asc]
+          )
+          page = Gluttonberg::Page.first_with_localization(component_conditions)
+          if page
+            Gluttonberg::Router.rewrite(page, params[:full_path], request, params, additional_params)
+          else
+            raise Merb::ControllerExceptions::NotFound
+          end
         end
-      end
+      end  
     end
     
     # This is a helper method used to find a matching locale and dialect based on 
@@ -260,6 +266,10 @@ module Gluttonberg
           path << ":dialect"
         end
         
+        #for public asset path via controller
+        controller = Gluttonberg.standalone? ? "library/public_assets" : "gluttonberg/library/public_assets"
+        match("/asset/:hash/:id").to(:controller => controller, :action => "show").name(:public_asset)
+        
         # Build the full path, which includes the format. This needs to account
         # for the simple case where we match from "/"
         full_path = if Gluttonberg.localized? || Gluttonberg.translated?
@@ -276,9 +286,7 @@ module Gluttonberg
         ).name(:public_page)
         # Filthy hack to match against the root, since the URL won't 
         # regenerate with optional parameters — :full_path
-        match(path).defer_to({:controller => controller, :action => "show"}, &Gluttonberg::Router::PUBLIC_DEFER_PROC).name(:public_root)      
-        controller = Gluttonberg.standalone? ? "library/public_assets" : "gluttonberg/library/public_assets"
-        match("/asset/:hash/:id").to(:controller => controller, :action => "show").name(:public_asset)
+        match(path).defer_to({:controller => controller, :action => "show"}, &Gluttonberg::Router::PUBLIC_DEFER_PROC).name(:public_root)              
       end
     end
   end

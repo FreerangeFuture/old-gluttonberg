@@ -36,7 +36,7 @@ module Gluttonberg
       end
       
       def show
-        provides :json
+        provides :json        
         @paginator, @assets = paginate(@collection.assets,{:order => [:name.desc], :per_page => 18})
         @paginate_previous_url = slice_url(:collection_show, :page => @paginator.previous)
         @paginate_next_url = slice_url(:collection_show, :page => @paginator.next)
