@@ -135,6 +135,7 @@ var AssetBrowser = {
   updateDisplay: function(markup) {
     AssetBrowser.display.html(markup);
     AssetBrowser.display.find("a").click(AssetBrowser.click);
+    $('#tabs').tabs();
   },
   click: function() {
     var target = $(this);
