@@ -29,7 +29,8 @@ module Gluttonberg
         display_delete_confirmation(
           :title      => "Delete the user #{@user.name}?",
           :action     => slice_url(:user, @user),
-          :return_url => slice_url(:users)
+          :return_url => slice_url(:users),
+          :do_not_delete => (session.user.id == @user.id)
         )
       end
   

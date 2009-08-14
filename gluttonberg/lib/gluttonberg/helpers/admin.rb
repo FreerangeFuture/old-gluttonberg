@@ -249,11 +249,8 @@ JAVASCRIPT_CODE
       end
       
       def admin_rights_form(user)        
-         if user.is_super_admin           
-          output = ""
-          output << check_box(:is_super_admin)    
-          output << label( :for => "is_super_admin", :class => "checkbox" , :title=> "Full admin user" )
-          output
+         if user.is_super_admin                     
+          hidden_field(:is_super_admin , :value=>true)
          else
            hidden_field(:is_super_admin , :value=>false)
          end 

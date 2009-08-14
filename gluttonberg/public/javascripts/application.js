@@ -114,7 +114,8 @@ var AssetBrowser = {
   },
   showOverlay: function() {
     if (!AssetBrowser.overlay) {
-      AssetBrowser.overlay = $('<div id="assetsDialogOverlay">&nbsp</div>');
+      var height = $('#wrapper').height() + 50;      
+      AssetBrowser.overlay = $('<div id="assetsDialogOverlay" style="height:'+height+'px;">&nbsp</div>');      
       $("body").append(AssetBrowser.overlay);
     }
     else {
