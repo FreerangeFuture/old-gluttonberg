@@ -11,7 +11,7 @@
     = text_field(:email, :class => "large", :label => "E-mail")
     
     
-    = admin_rights_form(session.user)
+    = admin_rights_form(@user.new_record? ? session.user : @user)
     
     
   = block("Password") do
