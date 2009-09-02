@@ -23,6 +23,10 @@
     
     /[if IE 6]
       %link{:href => gluttonberg_public_path_for(:stylesheet, 'admin-ie6.css'), :type => "text/css", :charset => "utf-8", :rel => "stylesheet"}/
+      
+    /[if IE 7]
+      %link{:href => gluttonberg_public_path_for(:stylesheet, 'admin-ie7.css'), :type => "text/css", :charset => "utf-8", :rel => "stylesheet"}/
+    
     
     = include_required_js
   %body{:id => params[:controller].match(%r{\w+$}), :class => params[:action]}
