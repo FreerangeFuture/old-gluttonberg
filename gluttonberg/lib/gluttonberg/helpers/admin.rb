@@ -241,7 +241,7 @@ JAVASCRIPT_CODE
       def main_nav_entry(text, mod, url = nil, opts = {})
         if url
           li_opts = {:id => "#{mod}Nav"}
-          if( ( request.env["REQUEST_PATH"] && (request.env["REQUEST_PATH"].match(%r{/#{mod}}) || request.env["REQUEST_PATH"] == url) )  || (request.env["REQUEST_PATH"].include?("content") && request.env["REQUEST_PATH"] == url ) )
+          if( ( request.env["REQUEST_PATH"] && (request.env["REQUEST_PATH"].match(%r{/#{mod}}) || request.env["REQUEST_PATH"] == url) )  || (request.env["REQUEST_PATH"] && request.env["REQUEST_PATH"].include?("content") && request.env["REQUEST_PATH"] == url ) )
             li_opts[:class] = "current"
           end
           tag("li", link_to(text, url, opts), li_opts)
