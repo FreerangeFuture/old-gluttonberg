@@ -21,7 +21,7 @@ module Gluttonberg
       # thumbnailing on.
       def self.included(klass)
         klass.class_eval do
-          property :name,             String
+          property :name,             String, :nullable => false
           property :description,      DataMapper::Types::Text, :lazy => false
           property :file_name,        String, :length => 255
           property :asset_hash,       String, :length => 255, :writer => :private, :field => 'hash'
@@ -50,6 +50,17 @@ module Gluttonberg
       end
       
       module ClassMethods
+        # Generate auto titles for those assets without name
+        def generate_name
+          assets = Gluttonberg::Asset.all(:name => "")
+          assets.each do |asset|
+            p asset.file_name
+            asset.name = asset.file_name.split(".")[0]
+            asset.save
+          end
+          'done' # this just makes the output nicer when running from slice -i
+        end  
+          
         # Generates/Re-generates thumbnails for all the image assets in the 
         # library.
         def generate_all_thumbnails

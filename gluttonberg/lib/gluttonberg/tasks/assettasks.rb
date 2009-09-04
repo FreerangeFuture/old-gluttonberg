@@ -15,5 +15,12 @@ namespace :slices do
       Gluttonberg::Library.rebuild
     end
     
+    
+    
   end
+  desc "Assign file_name as name of those asset whose name is null"
+  task :generate_asset_names => :merb_env do
+    Gluttonberg::Asset.generate_name
+  end
+  
 end
