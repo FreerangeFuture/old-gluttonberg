@@ -35,6 +35,7 @@ module Gluttonberg
       end
   
       def create
+        params["gluttonberg::user"][:email] = params["gluttonberg::user"][:email].downcase
         @user = User.new(params["gluttonberg::user"])
         if @user.save
           redirect slice_url(:users), :message => {:notice => "User was successfully created"}
@@ -45,6 +46,7 @@ module Gluttonberg
       end
   
       def update
+        params["gluttonberg::user"][:email] = params["gluttonberg::user"][:email].downcase
         if @user.update_attributes(params["gluttonberg::user"])
            redirect slice_url(:users)
         else

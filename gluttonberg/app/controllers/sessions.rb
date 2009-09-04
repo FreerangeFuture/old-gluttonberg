@@ -4,7 +4,8 @@ module Gluttonberg
     before :_maintain_auth_session_before, :exclude => [:destroy]  # Need to hang onto the redirection during the session.abandon!
     before :_abandon_session,     :only => [:update, :destroy]
     before  :_maintain_auth_session_after,  :exclude => [:destroy]  # Need to hang onto the redirection during the session.abandon!
-    before :ensure_authenticated, :only => [:update]
+    before :my_ensure_authenticated, :only => [:update]
+    #before :ensure_authenticated, :only => [:update]
 
     # redirect from an after filter for max flexibility
     # We can then put it into a slice and ppl can easily 
@@ -22,6 +23,11 @@ module Gluttonberg
   
   
     private   
+    
+    def my_ensure_authenticated
+      params[:email] = params[:email].downcase
+      ensure_authenticated
+    end
     # @overwritable
     def redirect_after_login
       message[:notice] = "Authenticated Successfully"
