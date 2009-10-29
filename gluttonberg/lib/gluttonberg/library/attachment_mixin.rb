@@ -205,23 +205,23 @@ module Gluttonberg
         # Create thumbailed versions of image attachements.
         # TODO: generate thumbnails with the correct extension
         def generate_image_thumb
+          
           if self.class.generate_thumbs
-            
-            
+                        
               begin
                 ImageScience.with_image(location_on_disk) do |img|
                     self.class.sizes.each_pair do |name, config|
                       path = File.join(directory, "#{config[:filename]}.jpg")
                       
                       
-                      if self.class.is_cropped
+                      if self.class.is_cropped                        
                           if img.width > config[:width]
                             img.cropped_thumbnail(config[:width]) { |thumb| 
                                 thumb.with_crop(0,0,config[:width], config[:height]){ |thumb| thumb.save(path) }
                                 thumb.save(path)                                   
                                 }                      
                           end
-                      else
+                      else                          
                             if img.height >= img.width
                                 if img.height > config[:height]
                                   img.thumbnail(config[:height]) { |thumb| thumb.save(path) }
