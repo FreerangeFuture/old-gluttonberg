@@ -16,6 +16,8 @@ module Gluttonberg
       # basis via the slice configuration.
       MAX_IMAGE_SIZE = {:width => 2000, :height => 2000}
       
+      IS_CROPPED = false
+      
       # The included hook adds the ivars and properties we need. It also checks 
       # to see if image science is available, in which case it will turn image
       # thumbnailing on.
@@ -89,7 +91,17 @@ module Gluttonberg
         def max_image_size
           Gluttonberg.config[:max_image_size] || MAX_IMAGE_SIZE
         end
+        
+        def is_cropped
+          if Gluttonberg.config[:is_cropped]
+            Gluttonberg.config[:is_cropped]
+          else  
+            IS_CROPPED
+          end  
+        end
+        
       end
+      
       
       module InstanceMethods
         # Setter for the file object. It sanatises the file name and stores in 
@@ -194,33 +206,50 @@ module Gluttonberg
         # TODO: generate thumbnails with the correct extension
         def generate_image_thumb
           if self.class.generate_thumbs
-            begin
-              ImageScience.with_image(location_on_disk) do |img|
-                self.class.sizes.each_pair do |name, config|
-                  path = File.join(directory, "#{config[:filename]}.jpg")
-                  if img.height >= img.width
-                    if img.height > config[:height]
-                      img.thumbnail(config[:height]) { |thumb| thumb.save(path) }
-                    else
-                      img.save(path)
-                    end
-                  else
-                    if img.width > config[:width]
-                      img.thumbnail(config[:width]) { |thumb| thumb.save(path) }
-                    else
-                      img.save(path)
-                    end
-                  end               
-                end
+            
+            
+              begin
+                ImageScience.with_image(location_on_disk) do |img|
+                    self.class.sizes.each_pair do |name, config|
+                      path = File.join(directory, "#{config[:filename]}.jpg")
+                      
+                      
+                      if self.class.is_cropped
+                          if img.width > config[:width]
+                            img.cropped_thumbnail(config[:width]) { |thumb| 
+                                thumb.with_crop(0,0,config[:width], config[:height]){ |thumb| thumb.save(path) }
+                                thumb.save(path)                                   
+                                }                      
+                          end
+                      else
+                            if img.height >= img.width
+                                if img.height > config[:height]
+                                  img.thumbnail(config[:height]) { |thumb| thumb.save(path) }
+                                else
+                                  img.save(path)
+                                end
+                            else
+                                if img.width > config[:width]
+                                  img.thumbnail(config[:width]) { |thumb| thumb.save(path) }
+                                else
+                                  img.save(path)
+                                end
+                             end               
+                                              
+                      end #is_cropped  
+                    end # name, config
+                end  # img                  
+                                   
+                
                 attribute_set(:custom_thumbnail, true)
-              end
+              #end
             rescue TypeError => error
               # ignore TypeErrors, just means it wasn't a supported image
             end
           else
             attribute_set(:custom_thumbnail, false)
-          end
-        end
+          end #if gen_thumbs
+        end # method
 
         def generate_proper_resolution
           if self.class.generate_thumbs
