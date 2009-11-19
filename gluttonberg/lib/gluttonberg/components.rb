@@ -45,8 +45,8 @@ module Gluttonberg
     end
     
    
-   def self.register_for_left_nav(name , url)
-      @@left_nav_entries << [name , url]
+   def self.register_for_left_nav(name , url , only_for_super_admin = false )
+      @@left_nav_entries << [name , url , only_for_super_admin]
     end 
     
    # Returns an array of components that have been given a nav_label —
