@@ -202,7 +202,7 @@ module Gluttonberg
          # end
         end
         
-        # Create thumbailed versions of image attachements.
+        # Create thumbnailed versions of image attachements.
         # TODO: generate thumbnails with the correct extension
         def generate_image_thumb
           
@@ -212,16 +212,21 @@ module Gluttonberg
                 ImageScience.with_image(location_on_disk) do |img|
                     self.class.sizes.each_pair do |name, config|
                       path = File.join(directory, "#{config[:filename]}.jpg")
+                                          
                       
-                      
-                      if self.class.is_cropped                        
-                          if img.width > config[:width]
+                      if self.class.is_cropped                                               
+                          if img.width > config[:width] || img.height > config[:height]
+                            puts "crop - "
                             img.cropped_thumbnail(config[:width]) { |thumb| 
-                                thumb.with_crop(0,0,config[:width], config[:height]){ |thumb| thumb.save(path) }
-                                thumb.save(path)                                   
-                                }                      
+                                          
+                                thumb.with_crop(0,0,config[:width], config[:height]){ |thumb1| thumb1.save(path) }                                 
+                            }                      
+                          else
+                            puts "nochange - "
+                            img.save(path)
                           end
-                      else                          
+                      else
+                        puts "thumbnail - "
                             if img.height >= img.width
                                 if img.height > config[:height]
                                   img.thumbnail(config[:height]) { |thumb| thumb.save(path) }

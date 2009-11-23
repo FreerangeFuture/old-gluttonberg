@@ -4,7 +4,7 @@ namespace :slices do
     task :create_thumbnails => :merb_env do
       assets = Gluttonberg::Asset.all
       assets.each do |asset|
-        p "thumb-nailing '#{asset.file_name}'"
+        p "thumb-nailing '#{asset.file_name}'  "
         asset.generate_image_thumb
         asset.save
       end
