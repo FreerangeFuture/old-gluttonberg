@@ -202,6 +202,69 @@ module Gluttonberg
          # end
         end
         
+        
+#         def suggested_measures(object , config)
+#           actual_width = object.width
+#           actual_height = object.height
+#           required_width = config[:width]
+#           required_height = config[:height]
+#           
+#           if actual_width > actual_height
+#             size = actual_width > required_width ? required_width : actual_width
+#           else
+#             size = actual_height > required_height ? required_height : actual_width
+#           end    
+#                     
+#           scale = size.to_f / (actual_width > actual_height ? actual_width : actual_height)
+#           
+#           projected_width = actual_width * scale
+#           projected_height = actual_height * scale
+#           
+#           error_width = required_width / projected_width
+#           error_height = required_height / projected_height
+#           
+#           error = error_width > error_height ? error_width : error_height
+#           puts "error ------- #{error} "
+#           thumbnail_prefferred_size = ( required_width > required_height ? required_width : required_height ).to_f * (error)          
+#         end  
+        
+        def suggested_measures(object , config)
+          actual_width = object.width
+          actual_height = object.height
+          required_width = config[:width]
+          required_height = config[:height]
+          
+          if actual_width > actual_height
+            size = actual_width > required_width ? required_width : actual_width
+          else
+            size = actual_height > required_height ? required_height : actual_width
+          end    
+                    
+          scale = size.to_f / (actual_width > actual_height ? actual_width : actual_height)
+          
+          projected_width = actual_width * scale
+          projected_height = actual_height * scale
+          
+       
+          error_width = required_width / projected_width
+          error_height = required_height / projected_height
+          
+          error = error_width > error_height ? error_width : error_height
+          
+          while(error > 2.0)
+            error /= 2.0
+          end
+          
+          if required_width > 500 || required_height > 500
+            thumbnail_prefferred_size = ( required_width > required_height ? required_width : required_height ).to_f * (error)
+            thumbnailing = true
+          else
+            thumbnail_prefferred_size = ( required_width > required_height ? required_width : required_height ).to_i
+            thumbnailing = false
+          end  
+          thumbnail_prefferred_size
+        end  
+        
         # Create thumbnailed versions of image attachements.
         # TODO: generate thumbnails with the correct extension
         def generate_image_thumb
@@ -214,13 +277,29 @@ module Gluttonberg
                       path = File.join(directory, "#{config[:filename]}.jpg")
                                           
                       
-                      if self.class.is_cropped                                               
+                      if self.class.is_cropped
                           if img.width > config[:width] || img.height > config[:height]
-                            puts "crop - "
-                            img.cropped_thumbnail(config[:width]) { |thumb| 
-                                          
-                                thumb.with_crop(0,0,config[:width], config[:height]){ |thumb1| thumb1.save(path) }                                 
-                            }                      
+                        
+                            thumbnailing = (config[:height] > 500 || config[:width] > 500)
+                            
+                            
+                            if thumbnailing
+                              puts "thumbnail - "
+                                thumbnail_prefferred_size = suggested_measures(img , config)
+                                puts "thumbnail_prefferred_size #{thumbnail_prefferred_size} "
+                                img.thumbnail( thumbnail_prefferred_size )  { |thumb| 
+                                thumb.with_crop(0,0,config[:width], config[:height]){ |thumb2| thumb2.save(path) }                                                                          
+                                }
+                              
+                            else
+                              puts "cropping - "
+                               prfferred_width_for_cropping = config[:width] > config[:height] ? config[:width] : config[:height]
+                               img.cropped_thumbnail(prfferred_width_for_cropping) { |thumb1|
+                                   thumb1.with_crop(0,0,config[:width], config[:height]){ |thumb2| thumb2.save(path) }
+                                    
+                               }                      
+                            end
+                            
                           else
                             puts "nochange - "
                             img.save(path)
