@@ -203,32 +203,8 @@ module Gluttonberg
         end
         
         
-#         def suggested_measures(object , config)
-#           actual_width = object.width
-#           actual_height = object.height
-#           required_width = config[:width]
-#           required_height = config[:height]
-#           
-#           if actual_width > actual_height
-#             size = actual_width > required_width ? required_width : actual_width
-#           else
-#             size = actual_height > required_height ? required_height : actual_width
-#           end    
-#                     
-#           scale = size.to_f / (actual_width > actual_height ? actual_width : actual_height)
-#           
-#           projected_width = actual_width * scale
-#           projected_height = actual_height * scale
-#           
-#           error_width = required_width / projected_width
-#           error_height = required_height / projected_height
-#           
-#           error = error_width > error_height ? error_width : error_height
-#           puts "error ------- #{error} "
-#           thumbnail_prefferred_size = ( required_width > required_height ? required_width : required_height ).to_f * (error)          
-#         end  
         
-        def suggested_measures(object , config)
+        def suggested_measures(object , config , reduced_error)
           actual_width = object.width
           actual_height = object.height
           required_width = config[:width]
@@ -255,12 +231,14 @@ module Gluttonberg
             error /= 2.0
           end
           
-          if required_width > 500 || required_height > 500
+          
+          
+          if reduced_error
             thumbnail_prefferred_size = ( required_width > required_height ? required_width : required_height ).to_f * (error)
             thumbnailing = true
           else
-            thumbnail_prefferred_size = ( required_width > required_height ? required_width : required_height ).to_i
-            thumbnailing = false
+            thumbnail_prefferred_size = size #( required_width > required_height ? required_width : required_height ).to_i
+            thumbnailing = true
           end  
           thumbnail_prefferred_size
         end  
@@ -279,16 +257,21 @@ module Gluttonberg
                       
                       if self.class.is_cropped
                           if img.width > config[:width] || img.height > config[:height]
-                        
-                            thumbnailing = (config[:height] > 500 || config[:width] > 500)
-                            
-                            
+                                                    
+                            thumbnailing = !(config[:thumbnailining].blank? || config[:thumbnailining] == false )
+                                                        
                             if thumbnailing
+                              reduced_error = !(config[:reduced_error].blank? || config[:reduced_error] == false )
+                              
                               puts "thumbnail - "
-                                thumbnail_prefferred_size = suggested_measures(img , config)
+                                thumbnail_prefferred_size = suggested_measures(img , config , reduced_error)
                                 puts "thumbnail_prefferred_size #{thumbnail_prefferred_size} "
                                 img.thumbnail( thumbnail_prefferred_size )  { |thumb| 
-                                thumb.with_crop(0,0,config[:width], config[:height]){ |thumb2| thumb2.save(path) }                                                                          
+                                  if reduced_error                                            
+                                    thumb.with_crop(0,0,config[:width], config[:height]){ |thumb2| thumb2.save(path) }
+                                  else
+                                    thumb.save(path)
+                                  end
                                 }
                               
                             else
