@@ -243,12 +243,25 @@ module Gluttonberg
           thumbnail_prefferred_size
         end  
         
+        def find_error_in_pixels(object , config)
+          actual_width = object.width
+          actual_height = object.height
+          required_width = config[:width]
+          required_height = config[:height]
+          w_error = required_width - actual_width
+          h_error = required_height - actual_height
+          error = w_error > h_error ? w_error : h_error
+          
+          error > 0 ? error : 0
+        end
+              
+        
         # Create thumbnailed versions of image attachements.
         # TODO: generate thumbnails with the correct extension
         def generate_image_thumb
-          
+            
           if self.class.generate_thumbs
-                        
+                      
               begin
                 ImageScience.with_image(location_on_disk) do |img|
                     self.class.sizes.each_pair do |name, config|
@@ -263,7 +276,7 @@ module Gluttonberg
                             if thumbnailing
                               reduced_error = !(config[:reduced_error].blank? || config[:reduced_error] == false )
                               
-                              puts "thumbnail - "
+                              puts "thumbnail  - #{config[:filename]} "
                                 thumbnail_prefferred_size = suggested_measures(img , config , reduced_error)
                                 puts "thumbnail_prefferred_size #{thumbnail_prefferred_size} "
                                 img.thumbnail( thumbnail_prefferred_size )  { |thumb| 
@@ -275,20 +288,58 @@ module Gluttonberg
                                 }
                               
                             else
-                              puts "cropping - "
+                              puts "cropping - #{config[:filename]}"
                                prfferred_width_for_cropping = config[:width] > config[:height] ? config[:width] : config[:height]
+                               flag = false
+                               error = 0
                                img.cropped_thumbnail(prfferred_width_for_cropping) { |thumb1|
-                                   thumb1.with_crop(0,0,config[:width], config[:height]){ |thumb2| thumb2.save(path) }
-                                    
-                               }                      
+                                   
+                                   thumb1.with_crop(0,0,config[:width], config[:height]){ |thumb2| 
+                                     thumb2.save(path)
+                                      flag = true 
+                                   }
+                                   if flag == false
+                                     error = find_error_in_pixels(thumb1 , config)
+                                   end                                   
+                               }
+                                
+                               if flag == false  
+                                 puts "error management"
+                                 img.cropped_thumbnail(prfferred_width_for_cropping + error) { |thumb1|
+                                 
+                                    thumb1.with_crop(0,0,config[:width], config[:height]){ |thumb2| 
+                                      thumb2.save(path)
+                                       flag = true 
+                                       puts "it works"
+                                    }                                                                       
+                                }                               
+                               end
+                               
+                               if flag == false
+                                  puts "cropped_thumbnail fails on it. so thats why I am applying thumbnailing on this."
+                                  if img.height >= img.width
+                                      if img.height > config[:height]
+                                        img.thumbnail(config[:height]) { |thumb| thumb.save(path) }
+                                      else
+                                        img.save(path)
+                                      end
+                                  else
+                                      if img.width > config[:width]
+                                        img.thumbnail(config[:width]) { |thumb| thumb.save(path) }
+                                      else
+                                        img.save(path)
+                                      end
+                                   end    
+                               end   
+                                                  
                             end
                             
                           else
-                            puts "nochange - "
+                            puts "nochange -  #{config[:filename]}"
                             img.save(path)
                           end
                       else
-                        puts "thumbnail - "
+                        puts "default thumbnail -  - #{config[:filename]}"
                             if img.height >= img.width
                                 if img.height > config[:height]
                                   img.thumbnail(config[:height]) { |thumb| thumb.save(path) }
@@ -312,6 +363,7 @@ module Gluttonberg
               #end
             rescue TypeError => error
               # ignore TypeErrors, just means it wasn't a supported image
+              puts "TypeError"
             end
           else
             attribute_set(:custom_thumbnail, false)
