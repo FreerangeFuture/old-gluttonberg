@@ -272,7 +272,7 @@ JAVASCRIPT_CODE
       end
       
       def asset_url(asset)
-        "http://#{request.host}/asset/#{@asset.asset_hash[0..3]}/#{@asset.id}"
+        "http://#{request.host}/asset/#{asset.asset_hash[0..3]}/#{asset.id}"
       end  
       
       

@@ -42,7 +42,11 @@ module Gluttonberg
       # asset is missing it returns nil.
       def render_image_content(content, opts = {})
         if content.asset
-          image_tag(content.asset.url, opts.merge!(:alt => content.asset.name))
+          if opts[:url_for].blank?
+            image_tag(content.asset.url, opts.merge!(:alt => content.asset.name))
+          else
+            image_tag(content.asset.url_for(opts[:url_for].to_sym), opts.merge!(:alt => content.asset.name))              
+          end
         end
       end
 

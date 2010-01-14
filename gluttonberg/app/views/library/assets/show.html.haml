@@ -46,7 +46,7 @@
   
 %h3 Public path
 %dl  
-  %dd= text_field(:value => asset_url(@asset.id) , :id => "public-path")  
+  %dd= text_field(:value => asset_url(@asset) , :id => "public-path")  
  
   /= text_field(:value => "http://#{request.host}#{@asset.url}", :id => "public-path")
   
