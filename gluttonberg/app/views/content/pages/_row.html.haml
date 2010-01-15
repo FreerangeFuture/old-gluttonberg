@@ -8,8 +8,9 @@
       - if Gluttonberg.localized?
         %li= link_to 'Details', slice_url(:page, page)
       - else        
-        - @default_localization = page.localizations.first(:dialect_id => Gluttonberg::Dialect.first_default.id , :locale_id => Gluttonberg::Locale.first_default.id)
-        %li= link_to 'Edit Content', slice_url(:edit_page_localization, :page_id => page, :id => @default_localization.id)
+        - default_localization = Gluttonberg::PageLocalization.first( :page_id => page.id , :dialect_id => Gluttonberg::Dialect.first_default.id , :locale_id => Gluttonberg::Locale.first_default.id)
+              
+        %li= link_to 'Edit Content', slice_url(:edit_page_localization, :page_id => page, :id => default_localization.id)
       %li= link_to 'Settings', slice_url(:edit_page, page)
       %li= link_to 'Delete', slice_url(:delete_page, page)
       
