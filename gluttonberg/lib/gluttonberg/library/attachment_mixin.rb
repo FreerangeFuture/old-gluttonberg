@@ -37,21 +37,27 @@ module Gluttonberg
           before  :save,    :generate_reference_hash
           
           class << self
-            attr_reader :thumbnail_sizes, :generate_thumbs
+            attr_reader :thumbnail_sizes
           end
 
           extend ClassMethods
           include InstanceMethods
           
-          @generate_thumbs = begin
-            require 'image_science'
-          rescue LoadError
-            false
-          end
         end
       end
       
       module ClassMethods
+
+      	def load_image_science
+          status = true
+          begin
+            require 'image_science'
+          rescue LoadError
+            status = false
+          end
+          status
+        end	
+
         # Generate auto titles for those assets without name
         def generate_name
           assets = Gluttonberg::Asset.all(:name => "")
@@ -259,14 +265,11 @@ module Gluttonberg
         # Create thumbnailed versions of image attachements.
         # TODO: generate thumbnails with the correct extension
         def generate_image_thumb
-            
-          if self.class.generate_thumbs
-                      
+          if self.class.load_image_science
               begin
                 ImageScience.with_image(location_on_disk) do |img|
                     self.class.sizes.each_pair do |name, config|
                       path = File.join(directory, "#{config[:filename]}.jpg")
-                                          
                       
                       if self.class.is_cropped
                           if img.width > config[:width] || img.height > config[:height]
@@ -288,7 +291,7 @@ module Gluttonberg
                                 }
                               
                             else
-                              puts "cropping - #{config[:filename]}"
+                              Merb.logger.info "cropping - #{config[:filename]}"
                                prfferred_width_for_cropping = config[:width] > config[:height] ? config[:width] : config[:height]
                                flag = false
                                error = 0
@@ -371,7 +374,7 @@ module Gluttonberg
         end # method
 
         def generate_proper_resolution
-          if self.class.generate_thumbs
+          if self.class.load_image_science
             begin
               ImageScience.with_image(location_on_disk) do |img|
                   config = self.class.max_image_size
