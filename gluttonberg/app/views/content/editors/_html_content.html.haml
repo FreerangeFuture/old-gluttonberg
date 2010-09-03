@@ -1,6 +1,6 @@
 - id_of_text_area = "gluttonberg::page_localization[contents][#{content.association_name}][#{content.id}][text]"
-= enable_tinymce_on(id_of_text_area)
+= enable_tinymce
 
 %label= content.section_label
 = find_and_preserve do
-  = text_area(content.text, :name => id_of_text_area, :class => "large tall")
+  = text_area(content.text, :name => id_of_text_area, :class => "large tall mceEditor")
