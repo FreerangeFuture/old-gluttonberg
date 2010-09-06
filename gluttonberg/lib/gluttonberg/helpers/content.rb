@@ -75,6 +75,12 @@ module Gluttonberg
         tag(:script , content , :charset=>'utf-8', :type=>'text/javascript')        
       end
       
+      # generate javascript code to enable tinymce on it. textArea need to have class = mceEditor
+      def enable_tinymce_on_class(html_class)        
+        content = "enable_tinyMCE_on_class('#{html_class}'); \n"        
+        tag(:script , content , :charset=>'utf-8', :type=>'text/javascript')        
+      end
+      
     end # Content
   end # Helpers
 end # Gluttonberg

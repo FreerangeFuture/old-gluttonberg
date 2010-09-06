@@ -1,11 +1,17 @@
 function enable_tinyMCE_on()
 {
+	enable_tinyMCE_on_class("mceEditor");
+}    
+
+
+function enable_tinyMCE_on_class(html_class)
+{
 tinyMCE.init({
                 // General options
                 //mode : "exact",
                 //elements : ids,
                 mode : "specific_textareas",
-                editor_selector : "mceEditor",
+                editor_selector : "" + html_class,
                 theme : "advanced",
                 plugins : "safari,pagebreak,style,table,advlink,inlinepopups,fullscreen,noneditable,nonbreaking",
 
@@ -17,10 +23,10 @@ tinyMCE.init({
                 theme_advanced_toolbar_align : "left",
                 theme_advanced_statusbar_location : "bottom",
                 theme_advanced_resizing : true,
-               
+
                 content_css : "/stylesheets/user-styles.css",
-                
+
                 valid_elements : "a[href|target=_blank],strong/b,em/i,p,ol,ul,li,u,strike,blockquote"
         });
-        
- }    
+
+ }
