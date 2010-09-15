@@ -5,11 +5,11 @@ require 'merb-core'
 require 'merb-core/tasks/merb'
 
 GEM_NAME = "gluttonberg"
-AUTHOR = "Luke Matthew Sutton"
-EMAIL = "luke@freerangefuture.com"
+AUTHOR = "Freerange Future"
+EMAIL = "office@freerangefuture.com"
 HOMEPAGE = "http://freerangefuture.com"
 SUMMARY = "A content management system built as a merb-slice"
-GEM_VERSION = "0.5.1"
+GEM_VERSION = "0.5.5"
 
 spec = Gem::Specification.new do |s|
   #s.rubyforge_project = 'merb'
